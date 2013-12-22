@@ -1,0 +1,132 @@
+#!/bin/bash
+SVER="1.0.0"
+CONF='/etc/opt/sca/sdp.conf'
+
+title() {
+	echo "################################################################################"
+	echo "# Supportconfig Analysis Pattern Tool v${SVER}: $(date)"
+	echo "################################################################################"
+	echo
+}
+
+showHelp() {
+	echo 'Usage: dbp [check, empty, backup, cmd <query>, import <file>, del <int>]'
+	echo
+	echo " check                Checks, optimizes and repairs tables"
+	echo " empty                Truncates $DB_TABLE table"
+	echo " backup               Creates a mysqldump file of the $DB_NAME database"
+	echo " cmd <query>          Supports a custom query"
+	echo " import <file>        Imports the file"
+	echo " del <int>            Deletes pattern with Pattern ID <int>"
+	echo
+}
+
+displayDatabase() {
+	echo "Database:         $DB_NAME"
+	echo "Table:            $DB_TABLE"
+	PCOUNT=$(mysql $DB_CONNECT -NB -e "SELECT Count(PatternID) FROM $DB_TABLE")
+	echo "Total Patterns:   $PCOUNT"
+	echo
+	mysql $DB_CONNECT -e "SELECT Status, Count(Status) FROM $DB_TABLE GROUP BY Status"
+	echo
+	mysql $DB_CONNECT -e "SELECT Class, Count(Class) FROM $DB_TABLE GROUP BY Class"
+	echo
+}
+
+# usage: confirmed <string>
+confirmed() {
+	printf "$* [y/N]: "
+	read ANS
+	case $ANS in
+	y*|Y*) RCODE=0 ;;
+	*) RCODE=1 ;;
+	esac
+	return $RCODE
+}
+
+############################################################################################
+# Main
+############################################################################################
+clear
+title
+if grep -i 'Run setup-sdp' $CONF &>/dev/null; then
+	echo "ERROR: Database not configured, run setup-sdp"
+	echo
+	showHelp
+	exit 2
+else
+	. $CONF
+fi
+
+case $1 in
+h*|-h*|--h*)
+	showHelp
+	;;
+empty)
+	if confirmed "Are you sure you want to empty the database?"; then
+		echo
+		echo "Tables Emptied: $DB_TABLE"
+		mysql $DB_CONNECT -e "TRUNCATE $DB_TABLE"
+		echo
+		displayDatabase
+	else
+		echo
+		echo "Aborted"
+	fi
+	;;
+backup)
+	echo "Backing up $DB_NAME database, root password required"
+	BACKUP_DATE=$(date +"%y%m%d")
+	BACKUP_TIME=$(date +"%H%M")
+	BACKUP_FILE="${SCDIAG_HOME}/${DB_NAME}_backup_${BACKUP_DATE}_${BACKUP_TIME}.sql"
+	mysqldump -u root -p ${DB_NAME} > $BACKUP_FILE
+	ERR=$?
+	if ! (( $ERR )); then
+		echo "Compressing $BACKUP_FILE"
+		gzip -9 $BACKUP_FILE
+		echo "Backup complete"
+	fi
+	;;
+import)
+	FILE=$2
+	if [ -n "$FILE" ]; then
+		echo "Importing file: '$FILE'"
+		cat $FILE | mysql $DB_CONNECT
+	else
+		echo "ERROR: Invalid file: '$FILE'"
+	fi
+	;;
+del)
+	PATID=$2
+	if [ -z "$PATID" ]; then
+		echo "Error: Missing Pattern ID value"; echo
+		showHelp
+		exit 3
+	else
+		echo "Deleting Pattern $PATID"
+		mysql $DB_CONNECT -e "LOCK TABLES $DB_TABLE WRITE" #Establish MUTEX
+		mysql $DB_CONNECT -e "DELETE FROM $DB_TABLE WHERE PatternID = ${PATID}"
+		mysql $DB_CONNECT -e "UNLOCK TABLES"
+	fi
+	;;
+check)
+	echo "Checking Tables"
+	mysqlcheck $DB_CONNECT
+	echo
+	echo "Automatically Repairing Tables"
+	mysqlcheck --auto-repair $DB_CONNECT
+	echo
+	echo "Optimizing Tables"
+	mysqlcheck -o $DB_CONNECT
+	echo
+	;;
+cmd)
+	echo "Custom mySQL Query"
+	shift
+	mysql $DB_CONNECT -e "$*"	
+	;;
+*)
+	displayDatabase
+	;;
+esac
+

@@ -1,0 +1,173 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Library for SCA Patterns</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:none" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#constants">Constants</a></li>
+	<li><a href="#functions">Functions</a></li>
+	<ul>
+
+		<li><a href="#edirvalidation">eDirValidation</a></li>
+		<li><a href="#edirstatus">eDirStatus</a></li>
+		<li><a href="#ndsdmemorymaximum">ndsdMemoryMaximum</a></li>
+	</ul>
+
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>eDir - The Support Diagnostic Pattern eDirectory perl library</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>use SDP::eDir;</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Provides shared functions for eDirectory support pattern analysis</p>
+<p>
+</p>
+<hr />
+<h1><a name="constants">Constants</a></h1>
+<dl>
+<dt><strong><a name="edir_not_installed_an_instance_of_edirectory_is_not_installed" class="item">EDIR_NOT_INSTALLED - 
+  An instance of eDirectory is not installed</a></strong>
+
+<dt><strong><a name="edir_not_running_an_instance_of_ndsd_is_not_running_on_the_machine" class="item">EDIR_NOT_RUNNING - 
+  An instance of ndsd is not running on the machine</a></strong>
+
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="functions">Functions</a></h1>
+<p>
+</p>
+<h2><a name="edirvalidation">eDirValidation</a></h2>
+<dl>
+<dt><strong><a name="description" class="item">Description</a></strong>
+
+<dd>
+<p>eDirValidation tests to ensure that eDirectory rpm is installed and the daemon is running.</p>
+</dd>
+</li>
+<dt><strong><a name="examples" class="item">Examples</a></strong>
+
+<dd>
+<pre>
+  SDP::eDir::eDirValidation()</pre>
+</dd>
+<dd>
+<pre>
+  will cause the pattern to exit with STATUS_ERROR if eDirectory is not installed or is not running.  The function
+  can only return 0.</pre>
+</dd>
+<dd>
+<pre>
+  SDP::eDir::eDirValidation(EDIR_NOT_INSTALLED)</pre>
+</dd>
+<dd>
+<pre>
+  will cause the pattern to exit with STATUS_ERROR if eDirectory is not running.  The function will either return 
+  0 if eDirectory is installed, or EDIR_NOT_INSTALLED if eDirectory is not installed.</pre>
+</dd>
+<dd>
+<pre>
+  SDP::eDir::eDirValidation(EDIR_NOT_RUNNING)</pre>
+</dd>
+<dd>
+<pre>
+  will cause the pattern to exit with STATUS_ERROR if eDirectory is not installed.  The function will either return
+  0 if eDirectory is running, or EDIR_NOT_RUNNING if eDirectory is not running.</pre>
+</dd>
+<dd>
+<pre>
+  SDP::eDir::eDirValidation(EDIR_NOT_INSTALLED | EDIR_NOT_RUNNING)</pre>
+</dd>
+<dd>
+<pre>
+  will never cause the pattern to exit with STATUS_ERROR.  The function will either return a 0 if eDirectory is
+  installed and running, or a bitwise OR of EDIR_NOT_RUNNING and EDIR_NOT_INSTALLED depending on what is
+  discovered.  Check the return with a bitwise AND to detect what was found.</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="edirstatus">eDirStatus</a></h2>
+<dl>
+<dt><strong><a name="description2" class="item">Description</a></strong>
+
+<dd>
+<p>eDirStatus returns the output of the ndsstat command into a hash</p>
+</dd>
+</li>
+<dt><strong><a name="example" class="item">Example</a></strong>
+
+<dd>
+<pre>
+  use SDP::eDir;
+  my %ndsstat = SDP::eDir::eDirStatus();
+  print &quot;Using eDirectory version $ndsstat{'Binary Version'}\n&quot;; 
+  print &quot;Testing server $ndsstat{'Server Name'} in tree $ndsstat{'Tree Name'}\n&quot;;</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="ndsdmemorymaximum">ndsdMemoryMaximum</a></h2>
+<dl>
+<dt><strong><a name="description3" class="item">Description</a></strong>
+
+<dd>
+<p>ndsdMemoryMaximum returns the maximum memory size ndsd can reach before becoming unresponsive.  This number is dependent on version and architecture.</p>
+</dd>
+</li>
+<dt><strong><a name="example2" class="item">Example</a></strong>
+
+<dd>
+<pre>
+  use SDP::eDir;
+  my $maximum_memory = SDP::eDir::ndsdMemoryMaximum();</pre>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Tregaron Bayly, &lt;<a href="mailto:tbayly@novell.com">tbayly@novell.com</a>&gt;</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>Copyright (C) 2009,2010 by Tregaron Bayly</p>
+<p>This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl itself, either Perl version 5.10.0 or,
+at your option, any later version of Perl 5 you may have available.</p>
+
+</body>
+
+</html>

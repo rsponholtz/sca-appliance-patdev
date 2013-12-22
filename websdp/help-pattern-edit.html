@@ -1,0 +1,41 @@
+<HTML>
+<HEAD>
+	<TITLE>Help: SDP Edit</TITLE>
+</HEAD>
+<BODY>
+	<H1 ALIGN="center">Help: SDP Edit</H1>
+	<TABLE WIDTH="100%" ALIGN="center" BORDER=1>
+	<TR><TH WIDTH="25%">Field</TH><TH WIDTH="75%">Description</TH></TR>
+	<TR><TD>Submitter <FONT COLOR="red">(Required)</FONT></TD><TD>The first and last name of the person submitting the pattern idea.</TD></TR>
+	<TR><TD>Owner</TD><TD>The first and last name of the person actually writing the pattern.</TD></TR>
+	<TR><TD>Title <FONT COLOR="red">(Required)</FONT> [60 Character Limit]</TD><TD>A short title for the pattern showing what it's going to do.</TD></TR>
+	<TR><TD>Description</TD><TD>A more detailed pattern description. This should briefly explain what the pattern will check or do. The Steps to Identfiy explain how the pattern will work.</TD></TR>
+	<TR><TD>Class</TD><TD>The major product class to which the pattern applies. This is the collapsible field in the SCA report. Pick from the drop down list.</TD></TR>
+	<TR><TD>Category <FONT COLOR="red">(Required)</FONT></TD><TD>A subset of the Class.</TD></TR>
+	<TR><TD>Component <FONT COLOR="red">(Required)</FONT></TD><TD>A subset of the Category</TD></TR>
+	<TR><TD>Status</TD><TD>A drop down list that shows the current status of the pattern. Making a change to the database does not affect the actual pattern in the patterns/local directory. That must be done manually.
+		<TABLE>
+		<TR><TD><b>Proposed</b></TD><TD>Available to be written by any available pattern writer.</TD></TR>
+		<TR><TD><b>Assigned</b></TD><TD>Assigned to an owner or pattern writer.</TD></TR>
+		<TR><TD><b>In-Progress</b></TD><TD>The pattern is actively being developed.</TD></TR>
+		<TR><TD><b>Complete</b></TD><TD>Code complete and ready for general testing.</TD></TR>
+		<TR><TD><b>Staging</b></TD><TD>Moved to the staging area for beta and pre-release testing.</TD></TR>
+		<TR><TD><b>Released</b></TD><TD>Released to the public. <B>NOTE:</B> You still need to manually copy the developed pattern to the patterns/local directory.</TD></TR>
+		<TR><TD><b>Maintenance</b></TD><TD>A mature pattern that is under maintenance.</TD></TR>
+		<TR><TD><b>Obsolete</b></TD><TD>The pattern is no longer valid and has been removed from the public. <B>NOTE:</B> You still need to manually remove the file from the patterns/local directory.</TD></TR>
+		<TR><TD><b>Rejected</b></TD><TD>The pattern submission has been rejected with the reasons documented in the Notes field.</TD></TR>
+		</TABLE>
+	</TD></TR>
+	<TR><TD>Release</TD><TD>Date the pattern was released.</TD></TR>
+	<TR><TD>Pattern ID</TD><TD>This is an internal tracking number unique to each pattern submission that cannot be changed.</TD></TR>
+	<TR><TD>Pattern File</TD><TD>The pattern filename that will be comitted to the supportconfig diagnostic pattern (SDP) repository. This must be a unique file name within the SDP category directory with the format, prodID-00000.pl. For example, lvm-00001.pl</TD></TR>
+	<TR><TD>Pattern Type</TD><TD>The kind of pattern file to be written, such as Bash, Pythong or Perl. The pattern type will determine the pattern file template to be generated.</TD></TR>
+	<TR><TD>TID URL</TD><TD>TID URL solution to which the pattern will be linked. A TID tag is assumed; do not include it.</TD></TR>
+	<TR><TD>BUG URL</TD><TD>BUG URL to which the pattern will be linked. A BUG tag is assumed; do not include it.</TD></TR>
+	<TR><TD>URL Pair [1-5]</TD><TD>The tag and URL for a solution to be linked to the pattern in the form of TAG=URL. For example, <B>SUSE=http://www.suse.com</B> is a URL Pair; SUSE is the tag and http://www.suse.com is the URL. The URL pair is separated by an "=" sign.</TD></TR>
+	<TR><TD><FORM>Radio Buttons <INPUT TYPE="radio" NAME="Help" VALUE="Help" CHECKED="yes"></FORM></TD><TD>The selected radio button determines which URL is the primary link. The primary link is linked to the pattern's overall display message.</TD></TR>
+	<TR><TD>Modified</TD><TD>The date the pattern or pattern data was last updated in the SDP Submissions database.</TD></TR>
+	<TR><TD>Notes</TD><TD>A space in which to keep notes regarding this pattern.</TD></TR>
+	</TABLE>
+</BODY>
+</HTML>

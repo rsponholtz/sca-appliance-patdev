@@ -1,0 +1,391 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Python Library for SCA Patterns</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:none" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#constants">CONSTANTS</a></li>
+	<li><a href="#global_variables">GLOBAL VARIABLES</a></li>
+	<li><a href="#functions">FUNCTIONS</a></li>
+	<ul>
+
+		<li><a href="#init_class__category__component__id__link__over_all__info__links_">init(CLASS, CATEGORY, COMPONENT, ID, LINK, OVER_ALL, INFO, LINKS)</a></li>
+		<li><a href="#processoptions___">processOptions( )</a></li>
+		<li><a href="#printpatternresults___">printPatternResults( )</a></li>
+		<li><a href="#updatestatus_overall__overallinfo_">updateStatus(overAll, overAllInfo)</a></li>
+		<li><a href="#setstatus_overall__overallinfo_">setStatus(overAll, overAllInfo)</a></li>
+		<li><a href="#compareversions_version1__version2_">compareVersions(version1, version2)</a></li>
+		<li><a href="#getsection_file_open__section__content_">getSection(FILE_OPEN, SECTION, CONTENT)</a></li>
+	</ul>
+
+	<li><a href="#contributors">CONTRIBUTORS</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Core.py</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>import Core</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>The core Supportconfig Analysis Pattern library for Python</p>
+<p>
+</p>
+<hr />
+<h1><a name="constants">CONSTANTS</a></h1>
+<p>TEMP
+PART
+SUCC
+REC
+WARN
+CRIT
+ERROR</p>
+<p>STATUS_TEMPORARY
+STATUS_PARTIAL
+STATUS_SUCCESS
+STATUS_RECOMMEND
+STATUS_PROMOTION
+STATUS_WARNING
+STATUS_CRITICAL
+STATUS_ERROR</p>
+<p>
+</p>
+<hr />
+<h1><a name="global_variables">GLOBAL VARIABLES</a></h1>
+<p>META_CLASS
+META_CATEGORY
+META_COMPONENT
+PATTERN_ID
+PRIMARY_LINK
+OVERALL
+OVERALL_INFO
+OTHER_LINKS</p>
+<p>
+</p>
+<hr />
+<h1><a name="functions">FUNCTIONS</a></h1>
+<p>
+</p>
+<h2><a name="init_class__category__component__id__link__over_all__info__links_">init(CLASS, CATEGORY, COMPONENT, ID, LINK, OVER_ALL, INFO, LINKS)</a></h2>
+<dl>
+<dt><strong><a name="description" class="item">Description</a></strong>
+
+<dd>
+<p>Sets the global variables to the initilized values in the pattern. The values will be modified by library functions as the pattern runs.</p>
+</dd>
+</li>
+<dt><strong><a name="requires" class="item">Requires</a></strong>
+
+<dd>
+<p>Initial values for global variables</p>
+</dd>
+</li>
+<dt><strong><a name="returns" class="item">Returns</a></strong>
+
+<dd>
+<p>Nothing</p>
+</dd>
+</li>
+<dt><strong><a name="example" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        META_CLASS = &quot;SLE&quot;
+        META_CATEGORY = &quot;Boot&quot;
+        META_COMPONENT = &quot;Driver&quot;
+        PATTERN_ID = os.path.basename(__file__)
+        PRIMARY_LINK = &quot;META_LINK_TID&quot;
+        OVERALL = Core.TEMP
+        OVERALL_INFO = &quot;NOT SET&quot;
+        OTHER_LINKS = &quot;META_LINK_TID=https://www.suse.com/support/kb/doc.php?id=7014091|META_LINK_BUG=https://bugzilla.novell.com/show_bug.cgi?id=847858&quot;</pre>
+</dd>
+<dd>
+<pre>
+        Core.init(META_CLASS, META_CATEGORY, META_COMPONENT, PATTERN_ID, PRIMARY_LINK, OVERALL, OVERALL_INFO, OTHER_LINKS)</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="processoptions___">processOptions( )</a></h2>
+<dl>
+<dt><strong><a name="description2" class="item">Description</a></strong>
+
+<dd>
+<p>Processes pattern startup options. The only startup option currently supported is -p &lt;/path/to/extracted/supportconfig/archive&gt;.</p>
+</dd>
+</li>
+<dt><strong><a name="requires2" class="item">Requires</a></strong>
+
+<dd>
+<p>Nothing</p>
+</dd>
+</li>
+<dt><strong><a name="returns2" class="item">Returns</a></strong>
+
+<dd>
+<p>Sets startup option values</p>
+</dd>
+</li>
+<dt><strong><a name="example2" class="item">Example</a></strong>
+
+<dd>
+<p>Since Core.processOptions is called in the Core.init function, you just need to call Core.init.</p>
+</dd>
+<dd>
+<pre>
+        META_CLASS = &quot;SLE&quot;
+        META_CATEGORY = &quot;Boot&quot;
+        META_COMPONENT = &quot;Driver&quot;
+        PATTERN_ID = os.path.basename(__file__)
+        PRIMARY_LINK = &quot;META_LINK_TID&quot;
+        OVERALL = Core.TEMP
+        OVERALL_INFO = &quot;NOT SET&quot;
+        OTHER_LINKS = &quot;META_LINK_TID=https://www.suse.com/support/kb/doc.php?id=7014091|META_LINK_BUG=https://bugzilla.novell.com/show_bug.cgi?id=847858&quot;</pre>
+</dd>
+<dd>
+<pre>
+        Core.init(META_CLASS, META_CATEGORY, META_COMPONENT, PATTERN_ID, PRIMARY_LINK, OVERALL, OVERALL_INFO, OTHER_LINKS)</pre>
+</dd>
+</li>
+</dl>
+<hr><p>
+</p>
+<h2><a name="printpatternresults___">printPatternResults( )</a></h2>
+<dl>
+<dt><strong><a name="description3" class="item">Description</a></strong>
+
+<dd>
+<p>The SCA Appliance expects each pattern to return a standard string to stdout. 
+This function ensures the correct string is returned. It should be in the form below.</p>
+</dd>
+<dd>
+<p>META_CLASS=&lt;string&gt;|META_CATEGORY=&lt;string&gt;|META_COMPONENT=&lt;string&gt;|PATTERN_ID=&lt;pattern_filename&gt;|PRIMARY_LINK=META_LINK_&lt;TAG&gt;|OVERALL=[0-5]|OVERALL_INFO=&lt;message string&gt;|META_LINK_&lt;TAG&gt;=&lt;URL&gt;[|META_LINK_&lt;TAG&gt;=&lt;URL&gt;]</p>
+</dd>
+</li>
+<dt><strong><a name="requires3" class="item">Requires</a></strong>
+
+<dd>
+<p>Nothing</p>
+</dd>
+</li>
+<dt><strong><a name="returns3" class="item">Returns</a></strong>
+
+<dd>
+<p>Pattern results to stdout.</p>
+</dd>
+</li>
+<dt><strong><a name="example3" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        printPatternResults()</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="updatestatus_overall__overallinfo_">updateStatus(overAll, overAllInfo)</a></h2>
+<dl>
+<dt><strong><a name="description4" class="item">Description</a></strong>
+
+<dd>
+<p>Creates the message string customers see in the SCA Report if the pattern returns a positive result. It also sets the severity level of that message to: critical, warning, recommended, success or not included at all. If overAll is greater than the current global OVERALL value, OVERALL will be overwritten with overAll and OVERALL_INFO will be set to overAllInfo.</p>
+</dd>
+</li>
+<dt><strong><a name="requires4" class="item">Requires</a></strong>
+
+<dd>
+<p>Status level of the message, see CONSTANTS above.</p>
+</dd>
+<dd>
+<p>A message string for the SCA Report</p>
+</dd>
+</li>
+<dt><strong><a name="returns4" class="item">Returns</a></strong>
+
+<dd>
+<p>Nothing. However, if overAll is set to Core.ERROR, updateStatus will cause the pattern to terminate.</p>
+</dd>
+</li>
+<dt><strong><a name="example4" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        Core.updateStatus(Core.CRIT, &quot;A critical error has been detected&quot;)</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="setstatus_overall__overallinfo_">setStatus(overAll, overAllInfo)</a></h2>
+<dl>
+<dt><strong><a name="description5" class="item">Description</a></strong>
+
+<dd>
+<p>Similiar to updateStatus where OVERALL is set to overAll and OVERALL_INFO is set to overAllInfo without any consideration to the current OVERALL status.</p>
+</dd>
+</li>
+<dt><strong><a name="requires5" class="item">Requires</a></strong>
+
+<dd>
+<p>Status level of the message, see CONSTANTS above.</p>
+</dd>
+<dd>
+<p>A message string for the SCA Report</p>
+</dd>
+</li>
+<dt><strong><a name="returns5" class="item">Returns</a></strong>
+
+<dd>
+<p>Nothing</p>
+</dd>
+</li>
+<dt><strong><a name="example5" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        Core.setStatus(Core.CRIT, &quot;A critical error has been detected&quot;)</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="compareversions_version1__version2_">compareVersions(version1, version2)</a></h2>
+<dl>
+<dt><strong><a name="description6" class="item">Description</a></strong>
+
+<dd>
+<p>Compares two version strings</p>
+</dd>
+</li>
+<dt><strong><a name="requires6" class="item">Requires</a></strong>
+
+<dd>
+<p>Two version strings</p>
+</dd>
+</li>
+<dt><strong><a name="returns6" class="item">Returns</a></strong>
+
+<dd>
+<p>Returns -1 if version1 is less than version2</p>
+</dd>
+<dd>
+<p>Returns 0 if version1 equals version2</p>
+</dd>
+<dd>
+<p>Returns 1 if version1 is greater than version2</p>
+</dd>
+</li>
+<dt><strong><a name="example6" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        DRIVER = 'sg'
+        DRIVER_INFO = SUSE.getDriverInfo(DRIVER)
+        BAD_VERSION = '3.5.34'
+        if( Core.compareVersions(DRIVER_INFO['version'], BAD_VERSION) &lt;= 0 ):
+                Core.updateStatus(Core.CRIT, &quot;Detected SCSI Driver issue, update system to fix it&quot;)
+        else:
+                Core.updateStatus(Core.ERROR, &quot;SCSI Driver issue not found&quot;)</pre>
+</dd>
+</dl>
+<hr><p>
+</p>
+<h2><a name="getsection_file_open__section__content_">getSection(FILE_OPEN, SECTION, CONTENT)</a></h2>
+<dl>
+<dt><strong><a name="description7" class="item">Description</a></strong>
+
+<dd>
+<p>Clips out a section of a supportconfig file and assigns each line to the CONTENT list. For example, the basic-health-check.txt file contains the following:</p>
+</dd>
+<dd>
+<pre>
+        #==[ Command ]======================================#
+        # /usr/bin/uptime
+        10:12am  up 1 day 19:11,  18 users,  load average: 4.90, 5.03, 5.30</pre>
+</dd>
+<dd>
+<p>The first line is the section header. The second commented line is the SECTION name. All lines after the SECTION name are the command output or file contents.</p>
+</dd>
+</li>
+<dt><strong><a name="requires7" class="item">Requires</a></strong>
+
+<dd>
+<p>The supportconfig file name to open</p>
+</dd>
+<dd>
+<p>The section title in the supportconfig file to get</p>
+</dd>
+<dd>
+<p>An empty list in which to put the section lines</p>
+</dd>
+</li>
+<dt><strong><a name="returns7" class="item">Returns</a></strong>
+
+<dd>
+<p>Populates the CONTENT list with the section lines</p>
+</dd>
+</li>
+<dt><strong><a name="example7" class="item">Example</a></strong>
+
+<dd>
+<pre>
+        fileOpen = &quot;basic-health-check.txt&quot;
+        section = &quot;/usr/bin/uptime&quot;
+        content = {}
+        fifteenMinAvg = -1
+        if Core.getSection(fileOpen, section, content):
+                for line in content:
+                        if &quot;load average&quot; in content[line]:
+                                fifteenMinAvg = content[line].split()[-1]</pre>
+</dd>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="contributors">CONTRIBUTORS</a></h1>
+<pre>
+        David Hamner (dhamner@novell.com)
+        Jason Record (jrecord@suse.com)</pre>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>Copyright (C) 2013 SUSE LLC</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; version 2 of the License.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</p>
+
+</body>
+
+</html>

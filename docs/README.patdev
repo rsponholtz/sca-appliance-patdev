@@ -1,0 +1,32 @@
+Installation Instructions:
+The Supportconfig Diagnostic Pattern Database can optionally be installed on it's own server of with the broker server.
+
+Supportconfig Diagnostic Pattern Database:
+	Minimum Installation Patterns:
+		Base System
+		32-Bit Runtime Environment
+		Minimal System
+		Web and LAMP Server
+	Login as root to the Broker Server
+	Add the SCA Appliance repository
+		yast add-on
+		Click Add, http, Next
+			Repository Name: SCA Appliance
+			URL of the Repository: http://download.opensuse.org/repositories/Novell:/NTS:/SCA/openSUSE_12.3/
+		Click Next
+		Search phrase: sca-
+		Packages to Install: sca-broker, sca-pattern-devel (findutils-locate is optional)
+		Click Accept and OK
+	Install phpMyAdmin (optional)
+		Download phpMyAdmin from http://www.phpmyadmin.net/home_page/index.php
+		Extract tar ball in /srv/www/htdocs/
+		Rename extracted directory to /srv/www/htdocs/phpMyAdmin
+		If you are running openSUSE, phpMyAdmin comes with the distro.
+	Run chkconfig apache2 on
+	Run chkconfig mysql on
+	Run rcapahce2 start
+	Run rcmysql start
+	Run /usr/bin/mysql_secure_installation (Press Enter for no initial password, and accept all the defaults. Create a mysql root user password 'suse').
+	Run setup-sdp
+
+

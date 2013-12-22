@@ -1,0 +1,56 @@
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+	<LINK REL="stylesheet" HREF="style.css">
+<TITLE>Creating Custom Patterns</TITLE>
+</HEAD>
+<BODY>
+<P CLASS="head_1" ALIGN="center">Supportconfig Diagnostic Patterns</P>
+<H2 ALIGN="center">Creating Custom Patterns</H2>
+<P>
+The Supportconfig Analysis (SCA) appliance uses scripts or programs to parse supportconfig archive files looking for specific known issues. 
+The scripts or programs are patterns. You can create your own custom patterns for local use. The supportconfig diagnostic pattern database
+is used to manage and create pattern templates to speed up development time.
+</P>
+<H2>Creating a Pattern</H2>
+<OL>
+<LI>Click on the <I>Create A Pattern</I> link</LI>
+<LI>Fill in the fields, using the Help button as necessary</LI>
+<LI>Click the <I>Submit Pattern</I> button</LI>
+<LI>When you return to the pattern list, click on the new pattern's title to edit</LI>
+<LI>Make sure your pattern type is correct, and click the <I>Generate Template</I> button</LI>
+<B>NOTE:</B> Bash patterns tend to take the longest to run.<BR><BR>
+<LI>Use the library documentation for help with function calls specific to <A HREF="docs-python.html">Python</A> or <A HREF="docs-perl.html">Perl</A></LI>
+<LI>Copy and paste this starting code to your editor</LI>
+<LI>Write the code necessary to parse the supportconfig files and indentify a known issue</LI>
+<B>NOTE:</B> The templates use libraries to help meet the <B>Pattern Requirements</B> below.<BR><BR>
+<LI>Save your pattern to the local pattern directory (Default: <B>/var/opt/sca/patterns/local</B>)</LI>
+<LI>Change the owner of your pattern file to sca</LI>
+<LI>Add execute permission to the owner of your pattern file</LI>
+<LI>Your pattern will be run against all new supportconfigs uploaded to the appliance</LI>
+</OL>
+
+<H2>Pattern Requirements</H2>
+<P>A supportconfig diagnostic pattern has the following requirements:</P>
+<UL>
+<LI>Be executable, so bash can execute it by referencing the filename only</LI>
+<LI>Accepts a -p start up parameter with the value of the path to the extracted archive</LI>
+<LI>Writes a case sensitive, order dependent information string to stdout</LI>
+<BR>
+META_CLASS=&lt;string&gt;|META_CATEGORY=&lt;string&gt;|META_COMPONENT=&lt;string&gt;|PATTERN_ID=&lt;pattern_filename&gt;|PRIMARY_LINK=META_LINK_&lt;TAG&gt;|OVERALL=[0-5]|OVERALL_INFO=&lt;message string&gt;|META_LINK_&lt;TAG&gt;=&lt;URL&gt;[|META_LINK_&lt;TAG&gt;=&lt;URL&gt;]<BR>
+<BR>
+<LI>A pattern supports a maximum of 12 solution links - one TID, one BUG and 10 custom links</LI>
+<LI>Provide at least one solution link</LI>
+<LI>Set the OVERALL status value to 0-5, -1 being invalid</LI>
+	0 = SUCCESS<BR>
+	1 = RECOMMEND<BR>
+	2 = PROMOTION<BR>
+	3 = WARNING<BR>
+	4 = CRITICAL<BR>
+	5 = ERROR<BR>
+<LI>Set the OVERALL_INFO value to the report's display string</LI>
+</UL>
+
+<FORM><INPUT TYPE="BUTTON" VALUE="Close" ONCLICK="window.location.href='patterns.php'"></FORM>
+</BODY>
+</HTML>
