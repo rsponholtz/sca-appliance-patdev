@@ -1,0 +1,163 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Pattern Tester</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:none" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#synopsis">SYNOPSIS</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#options">OPTIONS</a></li>
+	<li><a href="#errors">ERRORS</a></li>
+	<li><a href="#environment">ENVIRONMENT</a></li>
+	<li><a href="#examples">EXAMPLES</a></li>
+	<li><a href="#author">AUTHOR</a></li>
+	<li><a href="#copyright">COPYRIGHT</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>pat - Pattern Tester for Supportconfig Analysis Patterns</p>
+<p>
+</p>
+<hr />
+<h1><a name="synopsis">SYNOPSIS</a></h1>
+<p>pat pattern_filename [pattern options]</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run <strong>pat</strong> followed by the pattern filename you are testing. <strong>pat</strong> will test the pattern file contents as well as run the pattern against the archives extracted in the <strong>/var/archives</strong> directory. You can change the default <strong>/var/archives</strong> location by setting the <strong>ARCHDIR</strong> environment variable. <strong>pat</strong> will report the pattern's severity level for each of the archives tested.</p>
+<p>
+</p>
+<hr />
+<h1><a name="options">OPTIONS</a></h1>
+<p>-h for help is the only startup option <strong>pat</strong> has. All other startup options are for the pattern file itself, and follow the pattern filename being tested.</p>
+<p>
+</p>
+<hr />
+<h1><a name="errors">ERRORS</a></h1>
+<p>Patterns will be rejected for check in if there are any fatal errors.</p>
+<dl>
+<dt><strong><a name="pattern_execution_error_pattern_returned_non_zero" class="item">Pattern execution error, pattern returned non-zero</a></strong>
+
+<dd>
+<p>Patterns should not return an exit status. Any non-zero exit status returned by <strong>pat</strong> is assumed to be from the pattern. If you get a non-zero exit status when running <strong>pat</strong>, you have a scripting or configuration error in your pattern.</p>
+</dd>
+</li>
+<dt><strong><a name="missing_execute_permission" class="item">Missing execute permission</a></strong>
+
+<dd>
+<p>Each pattern file should be marked executable so the shell and the SCA Appliance can run it. Run <strong>chmod 755 /path/to/pattern/file</strong> to change the permissions.</p>
+</dd>
+</li>
+<dt><strong><a name="invalid_pattern_output_string_review_pattern_requirements" class="item">Invalid pattern output string, review Pattern Requirements</a></strong>
+
+<dd>
+<p>The output string must follow the convention:</p>
+</dd>
+<dd>
+<p>META_CLASS=&lt;string&gt;|META_CATEGORY=&lt;string&gt;|META_COMPONENT=&lt;string&gt;|PATTERN_ID=&lt;pattern_filename&gt;|PRIMARY_LINK=META_LINK_&lt;TAG&gt;|OVERALL=[0-5]|OVERALL_INFO=&lt;message string&gt;|META_LINK_&lt;TAG&gt;=&lt;URL&gt;[|META_LINK_&lt;TAG&gt;=&lt;URL&gt;]</p>
+</dd>
+<dd>
+<p>The output string is case sensitive and order dependent.</p>
+</dd>
+</li>
+<dt><strong><a name="missing_or_invalid_hash_pling" class="item">Missing or invalid hash pling</a></strong>
+
+<dd>
+<p>Each pattern must have a valid hash pling on the first line of the file. There can be no space preceeding the hash and it must be on the first line. For example, <strong>#!/bin/python</strong>.</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="environment">ENVIRONMENT</a></h1>
+<p>Set <strong>ARCHDIR</strong> in your environment to overide the default archive directory. 
+The <strong>ARCHDIR</strong> directory should contain all of the extracted supportconfig 
+tar balls you wish to test against.</p>
+<p>The default <strong>ARCHDIR</strong> location is <strong>/var/archives</strong>.</p>
+<p>
+</p>
+<hr />
+<h1><a name="examples">EXAMPLES</a></h1>
+<dl>
+<dt><strong><a name="using_the_defaults" class="item">Using the defaults</a></strong>
+
+<dd>
+<p>1. Copy and extract supportconfig archives with which you will test into /var/archives</p>
+</dd>
+<dd>
+<p>2. pat net-check.py</p>
+</dd>
+<dd>
+<p>3. All extracted archives in /var/archives will be used when testing your pattern</p>
+</dd>
+</li>
+<dt><strong><a name="temporarily_use_var_log_nts_directories_to_test" class="item">Temporarily use /var/log/nts_* directories to test</a></strong>
+
+<dd>
+<p>ARCHDIR=/var/log pat mpio-00001.pl</p>
+</dd>
+</li>
+<dt><strong><a name="use_tmp_nts_directories_to_test_for_this_login_session" class="item">Use /tmp/nts_* directories to test for this login session</a></strong>
+
+<dd>
+<p>export ARCHDIR=/tmp</p>
+</dd>
+<dd>
+<p>pat mpio-00001.pl</p>
+</dd>
+</li>
+<dt><strong><a name="use_a_specific_supportconfig_tar_ball_directory_for_this_login_session" class="item">Use a specific supportconfig tar ball directory for this login session.</a></strong>
+
+<dd>
+<p>export ARCHDIR=/mnt/spr/nts_sles11_sp3_x86_64_default_any</p>
+</dd>
+<dd>
+<p>pat net-00002.pl</p>
+</dd>
+</li>
+</dl>
+<p>
+</p>
+<hr />
+<h1><a name="author">AUTHOR</a></h1>
+<p>Jason Record &lt;<a href="mailto:jrecord@suse.com">jrecord@suse.com</a>&gt;</p>
+<p>
+</p>
+<hr />
+<h1><a name="copyright">COPYRIGHT</a></h1>
+<p>Copyright (C) 2014 SUSE LLC</p>
+<p>This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; version 2 of the License.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.</p>
+
+</body>
+
+</html>

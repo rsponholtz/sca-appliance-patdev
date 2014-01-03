@@ -43,18 +43,21 @@ install -d $RPM_BUILD_ROOT/etc/opt/%{sca_common}
 install -d $RPM_BUILD_ROOT/opt/%{sca_common}/bin
 install -d $RPM_BUILD_ROOT/srv/www/htdocs/sdp
 install -d $RPM_BUILD_ROOT/usr/sbin
+install -d $RPM_BUILD_ROOT/usr/bin
 install -d $RPM_BUILD_ROOT/usr/share/man/man1
 install -d $RPM_BUILD_ROOT/usr/share/man/man5
 install -d $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -d $RPM_BUILD_ROOT/var/opt/%{sca_common}
+install -d $RPM_BUILD_ROOT/var/archives
 install -m 644 config/*.conf $RPM_BUILD_ROOT/etc/opt/%{sca_common}
 install -m 644 config/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 544 bin/* $RPM_BUILD_ROOT/opt/%{sca_common}/bin
+install -m 555 bin/pat $RPM_BUILD_ROOT/usr/bin
 install -m 544 bin/* $RPM_BUILD_ROOT/usr/sbin
 install -m 644 websdp/* $RPM_BUILD_ROOT/srv/www/htdocs/sdp
 install -m 400 websdp/db-config.php $RPM_BUILD_ROOT/srv/www/htdocs/sdp
 install -m 644 schema/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
-install -m 644 docs/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
+install -m 644 docs/README* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 man/*.1.gz $RPM_BUILD_ROOT/usr/share/man/man1
 install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 
@@ -63,6 +66,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %dir /opt
 %dir /etc/opt
 %dir /var/opt
+%dir %attr(1777,root,root) /var/archives
 %dir /srv/www/htdocs/sdp
 %dir /opt/%{sca_common}
 %dir /opt/%{sca_common}/bin
@@ -70,6 +74,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %dir /var/opt/%{sca_common}
 %dir /usr/share/doc/packages/%{sca_common}
 /usr/sbin/*
+/usr/bin/*
 /opt/%{sca_common}/bin/*
 %config /etc/opt/%{sca_common}/*
 %doc /usr/share/man/man1/*
@@ -79,6 +84,8 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 
 %changelog
 * Fri Jan 03 2014 jrecord@suse.com
+- added pat documentation
+- added pat pattern tester
 - separated sca-appliance-common files
 
 * Thu Dec 20 2013 jrecord@suse.com

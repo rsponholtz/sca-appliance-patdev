@@ -1,0 +1,108 @@
+# pod2html --infile=/opt/gitwork/sca-appliance-patdev/docs/pat.pod --outfile=/opt/gitwork/sca-appliance-patdev/websdp/help-sdp-pat.html --title="Pattern Tester"
+# pod2man --center="Supportconfig Diagnostic Manual" --name="pat" --release="pat" --date="2014 Jan 03" /opt/gitwork/sca-appliance-patdev/docs/pat.pod /opt/gitwork/sca-appliance-patdev/man/pat.1
+
+=head1 NAME
+
+pat - Pattern Tester for Supportconfig Analysis Patterns
+
+=head1 SYNOPSIS
+
+pat pattern_filename [pattern options]
+
+=head1 DESCRIPTION
+
+A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run B<pat> followed by the pattern filename you are testing. B<pat> will test the pattern file contents as well as run the pattern against the archives extracted in the B</var/archives> directory. You can change the default B</var/archives> location by setting the B<ARCHDIR> environment variable. B<pat> will report the pattern's severity level for each of the archives tested. 
+
+=head1 OPTIONS
+
+-h for help is the only startup option B<pat> has. All other startup options are for the pattern file itself, and follow the pattern filename being tested.
+
+=head1 ERRORS
+
+Patterns will be rejected for check in if there are any fatal errors.
+
+=over 5
+
+=item Pattern execution error, pattern returned non-zero
+
+Patterns should not return an exit status. Any non-zero exit status returned by B<pat> is assumed to be from the pattern. If you get a non-zero exit status when running B<pat>, you have a scripting or configuration error in your pattern.
+
+=item Missing execute permission
+
+Each pattern file should be marked executable so the shell and the SCA Appliance can run it. Run B<chmod 755 /path/to/pattern/file> to change the permissions.
+
+=item Invalid pattern output string, review Pattern Requirements
+
+The output string must follow the convention:
+
+META_CLASS=<string>|META_CATEGORY=<string>|META_COMPONENT=<string>|PATTERN_ID=<pattern_filename>|PRIMARY_LINK=META_LINK_<TAG>|OVERALL=[0-5]|OVERALL_INFO=<message string>|META_LINK_<TAG>=<URL>[|META_LINK_<TAG>=<URL>]
+
+The output string is case sensitive and order dependent.
+
+=item Missing or invalid hash pling
+
+Each pattern must have a valid hash pling on the first line of the file. There can be no space preceeding the hash and it must be on the first line. For example, B<#!/bin/python>.
+
+=back
+
+=head1 ENVIRONMENT
+
+Set B<ARCHDIR> in your environment to overide the default archive directory. 
+The B<ARCHDIR> directory should contain all of the extracted supportconfig 
+tar balls you wish to test against.
+
+The default B<ARCHDIR> location is B</var/archives>.
+
+=head1 EXAMPLES
+
+=over 5
+
+=item Using the defaults
+
+1. Copy and extract supportconfig archives with which you will test into /var/archives
+
+2. pat net-check.py
+
+3. All extracted archives in /var/archives will be used when testing your pattern
+
+=item Temporarily use /var/log/nts_* directories to test
+
+ARCHDIR=/var/log pat mpio-00001.pl
+
+=item Use /tmp/nts_* directories to test for this login session
+
+export ARCHDIR=/tmp
+
+pat mpio-00001.pl
+
+=item Use a specific supportconfig tar ball directory for this login session.
+
+export ARCHDIR=/mnt/spr/nts_sles11_sp3_x86_64_default_any
+
+pat net-00002.pl
+
+=back
+
+=head1 AUTHOR
+
+Jason Record E<lt>jrecord@suse.comE<gt>
+
+=head1 COPYRIGHT
+
+Copyright (C) 2014 SUSE LLC
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; version 2 of the License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+=cut
+
