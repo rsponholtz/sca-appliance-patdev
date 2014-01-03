@@ -14,14 +14,14 @@ Vendor:       SUSE Support
 License:      GPLv2
 Autoreqprov:  on
 Version:      1.2
-Release:      1.131220.PTF.1
+Release:      1.140103.PTF.1
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
 Requires:     apache2
-Requires:     /usr/bin/mysql
 Requires:     /usr/sbin/mysqld
-Requires:     php5, php5-bz2, php5-mbstring, php5-mcrypt, php5-mysql, php5-zip, php5-zlib
+Requires:     sca-appliance-common
+Requires:     sca-patterns-base
 
 %description
 Database to keep track of custom SCA patterns
@@ -69,8 +69,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %dir /etc/opt/%{sca_common}
 %dir /var/opt/%{sca_common}
 %dir /usr/share/doc/packages/%{sca_common}
-/usr/sbin/setup-sdp
-/usr/sbin/sdpdb
+/usr/sbin/*
 /opt/%{sca_common}/bin/*
 %config /etc/opt/%{sca_common}/*
 %doc /usr/share/man/man1/*
@@ -79,6 +78,9 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
+* Fri Jan 03 2014 jrecord@suse.com
+- separated sca-appliance-common files
+
 * Thu Dec 20 2013 jrecord@suse.com
 - separated as individual RPM package
 
