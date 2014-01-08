@@ -12,10 +12,10 @@ URL:          https://bitbucket.org/g23guy/sca-appliance-patdev
 Group:        Documentation/SuSE
 Distribution: SUSE Linux Enterprise
 Vendor:       SUSE Support
-License:      GPLv2
+License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.2
-Release:      1.140108.PTF.2
+Release:      1.140108.PTF.3
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -70,7 +70,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %dir /opt
 %dir /etc/opt
 %dir /var/opt
-%dir %attr(1777,root,root) /var/archives
+%dir %attr(775,root,users) /var/archives
 %dir /srv/www/htdocs/sdp
 %dir /opt/%{sca_common}
 %dir /opt/%{sca_common}/bin
