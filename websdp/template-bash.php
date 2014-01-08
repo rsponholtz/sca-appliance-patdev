@@ -1,9 +1,9 @@
-#!/bin/bash<br><br>
 <?PHP
 $tmp = strtolower($Owner);
 $pos = strrpos($tmp, ' ') + 1;
 $Email = $tmp[0] . substr($tmp, $pos);
 echo "<font style=\"courier\" size=\"-1\">\n";
+echo "#!/bin/bash<br><br>\n";
 echo "# Title:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$Title<br>\n";
 echo "# Description:&nbsp;$Description<br>\n";
 echo "# Modified:&nbsp;&nbsp;&nbsp;&nbsp;$CurrentDate<br>\n";

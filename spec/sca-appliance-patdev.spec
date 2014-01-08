@@ -8,13 +8,14 @@
 
 Name:         sca-appliance-patdev
 Summary:      Supportconfig Analysis Appliance Pattern Development
+URL:          https://bitbucket.org/g23guy/sca-appliance-patdev
 Group:        Documentation/SuSE
 Distribution: SUSE Linux Enterprise
 Vendor:       SUSE Support
 License:      GPLv2
 Autoreqprov:  on
 Version:      1.2
-Release:      1.140103.PTF.1
+Release:      1.140108.PTF.1
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -83,6 +84,9 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
+* Wed Jan 08 2014 jrecord@suse.com
+- fixed hash plings in template php pages
+
 * Fri Jan 03 2014 jrecord@suse.com
 - added pat documentation
 - added pat pattern tester
