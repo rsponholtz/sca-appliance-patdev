@@ -12,7 +12,7 @@ URL:          https://bitbucket.org/g23guy/sca-appliance-patdev
 Group:        Documentation/SuSE
 Distribution: SUSE Linux Enterprise
 Vendor:       SUSE Support
-License:      GPL-2
+License:      GPLv2
 Autoreqprov:  on
 Version:      1.2
 Release:      1.140108.PTF.2
