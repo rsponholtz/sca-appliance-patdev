@@ -12,10 +12,10 @@ URL:          https://bitbucket.org/g23guy/sca-appliance-patdev
 Group:        Documentation/SuSE
 Distribution: SUSE Linux Enterprise
 Vendor:       SUSE Support
-License:      GPLv2
+License:      GPL-2
 Autoreqprov:  on
 Version:      1.2
-Release:      1.140108.PTF.1
+Release:      1.140108.PTF.2
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -25,7 +25,9 @@ Requires:     sca-appliance-common
 Requires:     sca-patterns-base
 
 %description
-Database to keep track of custom SCA patterns
+The SCA Appliance allows for adding custom patterns. This package
+provides a database used to create pattern templates, speeding up
+custom pattern development.
 
 Authors:
 --------
@@ -54,7 +56,8 @@ install -m 644 config/*.conf $RPM_BUILD_ROOT/etc/opt/%{sca_common}
 install -m 644 config/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 544 bin/* $RPM_BUILD_ROOT/opt/%{sca_common}/bin
 install -m 555 bin/pat $RPM_BUILD_ROOT/usr/bin
-install -m 544 bin/* $RPM_BUILD_ROOT/usr/sbin
+install -m 544 bin/sdpdb $RPM_BUILD_ROOT/usr/sbin
+install -m 544 bin/setup-sdp $RPM_BUILD_ROOT/usr/sbin
 install -m 644 websdp/* $RPM_BUILD_ROOT/srv/www/htdocs/sdp
 install -m 400 websdp/db-config.php $RPM_BUILD_ROOT/srv/www/htdocs/sdp
 install -m 644 schema/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
@@ -85,6 +88,8 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 
 %changelog
 * Wed Jan 08 2014 jrecord@suse.com
+- sdpdb man page has correct name
+- binaries installed in correct locations
 - fixed hash plings in template php pages
 
 * Fri Jan 03 2014 jrecord@suse.com
