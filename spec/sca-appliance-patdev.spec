@@ -87,6 +87,9 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
+* Fri Jan 10 2014 jrecord@suse.com
+- pat vars SPRSRC and DEFAULT_ARCHDIR can be set in the environment
+
 * Wed Jan 08 2014 jrecord@suse.com
 - sdpdb man page has correct name
 - binaries installed in correct locations
