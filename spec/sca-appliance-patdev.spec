@@ -15,7 +15,7 @@ Vendor:       SUSE Support
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.2
-Release:      1.140108.PTF.3
+Release:      1.140113.PTF.1
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -87,7 +87,8 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
-* Fri Jan 10 2014 jrecord@suse.com
+* Mon Jan 13 2014 jrecord@suse.com
+- pat displays SPRSRC
 - pat vars SPRSRC and DEFAULT_ARCHDIR can be set in the environment
 
 * Wed Jan 08 2014 jrecord@suse.com
