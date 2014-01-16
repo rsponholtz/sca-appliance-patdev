@@ -1,5 +1,5 @@
 #!/bin/bash
-: ${SPRSRC:="/var/opt/sca/patterns"}
+: ${SPRSRC:="/usr/lib/sca/patterns"}
 : ${DEFAULT_ARCHDIR:="/var/archives"}
 BASHLIB="${SPRSRC}/lib/bash"
 PERL5LIB="${PERL5LIB}:${SPRSRC}/lib/perl/"

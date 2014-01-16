@@ -5,6 +5,7 @@
 # norootforbuild
 # neededforbuild
 %define sca_common sca
+%define sdp_common sdp
 
 Name:         sca-appliance-patdev
 Summary:      Supportconfig Analysis Appliance Pattern Development
@@ -14,8 +15,8 @@ Distribution: SUSE Linux Enterprise
 Vendor:       SUSE Support
 License:      GPL-2.0
 Autoreqprov:  on
-Version:      1.2
-Release:      1.140113.PTF.1
+Version:      1.3
+Release:      0
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -42,24 +43,21 @@ gzip -9f man/*
 %install
 pwd;ls -la
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT/etc/opt/%{sca_common}
-install -d $RPM_BUILD_ROOT/opt/%{sca_common}/bin
-install -d $RPM_BUILD_ROOT/srv/www/htdocs/sdp
+install -d $RPM_BUILD_ROOT/etc/%{sca_common}
+install -d $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
 install -d $RPM_BUILD_ROOT/usr/sbin
 install -d $RPM_BUILD_ROOT/usr/bin
 install -d $RPM_BUILD_ROOT/usr/share/man/man1
 install -d $RPM_BUILD_ROOT/usr/share/man/man5
 install -d $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
-install -d $RPM_BUILD_ROOT/var/opt/%{sca_common}
 install -d $RPM_BUILD_ROOT/var/archives
-install -m 644 config/*.conf $RPM_BUILD_ROOT/etc/opt/%{sca_common}
+install -m 644 config/*.conf $RPM_BUILD_ROOT/etc/%{sca_common}
 install -m 644 config/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
-install -m 544 bin/* $RPM_BUILD_ROOT/opt/%{sca_common}/bin
 install -m 555 bin/pat $RPM_BUILD_ROOT/usr/bin
 install -m 544 bin/sdpdb $RPM_BUILD_ROOT/usr/sbin
 install -m 544 bin/setup-sdp $RPM_BUILD_ROOT/usr/sbin
-install -m 644 websdp/* $RPM_BUILD_ROOT/srv/www/htdocs/sdp
-install -m 400 websdp/db-config.php $RPM_BUILD_ROOT/srv/www/htdocs/sdp
+install -m 644 websdp/* $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
+install -m 400 websdp/db-config.php $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
 install -m 644 schema/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 docs/README* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 man/*.1.gz $RPM_BUILD_ROOT/usr/share/man/man1
@@ -67,26 +65,22 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 
 %files
 %defattr(-,root,root)
-%dir /opt
-%dir /etc/opt
-%dir /var/opt
 %dir %attr(775,root,users) /var/archives
-%dir /srv/www/htdocs/sdp
-%dir /opt/%{sca_common}
-%dir /opt/%{sca_common}/bin
-%dir /etc/opt/%{sca_common}
-%dir /var/opt/%{sca_common}
+%dir /srv/www/htdocs/%{sdp_common}
+%dir /etc/%{sca_common}
 %dir /usr/share/doc/packages/%{sca_common}
 /usr/sbin/*
 /usr/bin/*
-/opt/%{sca_common}/bin/*
-%config /etc/opt/%{sca_common}/*
+%config /etc/%{sca_common}/*
 %doc /usr/share/man/man1/*
 %doc /usr/share/man/man5/*
-%attr(-,wwwrun,www) /srv/www/htdocs/sdp
+%attr(-,wwwrun,www) /srv/www/htdocs/%{sdp_common}
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
+* Thu Jan 16 2014 jrecord@suse.com
+- relocated files according to FHS
+
 * Mon Jan 13 2014 jrecord@suse.com
 - pat displays SPRSRC
 - pat vars SPRSRC and DEFAULT_ARCHDIR can be set in the environment
