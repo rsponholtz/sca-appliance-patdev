@@ -1,6 +1,6 @@
 #!/bin/bash
-SVER="1.0.0"
-CONF='/etc/opt/sca/sdp.conf'
+SVER="1.0.1"
+CONF='/etc/sca/sdp.conf'
 
 title() {
 	echo "################################################################################"
