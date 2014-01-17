@@ -1,10 +1,11 @@
 #!/bin/bash
-: ${PATTERN_LIBRARY_BASE:="/usr/lib/sca/patterns"}
+: ${SCA_LIBRARY_PATH:="/usr/lib/sca"}
+: ${SCA_PATTERN_PATH:="${SCA_LIBRARY_PATH}/patterns"}
 : ${DEFAULT_ARCHDIR:="/var/archives"}
-BASHLIB="${PATTERN_LIBRARY_BASE}/lib/bash"
-PERL5LIB="${PERL5LIB}:${PATTERN_LIBRARY_BASE}/lib/perl/"
-PYTHONPATH="${PYTHONPATH}:${PATTERN_LIBRARY_BASE}/lib/python/"
-export PATTERN_LIBRARY_BASE BASHLIB PERL5LIB PYTHONPATH
+BASHLIB="${SCA_LIBRARY_PATH}/bash"
+PERL5LIB="${PERL5LIB}:${SCA_LIBRARY_PATH}/perl/"
+PYTHONPATH="${PYTHONPATH}:${SCA_LIBRARY_PATH}/python/"
+export SCA_LIBRARY_PATH SCA_PATTERN_PATH BASHLIB PERL5LIB PYTHONPATH
 
 title() {
 	echo "##########################################################################"
@@ -81,7 +82,7 @@ else
 	usage
 	exit 2
 fi
-echo "Library Directory:  $PATTERN_LIBRARY_BASE"
+echo "Pattern Directory:  $SCA_PATTERN_PATH"
 echo
 
 if echo $CMDLINE | grep ' -d' &>/dev/null; then

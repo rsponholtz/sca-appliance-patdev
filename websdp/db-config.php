@@ -4,7 +4,6 @@
 	$Database = 'SCAPatterns';
 	$TableName = 'Submissions';
 	$EmailDomain = 'suse.com';
-	$SCDIAG_HOME = '/var/opt/scdiag';
 	$DBHost = 'localhost';
 	$ResourceRefresh = 300;
 	$StatsRefresh = 15;
@@ -20,7 +19,6 @@
 	echo "<!-- Config: Database          = $Database -->\n";
 	echo "<!-- Config: TableName         = $TableName -->\n";
 	echo "<!-- Config: EmailDomain       = $EmailDomain -->\n";
-	echo "<!-- Config: SCDIAG_HOME       = $SCDIAG_HOME -->\n";
 	echo "<!-- Config: DBHost            = $DBHost -->\n";
 	echo "<!-- Config: ResourceRefresh   = $ResourceRefresh -->\n";
 	echo "<!-- Config: StatsRefresh      = $StatsRefresh -->\n";
