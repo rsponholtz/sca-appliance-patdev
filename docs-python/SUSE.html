@@ -1,0 +1,170 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module SUSE</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>SUSE</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href="../docs-python.html">index</a><br>/usr/lib/sca/python/SUSE.py</font></td></tr></table>
+    <p><tt>Supportconfig&nbsp;Analysis&nbsp;Library&nbsp;for&nbsp;SUSE&nbsp;python&nbsp;patterns<br>
+&nbsp;<br>
+Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&nbsp;specific&nbsp;to&nbsp;SUSE</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Core.html">Core</a><br>
+</td><td width="25%" valign=top>re<br>
+</td><td width="25%" valign=top>string<br>
+</td><td width="25%" valign=top>sys<br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-compareKernel"><strong>compareKernel</strong></a>(kernelVerion)</dt><dd><tt>Checks&nbsp;if&nbsp;kernel&nbsp;version&nbsp;is&nbsp;newer&nbsp;then&nbsp;given&nbsp;version<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kernelVersion&nbsp;-&nbsp;The&nbsp;kernel&nbsp;version&nbsp;string&nbsp;to&nbsp;compare<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1,&nbsp;0,&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;Installed&nbsp;kernel&nbsp;version&nbsp;older&nbsp;than&nbsp;kernelVerion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;Installed&nbsp;kernel&nbsp;version&nbsp;equals&nbsp;kernelVerion<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;Installed&nbsp;kernel&nbsp;version&nbsp;newer&nbsp;than&nbsp;kernelVerion<br>
+Example:<br>
+&nbsp;<br>
+KERNEL_VERSION&nbsp;=&nbsp;'3.0.93'<br>
+INSTALLED_VERSION&nbsp;=&nbsp;SUSE.<a href="#-compareKernel">compareKernel</a>(KERNEL_VERSION)<br>
+if(&nbsp;INSTALLED_VERSION&nbsp;&lt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.CRIT,&nbsp;"Bug&nbsp;detected&nbsp;in&nbsp;kernel&nbsp;version&nbsp;"&nbsp;+&nbsp;KERNEL_VERSION&nbsp;+&nbsp;"&nbsp;or&nbsp;before,&nbsp;update&nbsp;server&nbsp;for&nbsp;fixes")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Bug&nbsp;fixes&nbsp;applied&nbsp;for&nbsp;"&nbsp;+&nbsp;KERNEL_VERSION)</tt></dd></dl>
+ <dl><dt><a name="-compareRPM"><strong>compareRPM</strong></a>(package, versionString)</dt><dd><tt>Compares&nbsp;the&nbsp;versionString&nbsp;to&nbsp;the&nbsp;installed&nbsp;package's&nbsp;version<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;package&nbsp;-&nbsp;RPM&nbsp;package&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString&nbsp;-&nbsp;RPM&nbsp;package&nbsp;version&nbsp;string&nbsp;to&nbsp;compare&nbsp;against<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1,&nbsp;0,&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;RPM_NAME&nbsp;older&nbsp;than&nbsp;RPM_VERSION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;RPM_NAME&nbsp;equals&nbsp;RPM_VERSION<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;RPM_NAME&nbsp;newer&nbsp;than&nbsp;RPM_VERSION<br>
+Example:<br>
+&nbsp;<br>
+RPM_NAME&nbsp;=&nbsp;'mypackage'<br>
+RPM_VERSION&nbsp;=&nbsp;'1.1.0'<br>
+if(&nbsp;SUSE.<a href="#-packageInstalled">packageInstalled</a>(RPM_NAME)&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSTALLED_VERSION&nbsp;=&nbsp;SUSE.<a href="#-compareRPM">compareRPM</a>(RPM_NAME,&nbsp;RPM_VERSION)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;INSTALLED_VERSION&nbsp;&lt;=&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.CRIT,&nbsp;"Bug&nbsp;detected&nbsp;in&nbsp;"&nbsp;+&nbsp;RPM_VERSION&nbsp;+&nbsp;",&nbsp;update&nbsp;server&nbsp;for&nbsp;fixes")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Bug&nbsp;fixes&nbsp;applied&nbsp;for&nbsp;"&nbsp;+&nbsp;RPM_VERSION)<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;"ERROR:&nbsp;"&nbsp;+&nbsp;RPM_NAME&nbsp;+&nbsp;"&nbsp;not&nbsp;installed")</tt></dd></dl>
+ <dl><dt><a name="-getDriverInfo"><strong>getDriverInfo</strong></a>(DRIVER_NAME)</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;specified&nbsp;kernel&nbsp;driver<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DRIVER_NAME&nbsp;-&nbsp;The&nbsp;kernel&nbsp;driver&nbsp;name&nbsp;on&nbsp;which&nbsp;you&nbsp;want&nbsp;details<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(String)&nbsp;-&nbsp;The&nbsp;kernel&nbsp;driver&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;loaded&nbsp;(Boolean)&nbsp;-&nbsp;True&nbsp;if&nbsp;loaded,&nbsp;otherwise&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;filename&nbsp;(String)&nbsp;-&nbsp;The&nbsp;driver&nbsp;filename<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;(String)&nbsp;-&nbsp;The&nbsp;driver's&nbsp;version&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;license&nbsp;(String)&nbsp;-&nbsp;The&nbsp;driver's&nbsp;license&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;description&nbsp;(String)&nbsp;-&nbsp;Description&nbsp;of&nbsp;the&nbsp;driver<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;srcversion&nbsp;(String)&nbsp;-&nbsp;The&nbsp;driver's&nbsp;source&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;supported&nbsp;(String)&nbsp;-&nbsp;Support&nbsp;status&nbsp;string,&nbsp;usually&nbsp;yes&nbsp;or&nbsp;no<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vermagic&nbsp;(String)&nbsp;-&nbsp;Version&nbsp;magic&nbsp;string<br>
+Example:<br>
+&nbsp;<br>
+DRIVER_NAME&nbsp;=&nbsp;'zapi'<br>
+DRIVER_INFO&nbsp;=&nbsp;SUSE.<a href="#-getDriverInfo">getDriverInfo</a>(DRIVER_NAME)<br>
+if(&nbsp;DRIVER_INFO['loaded']&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_IGNORE,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_WARNING,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;missing,&nbsp;install&nbsp;it")</tt></dd></dl>
+ <dl><dt><a name="-getRpmInfo"><strong>getRpmInfo</strong></a>(PackageName)</dt><dd><tt>Retrieves&nbsp;RPM&nbsp;package&nbsp;information&nbsp;from&nbsp;supportconfig&nbsp;files&nbsp;using&nbsp;the&nbsp;specified&nbsp;PackageName<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;RPM&nbsp;package&nbsp;name&nbsp;on&nbsp;which&nbsp;you&nbsp;want&nbsp;details<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;name&nbsp;(String)&nbsp;-&nbsp;The&nbsp;RPM&nbsp;package&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;(String)&nbsp;-&nbsp;The&nbsp;RPM&nbsp;package&nbsp;version&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vendor&nbsp;(String)&nbsp;-&nbsp;The&nbsp;RPM&nbsp;vendor<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;installTime&nbsp;(String)&nbsp;-&nbsp;The&nbsp;date&nbsp;and&nbsp;time&nbsp;the&nbsp;package&nbsp;was&nbsp;installed<br>
+Example:<br>
+&nbsp;<br>
+RPM_NAME&nbsp;=&nbsp;'kernel-xen'<br>
+RPM_INFO&nbsp;=&nbsp;SUSE.<a href="#-getRpmInfo">getRpmInfo</a>(RPM_NAME)<br>
+if(&nbsp;len(RPM_INFO)&nbsp;&gt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_IGNORE,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_WARNING,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;missing,&nbsp;install&nbsp;it")</tt></dd></dl>
+ <dl><dt><a name="-getScInfo"><strong>getScInfo</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;supportconfig&nbsp;archive&nbsp;itself<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;envValue&nbsp;(String)&nbsp;-&nbsp;Environment&nbsp;value<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kernelValue&nbsp;(Integer)&nbsp;-&nbsp;Kernel&nbsp;number&nbsp;based&nbsp;on&nbsp;its&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cmdline&nbsp;(String)&nbsp;-&nbsp;Supportconfig's&nbsp;command&nbsp;line&nbsp;arguments<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config&nbsp;(String)&nbsp;-&nbsp;Supportconfig&nbsp;configuration&nbsp;options<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version&nbsp;(String)&nbsp;-&nbsp;Supportconfig&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;scriptDate&nbsp;(String)&nbsp;-&nbsp;Supportconfig&nbsp;script&nbsp;date<br>
+Example:<br>
+&nbsp;<br>
+REQUIRED_VERSION&nbsp;=&nbsp;'2.25-173';<br>
+SC_INFO&nbsp;=&nbsp;SUSE.getSCInfo();<br>
+if(&nbsp;Core.compareVersions(SC_INFO['version'],&nbsp;REQUIRED_VERSION)&nbsp;&gt;=&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;meets&nbsp;minimum&nbsp;requirement")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;NOT&nbsp;sufficient,&nbsp;"&nbsp;+&nbsp;str(REQUIRED_VERSION)&nbsp;+&nbsp;"&nbsp;or&nbsp;higher&nbsp;needed")</tt></dd></dl>
+ <dl><dt><a name="-getVersion"><strong>getVersion</strong></a>()</dt><dd><tt>Returns&nbsp;the&nbsp;SUSE&nbsp;release&nbsp;information<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;string&nbsp;from&nbsp;the&nbsp;SUSE&nbsp;release&nbsp;file&nbsp;like&nbsp;SLES&nbsp;11&nbsp;SP3<br>
+Example:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-normalizeVersionName"><strong>normalizeVersionName</strong></a>(versionString)</dt><dd><tt>Converts&nbsp;versionString&nbsp;into&nbsp;its&nbsp;abbreviated&nbsp;form.&nbsp;For&nbsp;example,&nbsp;<br>
+SUSE&nbsp;Linux&nbsp;Enterprise&nbsp;Server&nbsp;to&nbsp;SLES<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString&nbsp;-&nbsp;A&nbsp;complete&nbsp;version&nbsp;string<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString&nbsp;-&nbsp;String&nbsp;with&nbsp;abbreviations&nbsp;replacing&nbsp;long&nbsp;strings<br>
+Example:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+ <dl><dt><a name="-packageInstalled"><strong>packageInstalled</strong></a>(PackageName)</dt><dd><tt>The&nbsp;PackageName&nbsp;is&nbsp;installed&nbsp;on&nbsp;the&nbsp;server<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;The&nbsp;RPM&nbsp;package&nbsp;name&nbsp;to&nbsp;check&nbsp;if&nbsp;installed<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;is&nbsp;installed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;&nbsp;&nbsp;PackageName&nbsp;is&nbsp;NOT&nbsp;installed<br>
+Example:<br>
+&nbsp;<br>
+PACKAGE_NAME&nbsp;=&nbsp;'bind'<br>
+if&nbsp;(&nbsp;SUSE.<a href="#-packageInstalled">packageInstalled</a>(PACKAGE_NAME)&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"The&nbsp;package&nbsp;"&nbsp;+&nbsp;PACKAGE_NAME&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"The&nbsp;package&nbsp;"&nbsp;+&nbsp;PACKAGE_NAME&nbsp;+&nbsp;"&nbsp;is&nbsp;NOT&nbsp;installed")</tt></dd></dl>
+</td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>SLE10GA</strong> = '2.6.16.21-0.8'<br>
+<strong>SLE10SP1</strong> = '2.6.16.46-0.12'<br>
+<strong>SLE10SP2</strong> = '2.6.16.60-0.21'<br>
+<strong>SLE10SP3</strong> = '2.6.16.60-0.54.5'<br>
+<strong>SLE10SP4</strong> = '2.6.16.60-0.85.1'<br>
+<strong>SLE10SP5</strong> = '2.6.17'<br>
+<strong>SLE11GA</strong> = '2.6.27.19-5'<br>
+<strong>SLE11SP1</strong> = '2.6.32.12-0.7'<br>
+<strong>SLE11SP2</strong> = '3.0.13-0.27'<br>
+<strong>SLE11SP3</strong> = '3.0.76-0.11.1'<br>
+<strong>SLE11SP4</strong> = '3.1'<br>
+<strong>SLE12GA</strong> = '3.999'<br>
+<strong>SLE9GA</strong> = '2.6.5-7.97'<br>
+<strong>SLE9SP1</strong> = '2.6.5-7.139'<br>
+<strong>SLE9SP2</strong> = '2.6.5-7.191'<br>
+<strong>SLE9SP3</strong> = '2.6.5-7.244'<br>
+<strong>SLE9SP4</strong> = '2.6.5-7.308'<br>
+<strong>SLE9SP5</strong> = '2.6.5-8'</td></tr></table>
+</body></html>

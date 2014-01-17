@@ -1,5 +1,5 @@
 OBSPACKAGE=sca-appliance-patdev
-SVNDIRS=bin config docs man schema websdp
+SVNDIRS=bin config docs docs-python man schema websdp
 VERSION=$(shell awk '/Version:/ { print $$2 }' spec/${OBSPACKAGE}.spec)
 RELEASE=$(shell awk '/Release:/ { print $$2 }' spec/${OBSPACKAGE}.spec)
 SRCDIR=$(OBSPACKAGE)-$(VERSION)

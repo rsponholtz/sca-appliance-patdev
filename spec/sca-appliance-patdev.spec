@@ -45,7 +45,7 @@ pwd;ls -la
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/%{sca_common}
 install -d $RPM_BUILD_ROOT/var/tmp/%{sca_common}
-install -d $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
+install -d $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}/docs-python
 install -d $RPM_BUILD_ROOT/usr/sbin
 install -d $RPM_BUILD_ROOT/usr/bin
 install -d $RPM_BUILD_ROOT/usr/share/man/man1
@@ -57,6 +57,7 @@ install -m 644 config/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 555 bin/pat $RPM_BUILD_ROOT/usr/bin
 install -m 544 bin/sdpdb $RPM_BUILD_ROOT/usr/sbin
 install -m 544 bin/setup-sdp $RPM_BUILD_ROOT/usr/sbin
+install -m 644 docs-python/* $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}/docs-python
 install -m 644 websdp/* $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
 install -m 400 websdp/db-config.php $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}
 install -m 644 schema/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
@@ -68,6 +69,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %defattr(-,root,root)
 %dir %attr(775,root,users) /var/archives
 %dir /srv/www/htdocs/%{sdp_common}
+%dir /srv/www/htdocs/%{sdp_common}/docs-python
 %dir /etc/%{sca_common}
 %dir /var/tmp/%{sca_common}
 %dir /usr/share/doc/packages/%{sca_common}
@@ -77,6 +79,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/man/man1/*
 %doc /usr/share/man/man5/*
 %attr(-,wwwrun,www) /srv/www/htdocs/%{sdp_common}
+%attr(-,wwwrun,www) /srv/www/htdocs/%{sdp_common}/docs-python
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
