@@ -1,4 +1,4 @@
-<!-- Modified: Date            = 2013 Dec 16 -->
+<!-- Modified: Date            = 2014 Jan 22 -->
 <HTML>
 <HEAD>
 <?PHP
@@ -58,9 +58,9 @@
 	if ( strlen($URL09) > 0 && $URL09 != "NULL" ) { $URLS[] = $URL09; }
 	if ( strlen($URL10) > 0 && $URL10 != "NULL" ) { $URLS[] = $URL10; }
 
-	echo "<!-- template-generator.php \n";
+	//echo "<!-- template-generator.php \n";
 	var_dump($URLS);
-	echo "-->\n";
+	//echo "-->\n";
 
 	include 'db-close.php';
 	echo "<TITLE>$PatternType SDP Template</TITLE>\n";
@@ -89,12 +89,12 @@
 		}
 	}
 
-	echo "<!-- Variable: ErrOwner        = $ErrOwner -->\n";
-	echo "<!-- Variable: ErrClass        = $ErrClass -->\n";
-	echo "<!-- Variable: ErrCategory     = $ErrCategory -->\n";
-	echo "<!-- Variable: ErrComponent    = $ErrComponent -->\n";
-	echo "<!-- Variable: ErrSolution     = $ErrSolution -->\n";
-	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+	//echo "<!-- Variable: ErrOwner        = $ErrOwner -->\n";
+	//echo "<!-- Variable: ErrClass        = $ErrClass -->\n";
+	//echo "<!-- Variable: ErrCategory     = $ErrCategory -->\n";
+	//echo "<!-- Variable: ErrComponent    = $ErrComponent -->\n";
+	//echo "<!-- Variable: ErrSolution     = $ErrSolution -->\n";
+	//echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
 	
 	if ( $ErrorsFound ) {
 		echo "<H2 ALIGN=\"center\">Generate SDP Template: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";

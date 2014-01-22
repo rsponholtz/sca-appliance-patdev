@@ -1,4 +1,4 @@
-<!-- Modified: Date            = 2013 Nov 13 -->
+<!-- Modified: Date            = 2014 Jan 22 -->
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
@@ -14,12 +14,12 @@ if ( ! isset($UpdatedOnce) ) { $UpdatedOnce = 0; }
 
 include 'db-config.php';
 
-echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
-echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-echo "<!-- Variable: Filter          = $Filter -->\n";
-echo "<!-- Variable: PatternID       = $PatternID -->\n";
+//echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
+//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+//echo "<!-- Variable: Filter          = $Filter -->\n";
+//echo "<!-- Variable: PatternID       = $PatternID -->\n";
 
 if (isset($_POST['update-sdp'])) {
 	$Title 			= $_POST['form_title'];
@@ -50,7 +50,7 @@ if (isset($_POST['update-sdp'])) {
 			$Released = $Modified;
 		}
 	}
-	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+	//echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
 	if ( strlen($PrimaryLink) < 1 ) {
 		if ( strlen($TID) > 0 ) { $PrimaryLink = "META_LINK_TID"; }
 		elseif ( strlen($BUG) > 0 ) { $PrimaryLink = "META_LINK_BUG"; }
@@ -68,8 +68,8 @@ if (isset($_POST['update-sdp'])) {
 	$Query = "LOCK TABLES $TableName WRITE";
 	mysql_query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
 
-	echo "<!-- Query: Submitted          = $Query -->\n";
-	echo "<!-- Database: Table           = Locked $TableName -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Database: Table           = Locked $TableName -->\n";
 
 	if ( $Title && $Submitter && $Category && $Component ) {
 		if ( $Status == "Complete" && $Owner == "" ) {
@@ -85,7 +85,7 @@ if (isset($_POST['update-sdp'])) {
 				$Owner = $Submitter;
 				$Owner2submitter = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				echo "<!-- Override: Owner           = $Owner -->\n";
+				//echo "<!-- Override: Owner           = $Owner -->\n";
 			} else {
 				$Owner2submitter = 0;
 				$LocalRefresh = $StatusRefresh;
@@ -94,7 +94,7 @@ if (isset($_POST['update-sdp'])) {
 				$Status = 'Assigned'; 
 				$Status2assigned = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				echo "<!-- Override: Status          = $Status -->\n";
+				//echo "<!-- Override: Status          = $Status -->\n";
 			} else {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
@@ -103,10 +103,10 @@ if (isset($_POST['update-sdp'])) {
 			$Description = str_replace("'", "\'", $Description);
 			$Query = "UPDATE $TableName SET Title='$Title', Description='$Description', Class='$Class', Category='$Category', Component='$Component', Notes='$Notes', PatternFile='$PatternFile', PatternType='$PatternType', Submitted='$Submitted', Modified='$Modified', Released='$Released', Submitter='$Submitter', Owner='$Owner', PrimaryLink='$PrimaryLink', TID='$TID', BUG='$BUG', URL01='$URL01', URL02='$URL02', URL03='$URL03', URL04='$URL04', URL05='$URL05', Status='$Status' WHERE PatternID=$PatternID";
 
-			echo "<!-- Query: Submitted          = $Query -->\n";
+			//echo "<!-- Query: Submitted          = $Query -->\n";
 			$Result=mysql_query($Query);
 			if ($Result) {
-				echo "<!-- Query: Result             = Success -->\n";
+				//echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=pattern-edit.php?pid=$PatternID&by=$OrderBy&dir=$OrderDir&filter=$Filter&up=1\">\n"; }
 				echo "<BODY>\n";
 				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
@@ -119,7 +119,7 @@ if (isset($_POST['update-sdp'])) {
 				}
 				echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 			} else {
-				echo "<!-- Query: Result             = FAILED -->\n";
+				//echo "<!-- Query: Result             = FAILED -->\n";
 				echo "<BODY>\n";
 				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
@@ -138,9 +138,9 @@ if (isset($_POST['update-sdp'])) {
 	}
 
 	$Query = "UNLOCK TABLES";
-	echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
 	mysql_query($Query) or die("<FONT SIZE=\"-1\">Database: <B>ERROR</B>, Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
-	echo "<!-- Database: Table           = UnLocked $TableName -->\n";
+	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 
 	include 'db-close.php';
 } else {
@@ -158,12 +158,12 @@ if (isset($_POST['update-sdp'])) {
 	$Query = "SELECT * FROM $TableName WHERE PatternID=$PatternID";
 	$Result=mysql_query($Query);
 	$NumRows=mysql_numrows($Result);
-	echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
 	if ( $Result ) {
-		echo "<!-- Query: Result             = Success -->\n";
-		echo "<!-- Query: Rows               = $NumRows -->\n";
+		//echo "<!-- Query: Result             = Success -->\n";
+		//echo "<!-- Query: Rows               = $NumRows -->\n";
 	} else {
-		echo "<!-- Query: Results            = FAILURE -->\n";
+		//echo "<!-- Query: Results            = FAILURE -->\n";
 	}
 	include 'db-close.php';
 	$row_cell = mysql_fetch_row($Result);
@@ -234,7 +234,7 @@ if (isset($_POST['update-sdp'])) {
 		include 'form-pattern-type.php';
 	echo "</TD></TR>\n";
 
-	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+	//echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
 	echo "<TR><TD>";
 	if ( $TID ) {
 		if ( "$PrimaryLink" == "META_LINK_TID" ) { $CheckMark = "CHECKED=\"yes\""; }
@@ -352,8 +352,8 @@ if (isset($_POST['update-sdp'])) {
 	echo "</TR>\n";
 
 	if ( $UpdatedOnce > 0 ) { $Action = "Return to List"; } else { $Action = "Cancel"; }
-	echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
-	echo "<!-- Variable: Action          = $Action -->\n";
+	//echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
+	//echo "<!-- Variable: Action          = $Action -->\n";
 
 	echo "<TR><TD COLSPAN=2>&nbsp;</TD></TR>\n";
 	echo "<TR ALIGN=\"center\"><TD COLSPAN=2>\n";

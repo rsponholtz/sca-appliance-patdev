@@ -1,4 +1,4 @@
-<!-- Modified: Date            = 2013 Dec 18 -->
+<!-- Modified: Date            = 2014 Jan 22 -->
 <HTML>
 <HEAD>
 <?PHP
@@ -78,11 +78,11 @@
 		$Check = 0;
 	}
 
-	echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-	echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-	echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-	echo "<!-- Variable: Filter          = $Filter -->\n";
-	echo "<!-- Variable: Check           = $Check -->\n";
+	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+	//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+	//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+	//echo "<!-- Variable: Filter          = $Filter -->\n";
+	//echo "<!-- Variable: Check           = $Check -->\n";
 
 	$SubmitText = "Update Marked Patterns";
 	$PatternFields = "PatternID,Title,Class,Category,Component,PatternFile,Modified,Submitter,Owner,Status";
@@ -116,14 +116,14 @@
 	echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
 
 	include 'db-open.php';
-	echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
 	$Result=mysql_query($Query);
 	$Num=mysql_numrows($Result);
 	if ( $Result ) {
-		echo "<!-- Query: Result             = Success -->\n";
-		echo "<!-- Query: Rows               = $Num -->\n";
+		//echo "<!-- Query: Result             = Success -->\n";
+		//echo "<!-- Query: Rows               = $Num -->\n";
 	} else {
-		echo "<!-- Query: Result             = FAILURE -->\n";
+		//echo "<!-- Query: Result             = FAILURE -->\n";
 	}
 	include 'db-close.php';
 
@@ -161,19 +161,19 @@
 						$Query = "UPDATE $TableName SET Status='$Status',Modified='$Modified' WHERE PatternID=$PatternID";				
 					}
 
-					echo "<!-- Query: Submitted          = $Query -->\n";
+					//echo "<!-- Query: Submitted          = $Query -->\n";
 					$UpdateResult=mysql_query($Query);
 					if ( $UpdateResult ) {
-						echo "<!-- Query: Result             = Success -->\n";
+						//echo "<!-- Query: Result             = Success -->\n";
 						$PatternsUpdated++;
 					} else {
-						echo "<!-- Query: Result             = FAILURE -->\n";
+						//echo "<!-- Query: Result             = FAILURE -->\n";
 						$UpdateErrors++;
 					}
 
 				} else {
-					echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
-					echo "<!-- Query: Result             = Skipped -->\n";
+					//echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
+					//echo "<!-- Query: Result             = Skipped -->\n";
 				}
 			}
 			include 'db-close.php';
@@ -279,11 +279,11 @@
 		echo "</FORM>\n";
 	}	
 
-	echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-	echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-	echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-	echo "<!-- Variable: Filter          = $Filter -->\n";
-	echo "<!-- Variable: Check           = $Check -->\n";
+	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+	//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+	//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+	//echo "<!-- Variable: Filter          = $Filter -->\n";
+	//echo "<!-- Variable: Check           = $Check -->\n";
 ?>
 </BODY>
 </HTML>

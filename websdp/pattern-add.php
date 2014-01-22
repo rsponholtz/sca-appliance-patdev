@@ -1,4 +1,4 @@
-<!-- Modified: Date            = 2013 Jul 22 -->
+<!-- Modified: Date            = 2014 Jan 22 -->
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
@@ -13,11 +13,11 @@ $Check = htmlspecialchars($_GET['ck']);
 $PageFunction = "Add";
 $Submitted = date('Y\-m\-d');
 
-echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-echo "<!-- Variable: Filter          = $Filter -->\n";
-echo "<!-- Variable: PatternID       = $PatternID -->\n";
+//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+//echo "<!-- Variable: Filter          = $Filter -->\n";
+//echo "<!-- Variable: PatternID       = $PatternID -->\n";
 
 include 'db-config.php';
 
@@ -62,8 +62,8 @@ if (isset($_POST['add-sdp'])) {
 	$Query = "LOCK TABLES $TableName WRITE";
 	mysql_query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
 
-	echo "<!-- Query: Submitted          = $Query -->\n";
-	echo "<!-- Database: Table           = Locked $TableName -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Database: Table           = Locked $TableName -->\n";
 
 	if ( $Title && $Submitter && $Category && $Component ) {
 		if ( $Status == "Complete" && $Owner == "" ) {
@@ -78,7 +78,7 @@ if (isset($_POST['add-sdp'])) {
 				$Owner = $Submitter;
 				$Owner2submitter = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				echo "<!-- Override: Owner           = $Owner -->\n";
+				//echo "<!-- Override: Owner           = $Owner -->\n";
 			} else {
 				$Owner2submitter = 0;
 				$LocalRefresh = $StatusRefresh;
@@ -87,17 +87,17 @@ if (isset($_POST['add-sdp'])) {
 				$Status = 'Assigned'; 
 				$Status2assigned = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				echo "<!-- Override: Status          = $Status -->\n";
+				//echo "<!-- Override: Status          = $Status -->\n";
 			} else {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
 			$Query = "INSERT INTO $TableName VALUES ('','$Title','$Description','$Class','$Category','$Component','$Notes','$PatternFile','$PatternType','$Submitted','$Modified','$Released','$Submitter','$Owner',$PrimaryLink,'$TID','$BUG','$URL01','$URL02','$URL03','$URL04','$URL05','$URL06','$URL07','$URL08','$URL09','$URL10','$Status')";
 
-			echo "<!-- Query: Submitted          = $Query -->\n";
+			//echo "<!-- Query: Submitted          = $Query -->\n";
 			$result=mysql_query($Query);
 			if ($result) {
-				echo "<!-- Query: Result             = Success -->\n";
+				//echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
@@ -109,7 +109,7 @@ if (isset($_POST['add-sdp'])) {
 				}
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 			} else {
-				echo "<!-- Query: Result             = FAILED -->\n";
+				//echo "<!-- Query: Result             = FAILED -->\n";
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
@@ -118,7 +118,7 @@ if (isset($_POST['add-sdp'])) {
 			}
 		}
 	} else {
-		echo "<!-- Variables Undefined       = Title and Submitter -->\n";
+		//echo "<!-- Variables Undefined       = Title and Submitter -->\n";
 		echo "<BODY>\n";
 		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 		echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
@@ -127,9 +127,9 @@ if (isset($_POST['add-sdp'])) {
 	}
 
 	$Query = "UNLOCK TABLES";
-	echo "<!-- Query: Submitted          = $Query -->\n";
+	//echo "<!-- Query: Submitted          = $Query -->\n";
 	mysql_query($Query) or die("<FONT SIZE=\"-1\">Database: <B>ERROR</B>, Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
-	echo "<!-- Database: Table           = UnLocked $TableName -->\n";
+	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 
 	include 'db-close.php';
 } else {
@@ -200,11 +200,11 @@ if (isset($_POST['add-sdp'])) {
 <?PHP
 }
 
-echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-echo "<!-- Variable: Filter          = $Filter -->\n";
-echo "<!-- Variable: PatternID       = $PatternID -->\n";
+//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+//echo "<!-- Variable: Filter          = $Filter -->\n";
+//echo "<!-- Variable: PatternID       = $PatternID -->\n";
 ?> 
 
 </BODY>

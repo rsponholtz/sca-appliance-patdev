@@ -1,4 +1,4 @@
-<!-- Modified: Date            = 2013 Dec 16 -->
+<!-- Modified: Date            = 2014 Jan 22 -->
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
@@ -84,25 +84,25 @@ $Check = $_GET['ck'];
 		$Check = 0;
 	}
 
-echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-echo "<!-- Variable: Filter          = $Filter -->\n";
-echo "<!-- Variable: Check           = $Check -->\n";
+//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+//echo "<!-- Variable: Filter          = $Filter -->\n";
+//echo "<!-- Variable: Check           = $Check -->\n";
 
 include 'db-config.php';
 include 'db-open.php';
 
 // Get the total number of patterns
 $Query = "SELECT Count(PatternID) FROM $TableName";
-echo "<!-- Query: Submitted          = $Query -->\n";
+//echo "<!-- Query: Submitted          = $Query -->\n";
 $Result = mysql_query($Query);
 $Num = mysql_numrows($Result);
 if ( $Result ) {
-	echo "<!-- Query: Result             = Success -->\n";
-	echo "<!-- Query: Rows               = $Num -->\n";
+	//echo "<!-- Query: Result             = Success -->\n";
+	//echo "<!-- Query: Rows               = $Num -->\n";
 } else {
-	echo "<!-- Query: Result             = FAILURE -->\n";
+	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 $Row_Cell = mysql_fetch_row($Result);
 $TotalPatterns = $Row_Cell[0];
@@ -110,14 +110,14 @@ echo "<TR CLASS=\"head_2\"><TD>Total Patterns</TD><TD>$TotalPatterns</TD><TR>\n"
 
 // Count the patterns grouped by Status
 $Query = "SELECT Status, Count(Status) FROM $TableName GROUP BY Status";
-echo "<!-- Query: Submitted          = $Query -->\n";
+//echo "<!-- Query: Submitted          = $Query -->\n";
 $Result = mysql_query($Query);
 $Num = mysql_numrows($Result);
 if ( $Result ) {
-	echo "<!-- Query: Result             = Success -->\n";
-	echo "<!-- Query: Rows               = $Num -->\n";
+	//echo "<!-- Query: Result             = Success -->\n";
+	//echo "<!-- Query: Rows               = $Num -->\n";
 } else {
-	echo "<!-- Query: Result             = FAILURE -->\n";
+	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Status</TD></TR>\n";
 for ( $i=0; $i < $Num; $i++ ) {
@@ -130,14 +130,14 @@ for ( $i=0; $i < $Num; $i++ ) {
 
 // Count the patterns grouped by Class
 $Query = "SELECT Class, Count(Class) FROM $TableName GROUP BY Class";
-echo "<!-- Query: Submitted          = $Query -->\n";
+//echo "<!-- Query: Submitted          = $Query -->\n";
 $Result = mysql_query($Query);
 $Num = mysql_numrows($Result);
 if ( $Result ) {
-	echo "<!-- Query: Result             = Success -->\n";
-	echo "<!-- Query: Rows               = $Num -->\n";
+	//echo "<!-- Query: Result             = Success -->\n";
+	//echo "<!-- Query: Rows               = $Num -->\n";
 } else {
-	echo "<!-- Query: Result             = FAILURE -->\n";
+	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Class</TD></TR>\n";
 for ( $i=0; $i < $Num; $i++ ) {
@@ -150,14 +150,14 @@ for ( $i=0; $i < $Num; $i++ ) {
 
 // Count the patterns grouped by Type
 $Query = "SELECT PatternType, Count(PatternType) FROM $TableName GROUP BY PatternType";
-echo "<!-- Query: Submitted          = $Query -->\n";
+//echo "<!-- Query: Submitted          = $Query -->\n";
 $Result = mysql_query($Query);
 $Num = mysql_numrows($Result);
 if ( $Result ) {
-	echo "<!-- Query: Result             = Success -->\n";
-	echo "<!-- Query: Rows               = $Num -->\n";
+	//echo "<!-- Query: Result             = Success -->\n";
+	//echo "<!-- Query: Rows               = $Num -->\n";
 } else {
-	echo "<!-- Query: Result             = FAILURE -->\n";
+	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Pattern Type</TD></TR>\n";
 for ( $i=0; $i < $Num; $i++ ) {
