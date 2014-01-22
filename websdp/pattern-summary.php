@@ -50,8 +50,8 @@ $Check = $_GET['ck'];
 	}
 	if ( isset($ToggleDir) ) {
 		switch ($ToggleDir) {
-		case 0:
-		case 1:
+		case '0':
+		case '1':
 			break;
 		default:
 			$ToggleDir = 0;
@@ -74,8 +74,8 @@ $Check = $_GET['ck'];
 	}
 	if ( isset($Check) ) {
 		switch ($Check) {
-		case 0:
-		case 1:
+		case '0':
+		case '1':
 			break;
 		default:
 			$Check = 0;

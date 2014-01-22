@@ -9,6 +9,13 @@ $PatternID = htmlspecialchars($_GET['pid']);
 $UpdatedOnce = htmlspecialchars($_GET['up']);
 $PageTitle = "Supportconfig Diagnostic Pattern";
 $PageFunction = "Edit";
+if ( isset($PatternID) ) {
+	if ( ! is_numeric($PatternID) ) {
+		die("<FONT SIZE=\"-1\"><B>ERROR</B>: Invalid Pattern ID, Only numeric values allowed.</FONT><BR>");			
+	}
+} else {
+	die("<FONT SIZE=\"-1\"><B>ERROR</B>: Missing Pattern ID</FONT><BR>");
+}
 
 if ( ! isset($UpdatedOnce) ) { $UpdatedOnce = 0; }
 
