@@ -1,3 +1,4 @@
+<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
 <?PHP
 	//echo "\n<!-- Database: Connecting      = $Database on $DBHost as $User -->\n";
 	$DBConn = mysql_connect($DBHost,$User,$Password) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Unable to connect to database: <b>$Database</b></FONT><BR>");
