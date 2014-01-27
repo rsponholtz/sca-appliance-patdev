@@ -59,7 +59,7 @@
 	if ( strlen($URL10) > 0 && $URL10 != "NULL" ) { $URLS[] = $URL10; }
 
 	//echo "<!-- template-generator.php \n";
-	var_dump($URLS);
+	//var_dump($URLS);
 	//echo "-->\n";
 
 	include 'db-close.php';

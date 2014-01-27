@@ -14,7 +14,7 @@ Group:        Documentation/SuSE
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.3
-Release:      6
+Release:      7
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -81,6 +81,9 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
+* Mon Jan 27 2014 jrecord@suse.com
+- fixed python template generator dumping array
+
 * Wed Jan 22 2014 jrecord@suse.com
 - commented out debug statements to avoid xss
 
