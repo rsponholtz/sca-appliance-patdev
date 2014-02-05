@@ -1,0 +1,42 @@
+-------------------------------------------------------------------
+Fri Jan 31 19:31:15 UTC 2014 - jrecord@suse.com
+
+- updated help-sdp.html docs
+- fixed python template generator dumping array
+
+-------------------------------------------------------------------
+Wed Jan 22 07:10:41 MST 2014 jrecord@suse.com
+
+- commented out debug statements to avoid xss
+
+-------------------------------------------------------------------
+Thu Jan 17 07:10:41 MST 2014 jrecord@suse.com
+
+- updated paths
+- relocated files according to FHS
+
+-------------------------------------------------------------------
+Mon Jan 13 07:10:41 MST 2014 jrecord@suse.com
+
+- pat displays SPRSRC
+- pat vars SPRSRC and DEFAULT_ARCHDIR can be set in the environment
+
+-------------------------------------------------------------------
+Wed Jan 08 07:10:41 MST 2014 jrecord@suse.com
+
+- sdpdb man page has correct name
+- binaries installed in correct locations
+- fixed hash plings in template php pages
+
+-------------------------------------------------------------------
+Fri Jan 03 07:10:41 MST 2014 jrecord@suse.com
+
+- added pat documentation
+- added pat pattern tester
+- separated sca-appliance-common files
+
+-------------------------------------------------------------------
+Thu Dec 20 07:10:41 MST 2013 jrecord@suse.com
+
+- separated as individual RPM package
+

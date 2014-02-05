@@ -1,4 +1,7 @@
-# Copyright (C) 2013 SUSE LLC
+# spec file for package sca-appliance-patdev
+#
+# Copyright (C) 2014 SUSE LLC
+#
 # This file and all modifications and additions to the pristine
 # package are under the same license as the package itself.
 #
@@ -14,7 +17,7 @@ Group:        Documentation/SuSE
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.3
-Release:      8
+Release:      9
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -81,33 +84,4 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %doc /usr/share/doc/packages/%{sca_common}/*
 
 %changelog
-* Tue Jan 28 2014 jrecord@suse.com
-- updated help-sdp.html docs
-
-* Mon Jan 27 2014 jrecord@suse.com
-- fixed python template generator dumping array
-
-* Wed Jan 22 2014 jrecord@suse.com
-- commented out debug statements to avoid xss
-
-* Thu Jan 17 2014 jrecord@suse.com
-- updated paths
-- relocated files according to FHS
-
-* Mon Jan 13 2014 jrecord@suse.com
-- pat displays SPRSRC
-- pat vars SPRSRC and DEFAULT_ARCHDIR can be set in the environment
-
-* Wed Jan 08 2014 jrecord@suse.com
-- sdpdb man page has correct name
-- binaries installed in correct locations
-- fixed hash plings in template php pages
-
-* Fri Jan 03 2014 jrecord@suse.com
-- added pat documentation
-- added pat pattern tester
-- separated sca-appliance-common files
-
-* Thu Dec 20 2013 jrecord@suse.com
-- separated as individual RPM package
 
