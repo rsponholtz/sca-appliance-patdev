@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Tue Mar  4 21:25:40 UTC 2014 - jrecord@suse.com
+
+- Added IGNORE status count to pat
+- pat displays library directories
+
+-------------------------------------------------------------------
 Sat Feb  8 22:12:20 UTC 2014 - jrecord@suse.com
 
 - Packaged COPYING.GPLv2
