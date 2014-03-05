@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Mar  5 20:19:33 UTC 2014 - jrecord@suse.com
+
+- Updated python template
+- Updated python documentation
+
+-------------------------------------------------------------------
 Tue Mar  4 21:25:40 UTC 2014 - jrecord@suse.com
 
 - Added IGNORE status count to pat

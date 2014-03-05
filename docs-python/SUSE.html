@@ -119,6 +119,19 @@ if(&nbsp;Core.compareVersions(SC_INFO['version'],&nbsp;REQUIRED_VERSION)&nbsp;&g
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;meets&nbsp;minimum&nbsp;requirement")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;NOT&nbsp;sufficient,&nbsp;"&nbsp;+&nbsp;str(REQUIRED_VERSION)&nbsp;+&nbsp;"&nbsp;or&nbsp;higher&nbsp;needed")</tt></dd></dl>
+ <dl><dt><a name="-getServiceDInfo"><strong>getServiceDInfo</strong></a>(SERVICE_NAME)</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;systemd&nbsp;service&nbsp;information&nbsp;for&nbsp;SERVICE<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SERVICE_NAME&nbsp;-&nbsp;Name&nbsp;of&nbsp;systemd&nbsp;service<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;systemctl&nbsp;show&nbsp;SERVICE_NAME<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;output.<br>
+Example:<br>
+&nbsp;<br>
+SERVICE&nbsp;=&nbsp;'cups.service'<br>
+SERVICE_INFO&nbsp;=&nbsp;SUSE.<a href="#-getServiceDInfo">getServiceDInfo</a>(SERVICE)<br>
+if(&nbsp;SERVICE_INFO['SubState']&nbsp;==&nbsp;'running'&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Service&nbsp;is&nbsp;running:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Service&nbsp;is&nbsp;down:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));</tt></dd></dl>
  <dl><dt><a name="-getVersion"><strong>getVersion</strong></a>()</dt><dd><tt>Returns&nbsp;the&nbsp;SUSE&nbsp;release&nbsp;information<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -142,6 +155,18 @@ if&nbsp;(&nbsp;SUSE.<a href="#-packageInstalled">packageInstalled</a>(PACKAGE_NA
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"The&nbsp;package&nbsp;"&nbsp;+&nbsp;PACKAGE_NAME&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"The&nbsp;package&nbsp;"&nbsp;+&nbsp;PACKAGE_NAME&nbsp;+&nbsp;"&nbsp;is&nbsp;NOT&nbsp;installed")</tt></dd></dl>
+ <dl><dt><a name="-serviceDHealth"><strong>serviceDHealth</strong></a>(SERVICE_NAME)</dt><dd><tt>Reports&nbsp;the&nbsp;health&nbsp;of&nbsp;the&nbsp;specified&nbsp;systemd&nbsp;service<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SERVICE_NAME<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N/A<br>
+Example:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;<br>
+PACKAGE&nbsp;=&nbsp;"cups"<br>
+SERVICE&nbsp;=&nbsp;"cups.service"<br>
+if(&nbsp;SUSE.<a href="#-packageInstalled">packageInstalled</a>(PACKAGE)&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SUSE.<a href="#-serviceDHealth">serviceDHealth</a>(SERVICE)<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;"Basic&nbsp;Service&nbsp;Health;&nbsp;Package&nbsp;Not&nbsp;Installed:&nbsp;"&nbsp;+&nbsp;str(PACKAGE))</tt></dd></dl>
 </td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#55aa55">

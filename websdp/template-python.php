@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Mar 5 -->\n"; ?>
 <?PHP
 $tmp = strtolower($Owner);
 $pos = strrpos($tmp, ' ') + 1;
@@ -99,7 +99,7 @@ def checkSomething():
 if( checkSomething() ):
 	Core.updateStatus(Core.CRIT, "A critical severity is set")
 else:
-	Core.updateStatus(Core.CRIT,"A success severity is updated")
+	Core.updateStatus(Core.IGNORE, "Ignore this pattern, not applicable")
 
 Core.printPatternResults()
 </pre>
