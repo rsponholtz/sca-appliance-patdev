@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Thu Mar 13 17:26:27 UTC 2014 - jrecord@suse.com
+Thu Mar 13 19:15:56 UTC 2014 - jrecord@suse.com
 
+- Removed package ownership of /var/tmp/sca
 - Updated copyright FSF reference
 - Change to System/Monitoring spec Group
 

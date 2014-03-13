@@ -1,5 +1,5 @@
 #!/bin/bash
-SVER="1.0.2"
+SVER="1.0.3"
 CONF='/etc/sca/sdp.conf'
 
 title() {
@@ -79,6 +79,7 @@ backup)
 	BACKUP_DATE=$(date +"%y%m%d")
 	BACKUP_TIME=$(date +"%H%M")
 	BACKUP_FILE="${SCA_WORK}/sdp_backup_${DB_NAME}_${BACKUP_DATE}_${BACKUP_TIME}.sql"
+	mkdir -p ${SCA_WORK} &>/dev/null
 	mysqldump -u root -p ${DB_NAME} > $BACKUP_FILE
 	ERR=$?
 	if ! (( $ERR )); then

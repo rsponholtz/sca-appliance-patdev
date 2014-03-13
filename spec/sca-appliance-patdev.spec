@@ -17,7 +17,7 @@ Group:        System/Monitoring
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.3
-Release:      12
+Release:      13
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -46,7 +46,6 @@ gzip -9f man/*5
 pwd;ls -la
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/etc/%{sca_common}
-install -d $RPM_BUILD_ROOT/var/tmp/%{sca_common}
 install -d $RPM_BUILD_ROOT/srv/www/htdocs/%{sdp_common}/docs-python
 install -d $RPM_BUILD_ROOT/usr/sbin
 install -d $RPM_BUILD_ROOT/usr/bin
@@ -74,7 +73,6 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %dir /srv/www/htdocs/%{sdp_common}
 %dir /srv/www/htdocs/%{sdp_common}/docs-python
 %dir /etc/%{sca_common}
-%dir /var/tmp/%{sca_common}
 %dir /usr/share/doc/packages/%{sca_common}
 /usr/sbin/*
 /usr/bin/*
