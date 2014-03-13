@@ -13,11 +13,11 @@
 Name:         sca-appliance-patdev
 Summary:      Supportconfig Analysis Appliance Pattern Development
 URL:          https://bitbucket.org/g23guy/sca-appliance-patdev
-Group:        Documentation/SuSE
+Group:        System/Monitoring
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.3
-Release:      11.1
+Release:      12
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch

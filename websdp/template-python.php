@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Mar 5 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Mar 13 -->\n"; ?>
 <?PHP
 $tmp = strtolower($Owner);
 $pos = strrpos($tmp, ' ') + 1;
@@ -23,8 +23,7 @@ echo "#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the<br>\n";
 echo "#  GNU General Public License for more details.<br>\n";
 echo "#<br>\n";
 echo "#  You should have received a copy of the GNU General Public License<br>\n";
-echo "#  along with this program; if not, write to the Free Software<br>\n";
-echo "#  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.<br>\n";
+echo "#  along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.<br>\n";
 echo "#<br>\n";
 echo "#&nbsp;&nbsp;Authors/Contributors:<br>\n";
 echo "#&nbsp;&nbsp;&nbsp;$Owner ($Email@$EmailDomain)<br>\n";
