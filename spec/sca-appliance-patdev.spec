@@ -52,7 +52,7 @@ install -d $RPM_BUILD_ROOT/usr/bin
 install -d $RPM_BUILD_ROOT/usr/share/man/man1
 install -d $RPM_BUILD_ROOT/usr/share/man/man5
 install -d $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
-install -d $RPM_BUILD_ROOT/var/archives
+install -d $RPM_BUILD_ROOT/var/log/archives
 install -m 444 man/COPYING.GPLv2 $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 config/*.conf $RPM_BUILD_ROOT/etc/%{sca_common}
 install -m 644 config/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
@@ -69,7 +69,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 
 %files
 %defattr(-,root,root)
-%dir %attr(775,root,users) /var/archives
+%dir %attr(775,root,users) /var/log/archives
 %dir /srv/www/htdocs/%{sdp_common}
 %dir /srv/www/htdocs/%{sdp_common}/docs-python
 %dir /etc/%{sca_common}

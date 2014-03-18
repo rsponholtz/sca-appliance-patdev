@@ -1,7 +1,7 @@
 #!/bin/bash
 : ${SCA_LIBRARY_PATH:="/usr/lib/sca"}
 : ${SCA_PATTERN_PATH:="${SCA_LIBRARY_PATH}/patterns"}
-: ${DEFAULT_ARCHDIR:="/var/archives"}
+: ${DEFAULT_ARCHDIR:="/var/log/archives"}
 BASHLIB="${SCA_LIBRARY_PATH}/bash"
 PERL5LIB="${PERL5LIB}:${SCA_LIBRARY_PATH}/perl/"
 PYTHONPATH="${PYTHONPATH}:${SCA_LIBRARY_PATH}/python/"
@@ -9,7 +9,7 @@ export SCA_LIBRARY_PATH SCA_PATTERN_PATH BASHLIB PERL5LIB PYTHONPATH
 
 title() {
 	echo "##########################################################################"
-	echo "# PAT - SCA Pattern Tester v1.0.5"
+	echo "# PAT - SCA Pattern Tester v1.0.6"
 	echo "##########################################################################"
 }
 
