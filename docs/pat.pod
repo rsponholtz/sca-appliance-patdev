@@ -11,7 +11,7 @@ pat pattern_filename [pattern options]
 
 =head1 DESCRIPTION
 
-A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run B<pat> followed by the pattern filename you are testing. B<pat> will test the pattern file contents as well as run the pattern against the archives extracted in the B</var/archives> directory. You can change the default B</var/archives> location by setting the B<ARCHDIR> environment variable. B<pat> will report the pattern's severity level for each of the archives tested. 
+A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run B<pat> followed by the pattern filename you are testing. B<pat> will test the pattern file contents as well as run the pattern against the archives extracted in the B</var/log/archives> directory. You can change the default B</var/log/archives> location by setting the B<ARCHDIR> environment variable. B<pat> will report the pattern's severity level for each of the archives tested. 
 
 =head1 OPTIONS
 
@@ -51,7 +51,7 @@ Set B<ARCHDIR> in your environment to overide the default archive directory.
 The B<ARCHDIR> directory should contain all of the extracted supportconfig 
 tar balls you wish to test against.
 
-The default B<ARCHDIR> location is B</var/archives>.
+The default B<ARCHDIR> location is B</var/log/archives>.
 
 =head1 EXAMPLES
 
@@ -59,11 +59,11 @@ The default B<ARCHDIR> location is B</var/archives>.
 
 =item Using the defaults
 
-1. Copy and extract supportconfig archives with which you will test into /var/archives
+1. Copy and extract supportconfig archives with which you will test into /var/log/archives
 
 2. pat net-check.py
 
-3. All extracted archives in /var/archives will be used when testing your pattern
+3. All extracted archives in /var/log/archives will be used when testing your pattern
 
 =item Temporarily use /var/log/nts_* directories to test
 

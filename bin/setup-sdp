@@ -3,13 +3,13 @@
 SVER=1.0.1
 
 ##############################################################################
-#  setup-sdbroker - Supportconfig Analysis Pattern Setup Tool
-#  Copyright (C) 2013 SUSE LLC
+#  setup-sdbroker - Supportconfig Diagnostic Pattern Setup Tool
+#  Copyright (C) 2014 SUSE LLC
 #
 # Description:  Creates the main mySQL database for the Supportconfig Diagnostic
 #               Tool infrastructure
 # Runs on:      Broker Server
-# Modified:     2014 Jan 16
+# Modified:     2014 Mar 18
 #
 ##############################################################################
 #

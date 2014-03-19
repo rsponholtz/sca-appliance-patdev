@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Wed Mar 19 00:32:27 UTC 2014 - jrecord@suse.com
+
+- Moved man pages 1 to 8
+- Moved /var/archives to /var/log/archives per suse-filelist-forbidden-fhs23
+
+-------------------------------------------------------------------
 Thu Mar 13 20:15:33 UTC 2014 - jrecord@suse.com
 
 - Removed package ownership of /var/tmp/sca

@@ -132,7 +132,7 @@
 .\" ========================================================================
 .\"
 .IX Title "pat 1"
-.TH pat 1 "2014 Jan 03" "pat" "Supportconfig Diagnostic Manual"
+.TH pat 1 "2014 Jan 03" "pat" "Supportconfig Analysis Manual"
 .\" For nroff, turn off justification.  Always turn off hyphenation; it makes
 .\" way too many mistakes in technical documents.
 .if n .ad l
@@ -144,7 +144,7 @@ pat \- Pattern Tester for Supportconfig Analysis Patterns
 pat pattern_filename [pattern options]
 .SH "DESCRIPTION"
 .IX Header "DESCRIPTION"
-A tool used to test and maintain \s-1SCA\s0 patterns. Generally you change to the directory where the pattern being tested resides. Run \fBpat\fR followed by the pattern filename you are testing. \fBpat\fR will test the pattern file contents as well as run the pattern against the archives extracted in the \fB/var/archives\fR directory. You can change the default \fB/var/archives\fR location by setting the \fB\s-1ARCHDIR\s0\fR environment variable. \fBpat\fR will report the pattern's severity level for each of the archives tested.
+A tool used to test and maintain \s-1SCA\s0 patterns. Generally you change to the directory where the pattern being tested resides. Run \fBpat\fR followed by the pattern filename you are testing. \fBpat\fR will test the pattern file contents as well as run the pattern against the archives extracted in the \fB/var/log/archives\fR directory. You can change the default \fB/var/log/archives\fR location by setting the \fB\s-1ARCHDIR\s0\fR environment variable. \fBpat\fR will report the pattern's severity level for each of the archives tested.
 .SH "OPTIONS"
 .IX Header "OPTIONS"
 \&\-h for help is the only startup option \fBpat\fR has. All other startup options are for the pattern file itself, and follow the pattern filename being tested.
@@ -173,16 +173,16 @@ Set \fB\s-1ARCHDIR\s0\fR in your environment to overide the default archive dire
 The \fB\s-1ARCHDIR\s0\fR directory should contain all of the extracted supportconfig 
 tar balls you wish to test against.
 .PP
-The default \fB\s-1ARCHDIR\s0\fR location is \fB/var/archives\fR.
+The default \fB\s-1ARCHDIR\s0\fR location is \fB/var/log/archives\fR.
 .SH "EXAMPLES"
 .IX Header "EXAMPLES"
 .IP "Using the defaults" 5
 .IX Item "Using the defaults"
-1. Copy and extract supportconfig archives with which you will test into /var/archives
+1. Copy and extract supportconfig archives with which you will test into /var/log/archives
 .Sp
 2. pat net\-check.py
 .Sp
-3. All extracted archives in /var/archives will be used when testing your pattern
+3. All extracted archives in /var/log/archives will be used when testing your pattern
 .IP "Temporarily use /var/log/nts_* directories to test" 5
 .IX Item "Temporarily use /var/log/nts_* directories to test"
 ARCHDIR=/var/log pat mpio\-00001.pl

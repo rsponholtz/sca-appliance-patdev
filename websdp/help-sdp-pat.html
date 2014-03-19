@@ -44,7 +44,7 @@
 </p>
 <hr />
 <h1><a name="description">DESCRIPTION</a></h1>
-<p>A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run <strong>pat</strong> followed by the pattern filename you are testing. <strong>pat</strong> will test the pattern file contents as well as run the pattern against the archives extracted in the <strong>/var/archives</strong> directory. You can change the default <strong>/var/archives</strong> location by setting the <strong>ARCHDIR</strong> environment variable. <strong>pat</strong> will report the pattern's severity level for each of the archives tested.</p>
+<p>A tool used to test and maintain SCA patterns. Generally you change to the directory where the pattern being tested resides. Run <strong>pat</strong> followed by the pattern filename you are testing. <strong>pat</strong> will test the pattern file contents as well as run the pattern against the archives extracted in the <strong>/var/log/archives</strong> directory. You can change the default <strong>/var/log/archives</strong> location by setting the <strong>ARCHDIR</strong> environment variable. <strong>pat</strong> will report the pattern's severity level for each of the archives tested.</p>
 <p>
 </p>
 <hr />
@@ -94,7 +94,7 @@
 <p>Set <strong>ARCHDIR</strong> in your environment to overide the default archive directory. 
 The <strong>ARCHDIR</strong> directory should contain all of the extracted supportconfig 
 tar balls you wish to test against.</p>
-<p>The default <strong>ARCHDIR</strong> location is <strong>/var/archives</strong>.</p>
+<p>The default <strong>ARCHDIR</strong> location is <strong>/var/log/archives</strong>.</p>
 <p>
 </p>
 <hr />
@@ -103,13 +103,13 @@ tar balls you wish to test against.</p>
 <dt><strong><a name="using_the_defaults" class="item">Using the defaults</a></strong>
 
 <dd>
-<p>1. Copy and extract supportconfig archives with which you will test into /var/archives</p>
+<p>1. Copy and extract supportconfig archives with which you will test into /var/log/archives</p>
 </dd>
 <dd>
 <p>2. pat net-check.py</p>
 </dd>
 <dd>
-<p>3. All extracted archives in /var/archives will be used when testing your pattern</p>
+<p>3. All extracted archives in /var/log/archives will be used when testing your pattern</p>
 </dd>
 </li>
 <dt><strong><a name="temporarily_use_var_log_nts_directories_to_test" class="item">Temporarily use /var/log/nts_* directories to test</a></strong>
