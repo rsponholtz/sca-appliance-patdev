@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Tue Apr 22 22:09:20 UTC 2014 - jrecord@suse.com
+
+- Removed clear screen and -c
+
+-------------------------------------------------------------------
 Wed Mar 19 00:32:27 UTC 2014 - jrecord@suse.com
 
 - Moved man pages 1 to 8

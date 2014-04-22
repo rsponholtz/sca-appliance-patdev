@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SVER=1.0.1
+SVER=1.0.2
 
 ##############################################################################
 #  setup-sdbroker - Supportconfig Diagnostic Pattern Setup Tool
@@ -9,7 +9,7 @@ SVER=1.0.1
 # Description:  Creates the main mySQL database for the Supportconfig Diagnostic
 #               Tool infrastructure
 # Runs on:      Broker Server
-# Modified:     2014 Mar 18
+# Modified:     2014 Apr 22
 #
 ##############################################################################
 #
@@ -61,7 +61,6 @@ showHelp() {
 	echo
 	echo 'Options:'
 	echo '  -h Show this screen and exit'
-	echo '  -c Do not clear the screen'
 	echo '  -p <str> MySQL root password'
 	echo '  -b <str> MySQL sdpuser password'
 	echo '  -s <str> Path to schema files'
@@ -148,14 +147,12 @@ OPT_PASS=''
 OPT_SCHEMA=''
 OPT_INSRC=''
 OPT_EMAIL_ADMIN=''
-CLEAR=1
-while getopts ':chb:p:s:y' TMPOPT
+while getopts ':hb:p:s:y' TMPOPT
 do
 	case $TMPOPT in
 		\:) showHelp "ERROR: Missing Argument -$OPTARG"; exit 1 ;;
 		\?) showHelp "ERROR: Invalid Option -$OPTARG"; exit 2 ;;
-		c) CLEAR=0 ;;
-		h) clear; title; showHelp; exit 0 ;;
+		h) title; showHelp; exit 0 ;;
 		p) DB_PASS=$OPTARG ;;
 		b) OPT_PASS=$OPTARG ;;
 		s) OPT_SCHEMA=$OPTARG ;;
@@ -166,7 +163,6 @@ done
 [ -z "$DB_PASS" ] && { showHelp "ERROR: Missing MySQL Root Password"; exit 1; }
 [ -z "$OPT_SCHEMA" ] && SCHEMA_PATH=$DEF_SCHEMA || SCHEMA_PATH=$OPT_SCHEMA
 
-[ $CLEAR -gt 0 ] && clear
 title
 main
 
