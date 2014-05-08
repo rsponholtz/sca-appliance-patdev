@@ -1,12 +1,10 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <?PHP
 	$PatternID = $_GET['pid'];
 	$ErrorsFound = 0;
-
-	include 'db-config.php';
-	include 'db-open.php';
 
 	if ( isset($PatternID) ) {
 		if ( ! is_numeric($PatternID) ) {
@@ -15,9 +13,18 @@
 	} else { 
 		die("<FONT SIZE=\"-1\"><B>ERROR</B>: Invalid Pattern ID, Only numeric values allowed.</FONT><BR>");			
 	}
+	include 'sdp-config.php';
+	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+	if ($Connection->connect_errno()) {
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Database Pattern Index</P>\n";
+		echo "<H2 ALIGN=\"center\">Connect to Database: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\">Make sure the MariaDB database is configured properly.</P>\n";
+		echo "</BODY>\n</HTML>\n";
+		die();
+	}
 	$Query = "SELECT * FROM $TableName WHERE PatternID=$PatternID";
-	$Result = mysql_query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Query -> <B>FAILED</B></FONT><BR>Query=$Query<BR>\n");
-	$row_cell = mysql_fetch_row($Result);
+	$Result = $Connection->query($query);
+	$row_cell = $Result->fetch_row();
 	$PatternID		= htmlspecialchars($row_cell[0]);
 	$Title 			= htmlspecialchars($row_cell[1]);
 	$Description 	= htmlspecialchars($row_cell[2]);
@@ -62,7 +69,8 @@
 	//var_dump($URLS);
 	//echo "-->\n";
 
-	include 'db-close.php';
+	$Result->close();
+	$Connection->close();
 	echo "<TITLE>$PatternType SDP Template</TITLE>\n";
 	echo "</HEAD>\n";
 	echo "<BODY>\n";
