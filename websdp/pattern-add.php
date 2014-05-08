@@ -1,41 +1,122 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
 <LINK REL="stylesheet" HREF="style.css">
 
 <?PHP
-$OrderBy = htmlspecialchars($_GET['by']);
-$OrderDir = htmlspecialchars($_GET['dir']);
-$ToggleDir = htmlspecialchars($_GET['td']);
-$Filter = htmlspecialchars($_GET['filter']);
-$Check = htmlspecialchars($_GET['ck']);
-$PageFunction = "Add";
-$Submitted = date('Y\-m\-d');
+	$PageFunction = "Add";
+	$Submitted = date('Y\-m\-d');
+	$OrderBy = htmlspecialchars($_GET['by']);
+	$OrderDir = htmlspecialchars($_GET['dir']);
+	$ToggleDir = htmlspecialchars($_GET['td']);
+	$Filter = htmlspecialchars($_GET['filter']);
+	$Check = htmlspecialchars($_GET['ck']);
 
-//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-//echo "<!-- Variable: Filter          = $Filter -->\n";
-//echo "<!-- Variable: PatternID       = $PatternID -->\n";
+	//Validate and assign the default views
+	if ( isset($OrderBy) ) {
+		switch ($OrderBy) {
+		case "PatternID":
+		case "Title":
+		case "Class":
+		case "Category":
+		case "Component":
+		case "PatternFile":
+		case "Modified":
+		case "Submitter":
+		case "Owner":
+		case "Status":
+			break;
+		default:
+			$OrderBy = "Status";
+		}
+	} else {
+		$OrderBy = "Status";
+	}
 
-include 'db-config.php';
+	if ( isset($OrderDir) ) {
+		switch ($OrderDir) {
+		case 'DESC':
+		case 'ASC':
+			break;
+		default:
+			$OrderDir = 'ASC';
+		}
+	} else {
+		$OrderDir = 'ASC';
+	}
+	if ( isset($ToggleDir) ) {
+		switch ($ToggleDir) {
+		case '0':
+		case '1':
+			break;
+		default:
+			$ToggleDir = 0;
+		}
+	} else {
+		$ToggleDir = 0;
+	}
+	if ( isset($Filter) ) {
+		switch ($Filter) {
+		case 'all':
+		case 'dev':
+		case 'testing':
+		case 'release':
+			break;
+		default:
+			$Filter = 'dev';
+		}
+	} else {
+		$Filter = 'dev';
+	}
+	if ( isset($Check) ) {
+		switch ($Check) {
+		case '0':
+		case '1':
+			break;
+		default:
+			$Check = 0;
+		}
+	} else {
+		$Check = 0;
+	}
+
+	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+	//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+	//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+	//echo "<!-- Variable: Filter          = $Filter -->\n";
+	//echo "<!-- Variable: Check           = $Check -->\n";
+
+
+include 'sdp-config.php';
 
 if (isset($_POST['add-sdp'])) {
+	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+	if ($Connection->connect_errno()) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Add Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR:</B> Failed to connect to database.</P>\n";
+		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
+		die();
+	}
 	$PatternID     = '';
-	$Title 			= $_POST['form_title'];
-	$Description 	= $_POST['form_description'];
-	$Class 			= $_POST['form_class'];
-	$Category 		= $_POST['form_category'];
-	$Component 		= $_POST['form_component'];
-	$Notes 			= $_POST['form_notes'];
-	$PatternFile 	= $_POST['form_pattern_file'];
-	$PatternType 	= $_POST['form_pattern_type'];
+	$Title 			= $Connection->real_escape_string($_POST['form_title']);
+	$Description 	= $Connection->real_escape_string($_POST['form_description']);
+	$Class 			= $Connection->real_escape_string($_POST['form_class']);
+	$Category 		= $Connection->real_escape_string($_POST['form_category']);
+	$Component 		= $Connection->real_escape_string($_POST['form_component']);
+	$Notes 			= $Connection->real_escape_string($_POST['form_notes']);
+	$PatternFile 	= $Connection->real_escape_string($_POST['form_pattern_file']);
+	$PatternType 	= $Connection->real_escape_string($_POST['form_pattern_type']);
 //	$Submitted     = date('Y\-m\-d'); # Must be set above
 	$Modified 		= $Submitted;
 	$Released 		= 'NULL';
-	$Submitter 		= $_POST['form_submitter'];
-	$Owner 			= $_POST['form_owner'];
+	$Submitter 		= $Connection->real_escape_string($_POST['form_submitter']);
+	$Owner 			= $Connection->real_escape_string($_POST['form_owner']);
 	$TID 				= $_POST['form_tid'];
 	$BUG 				= $_POST['form_bug'];
 	$URL01 			= $_POST['form_url1'];
@@ -58,9 +139,9 @@ if (isset($_POST['add-sdp'])) {
 	elseif ( strlen($URL05) > 0 ) { $URL = preg_split("/=/", "$URL05"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
 	else { $PrimaryLink = 'NULL'; }
 
-	include 'db-open.php';
 	$Query = "LOCK TABLES $TableName WRITE";
-	mysql_query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
+	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
+	$Result->close();
 
 	//echo "<!-- Query: Submitted          = $Query -->\n";
 	//echo "<!-- Database: Table           = Locked $TableName -->\n";
@@ -93,10 +174,9 @@ if (isset($_POST['add-sdp'])) {
 				$LocalRefresh = $StatusRefresh;
 			}
 			$Query = "INSERT INTO $TableName VALUES ('','$Title','$Description','$Class','$Category','$Component','$Notes','$PatternFile','$PatternType','$Submitted','$Modified','$Released','$Submitter','$Owner',$PrimaryLink,'$TID','$BUG','$URL01','$URL02','$URL03','$URL04','$URL05','$URL06','$URL07','$URL08','$URL09','$URL10','$Status')";
-
 			//echo "<!-- Query: Submitted          = $Query -->\n";
-			$result=mysql_query($Query);
-			if ($result) {
+			$Result = $Connection->query($Query);
+			if ($Result) {
 				//echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
@@ -113,9 +193,10 @@ if (isset($_POST['add-sdp'])) {
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR:</B> " . mysql_error() . "</P>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR:</B> " . $Result->error . "</P>\n";
 				echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 			}
+			$Result->close();
 		}
 	} else {
 		//echo "<!-- Variables Undefined       = Title and Submitter -->\n";
@@ -128,10 +209,10 @@ if (isset($_POST['add-sdp'])) {
 
 	$Query = "UNLOCK TABLES";
 	//echo "<!-- Query: Submitted          = $Query -->\n";
-	mysql_query($Query) or die("<FONT SIZE=\"-1\">Database: <B>ERROR</B>, Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
+	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
+	$Result->close();
 	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
-
-	include 'db-close.php';
+	$Connection->close();
 } else {
 ?>
 </HEAD>

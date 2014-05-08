@@ -5,11 +5,11 @@
 <?PHP
 	include 'sdp-config.php';
 
-	$OrderBy = $_GET['by'];
-	$OrderDir = $_GET['dir'];
-	$ToggleDir = $_GET['td'];
-	$Filter = $_GET['filter'];
-	$Check = $_GET['ck'];
+	$OrderBy = htmlspecialchars($_GET['by']);
+	$OrderDir = htmlspecialchars($_GET['dir']);
+	$ToggleDir = htmlspecialchars($_GET['td']);
+	$Filter = htmlspecialchars($_GET['filter']);
+	$Check = htmlspecialchars($_GET['ck']);
 
 	//Validate and assign the default views
 	if ( isset($OrderBy) ) {
