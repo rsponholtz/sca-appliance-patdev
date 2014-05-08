@@ -1,8 +1,9 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <?PHP
-	include 'db-config.php';
+	include 'sdp-config.php';
 
 	$OrderBy = $_GET['by'];
 	$OrderDir = $_GET['dir'];
@@ -115,18 +116,23 @@
 	echo "</HEAD>\n";
 	echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
 
-	include 'db-open.php';
+	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+	if ($Connection->connect_errno()) {
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">SCA Database Index</P>\n";
+		echo "<H2 ALIGN=\"center\">Connect to Database: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\">Make sure the MariaDB database is configured properly.</P>\n";
+		echo "</BODY>\n</HTML>\n";
+		die();
+	}
 	//echo "<!-- Query: Submitted          = $Query -->\n";
-	$Result=mysql_query($Query);
-	$Num=mysql_numrows($Result);
+	$Result = $Connection->query($query);
+	$Num = $Result->num_rows;
 	if ( $Result ) {
 		//echo "<!-- Query: Result             = Success -->\n";
 		//echo "<!-- Query: Rows               = $Num -->\n";
 	} else {
 		//echo "<!-- Query: Result             = FAILURE -->\n";
 	}
-	include 'db-close.php';
-
 
 	if ( isset($_POST['multi-edit']) ) {
 		$UpdateErrors = 0;
@@ -135,9 +141,8 @@
 		if ( $NewStatus == "-Unchanged-" ) {
 			echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"blue\">Status Unchanged</FONT></H2>\n";
 		} else {
-			include 'db-open.php';
-			for ( $i=0; $i < $Num; $i++ ) {
-				$row_cell = mysql_fetch_row($Result);
+			$i=0;
+			while ( $row_cell = $Result->fetch_row() ) {
 				$PatternID		= htmlspecialchars($row_cell[0]);
 				$Title			= htmlspecialchars($row_cell[1]);
 				$Class			= htmlspecialchars($row_cell[2]);
@@ -162,7 +167,7 @@
 					}
 
 					//echo "<!-- Query: Submitted          = $Query -->\n";
-					$UpdateResult=mysql_query($Query);
+					$UpdateResult = $Connection->query($query);
 					if ( $UpdateResult ) {
 						//echo "<!-- Query: Result             = Success -->\n";
 						$PatternsUpdated++;
@@ -170,6 +175,7 @@
 						//echo "<!-- Query: Result             = FAILURE -->\n";
 						$UpdateErrors++;
 					}
+					$UpdateResult->close();
 
 				} else {
 					//echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
@@ -220,8 +226,8 @@
 		echo "</TR>\n";
 
 		echo "<FORM METHOD=post>\n";
-		for ( $i=0; $i < $Num; $i++ ) {
-			$row_cell = mysql_fetch_row($Result);
+		$i=0;
+		while ( $row_cell = $Result->fetch_row() ) {
 			$PatternID		= htmlspecialchars($row_cell[0]);
 			$Title			= htmlspecialchars($row_cell[1]);
 			$Class			= htmlspecialchars($row_cell[2]);
@@ -277,7 +283,9 @@
 		echo "</TABLE>\n\n";
 
 		echo "</FORM>\n";
-	}	
+	}
+	$Result->close();
+	$Connection->close();
 
 	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
 	//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";

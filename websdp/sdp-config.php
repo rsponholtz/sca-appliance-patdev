@@ -1,11 +1,11 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
 <?PHP
-	$User = 'sdpuser';
-	$Password = "${User}_password";
-	$Database = 'SCAPatterns';
+	$DB_USER = 'sdpuser';
+	$DB_PASS = "${DB_USER}_password";
+	$DB_NAME = 'SCAPatterns';
 	$TableName = 'Submissions';
 	$EmailDomain = 'suse.com';
-	$DBHost = 'localhost';
+	$DB_HOST = 'localhost';
 	$ResourceRefresh = 300;
 	$StatsRefresh = 15;
 	$StatusRefresh = 2;
@@ -16,11 +16,11 @@
 	$Year = date('Y');
 	$CurrentDate = date('Y M d');
 
-	//echo "<!-- Config: User              = $User -->\n";
-	//echo "<!-- Config: Database          = $Database -->\n";
+	//echo "<!-- Config: DB_USER           = $DB_USER -->\n";
+	//echo "<!-- Config: DB_NAME           = $DB_NAME -->\n";
 	//echo "<!-- Config: TableName         = $TableName -->\n";
 	//echo "<!-- Config: EmailDomain       = $EmailDomain -->\n";
-	//echo "<!-- Config: DBHost            = $DBHost -->\n";
+	//echo "<!-- Config: DB_HOST           = $DB_HOST -->\n";
 	//echo "<!-- Config: ResourceRefresh   = $ResourceRefresh -->\n";
 	//echo "<!-- Config: StatsRefresh      = $StatsRefresh -->\n";
 	//echo "<!-- Config: StatusRefresh     = $StatusRefresh -->\n";
