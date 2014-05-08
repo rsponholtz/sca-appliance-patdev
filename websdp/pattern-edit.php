@@ -1,4 +1,5 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
@@ -19,7 +20,7 @@ if ( isset($PatternID) ) {
 
 if ( ! isset($UpdatedOnce) ) { $UpdatedOnce = 0; }
 
-include 'db-config.php';
+include 'sdp-config.php';
 
 //echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
 //echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
@@ -29,20 +30,32 @@ include 'db-config.php';
 //echo "<!-- Variable: PatternID       = $PatternID -->\n";
 
 if (isset($_POST['update-sdp'])) {
-	$Title 			= $_POST['form_title'];
-	$Description 	= $_POST['form_description'];
-	$Class 			= $_POST['form_class'];
-	$Category 		= $_POST['form_category'];
-	$Component 		= $_POST['form_component'];
-	$Notes 			= $_POST['form_notes'];
-	$PatternFile 	= $_POST['form_pattern_file'];
+	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+	if ($Connection->connect_errno()) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR:</B> Failed to connect to database.</P>\n";
+		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
+		die();
+	}
+
+	$Title 			= $Connection->real_escape_string($_POST['form_title']);
+	$Description 	= $Connection->real_escape_string($_POST['form_description']);
+	$Class 			= $Connection->real_escape_string($_POST['form_class']);
+	$Category 		= $Connection->real_escape_string($_POST['form_category']);
+	$Component 		= $Connection->real_escape_string($_POST['form_component']);
+	$Notes 			= $Connection->real_escape_string($_POST['form_notes']);
+	$PatternFile 	= $Connection->real_escape_string($_POST['form_pattern_file']);
 	$PatternType 	= $_POST['form_pattern_type'];
 	$Submitted 		= $_POST['form_submitted'];
 	$Modified 		= date('Y\-m\-d');
-	$Released 		= $_POST['form_released'];
-	$Submitter 		= $_POST['form_submitter'];
-	$Owner 			= $_POST['form_owner'];
-	$PrimaryLink   = $_POST['form_plink'];
+	$Released 		= $Connection->real_escape_string($_POST['form_released']);
+	$Submitter 		= $Connection->real_escape_string($_POST['form_submitter']);
+	$Owner 			= $Connection->real_escape_string($_POST['form_owner']);
+	$PrimaryLink   = $Connection->real_escape_string($_POST['form_plink']);
 	$TID 				= $_POST['form_tid'];
 	$BUG 				= $_POST['form_bug'];
 	$URL01 			= $_POST['form_url1'];
@@ -71,13 +84,6 @@ if (isset($_POST['update-sdp'])) {
 
 	$UpdatedOnce	= $_POST['form_updated_once'];
 	
-	include 'db-open.php';
-	$Query = "LOCK TABLES $TableName WRITE";
-	mysql_query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
-
-	//echo "<!-- Query: Submitted          = $Query -->\n";
-	//echo "<!-- Database: Table           = Locked $TableName -->\n";
-
 	if ( $Title && $Submitter && $Category && $Component ) {
 		if ( $Status == "Complete" && $Owner == "" ) {
 			echo "</HEAD>\n";
@@ -106,12 +112,16 @@ if (isset($_POST['update-sdp'])) {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
-			$Title = str_replace("'", "\'", $Title);
-			$Description = str_replace("'", "\'", $Description);
+			$Query = "LOCK TABLES $TableName WRITE";
+			$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
+			$Result->close();
+			//echo "<!-- Query: Submitted          = $Query -->\n";
+			//echo "<!-- Database: Table           = Locked $TableName -->\n";
+
 			$Query = "UPDATE $TableName SET Title='$Title', Description='$Description', Class='$Class', Category='$Category', Component='$Component', Notes='$Notes', PatternFile='$PatternFile', PatternType='$PatternType', Submitted='$Submitted', Modified='$Modified', Released='$Released', Submitter='$Submitter', Owner='$Owner', PrimaryLink='$PrimaryLink', TID='$TID', BUG='$BUG', URL01='$URL01', URL02='$URL02', URL03='$URL03', URL04='$URL04', URL05='$URL05', Status='$Status' WHERE PatternID=$PatternID";
 
 			//echo "<!-- Query: Submitted          = $Query -->\n";
-			$Result=mysql_query($Query);
+			$Result = $Connection->query($Query);
 			if ($Result) {
 				//echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=pattern-edit.php?pid=$PatternID&by=$OrderBy&dir=$OrderDir&filter=$Filter&up=1\">\n"; }
@@ -131,9 +141,10 @@ if (isset($_POST['update-sdp'])) {
 				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR:</B> " . mysql_error() . "</P>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR:</B> " . $Connection->error . "</P>\n";
 				echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 			}
+			$Result->close();
 		}
 	} else {
 		echo "<BODY>\n";
@@ -145,11 +156,12 @@ if (isset($_POST['update-sdp'])) {
 	}
 
 	$Query = "UNLOCK TABLES";
+	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
+	$Result->close();
 	//echo "<!-- Query: Submitted          = $Query -->\n";
-	mysql_query($Query) or die("<FONT SIZE=\"-1\">Database: <B>ERROR</B>, Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
 	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 
-	include 'db-close.php';
+	$Connection->close();
 } else {
 ?>
 </HEAD>

@@ -125,7 +125,7 @@
 		die();
 	}
 	//echo "<!-- Query: Submitted          = $Query -->\n";
-	$Result = $Connection->query($query);
+	$Result = $Connection->query($Query);
 	$Num = $Result->num_rows;
 	if ( $Result ) {
 		//echo "<!-- Query: Result             = Success -->\n";
@@ -167,7 +167,7 @@
 					}
 
 					//echo "<!-- Query: Submitted          = $Query -->\n";
-					$UpdateResult = $Connection->query($query);
+					$UpdateResult = $Connection->query($Query);
 					if ( $UpdateResult ) {
 						//echo "<!-- Query: Result             = Success -->\n";
 						$PatternsUpdated++;
