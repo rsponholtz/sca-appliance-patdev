@@ -170,22 +170,29 @@ if (isset($_POST['update-sdp'])) {
 <?PHP
 	echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 	echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-	include 'db-open.php';
 	if ( ! isset($PatternID) ) {
 		die("<B>ERROR</B>: Undefined Variable \"PatternID\" -> <B>FAILED</B>\n");
 	}
+	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+	if ($Connection->connect_errno()) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR:</B> Failed to connect to database.</P>\n";
+		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
+		die();
+	}
 	$Query = "SELECT * FROM $TableName WHERE PatternID=$PatternID";
-	$Result=mysql_query($Query);
-	$NumRows=mysql_numrows($Result);
+	$Result = $Connection->query($Query);
 	//echo "<!-- Query: Submitted          = $Query -->\n";
 	if ( $Result ) {
 		//echo "<!-- Query: Result             = Success -->\n";
-		//echo "<!-- Query: Rows               = $NumRows -->\n";
 	} else {
 		//echo "<!-- Query: Results            = FAILURE -->\n";
 	}
-	include 'db-close.php';
-	$row_cell = mysql_fetch_row($Result);
+	$row_cell = $Result->fetch_row();
 	$PatternID		= htmlspecialchars($row_cell[0]);
 	$Title 			= htmlspecialchars($row_cell[1]);
 	$Description 	= htmlspecialchars($row_cell[2]);
@@ -214,6 +221,9 @@ if (isset($_POST['update-sdp'])) {
 //	$URL09 			= htmlspecialchars($row_cell[25]);
 //	$URL10 			= htmlspecialchars($row_cell[26]);
 	$Status 			= htmlspecialchars($row_cell[27]);
+
+	$Result->close();
+	$Connection->close();
 ?>
 
 <FORM METHOD="post">
