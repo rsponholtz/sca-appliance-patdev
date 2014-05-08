@@ -1,4 +1,5 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
@@ -90,29 +91,37 @@ $Check = $_GET['ck'];
 //echo "<!-- Variable: Filter          = $Filter -->\n";
 //echo "<!-- Variable: Check           = $Check -->\n";
 
-include 'db-config.php';
-include 'db-open.php';
+include 'sdp-config.php';
+$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
+if ($Connection->connect_errno()) {
+	echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Database Summary</P>\n";
+	echo "<H2 ALIGN=\"center\">Connect to Database: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+	echo "<P ALIGN=\"center\">Make sure the MariaDB database is configured properly.</P>\n";
+	echo "</BODY>\n</HTML>\n";
+	die();
+}
 
 // Get the total number of patterns
 $Query = "SELECT Count(PatternID) FROM $TableName";
 //echo "<!-- Query: Submitted          = $Query -->\n";
-$Result = mysql_query($Query);
-$Num = mysql_numrows($Result);
+$Result = $Connection->query($Query);
+$Num = $Result->num_rows;
 if ( $Result ) {
 	//echo "<!-- Query: Result             = Success -->\n";
 	//echo "<!-- Query: Rows               = $Num -->\n";
 } else {
 	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
-$Row_Cell = mysql_fetch_row($Result);
-$TotalPatterns = $Row_Cell[0];
+$Row_Cell = $Result->fetch_row();
+$TotalPatterns = htmlspecialchars($Row_Cell[0]);
 echo "<TR CLASS=\"head_2\"><TD>Total Patterns</TD><TD>$TotalPatterns</TD><TR>\n";
+$Result->close();
 
 // Count the patterns grouped by Status
 $Query = "SELECT Status, Count(Status) FROM $TableName GROUP BY Status";
 //echo "<!-- Query: Submitted          = $Query -->\n";
-$Result = mysql_query($Query);
-$Num = mysql_numrows($Result);
+$Result = $Connection->query($Query);
+$Num = $Result->num_rows;
 if ( $Result ) {
 	//echo "<!-- Query: Result             = Success -->\n";
 	//echo "<!-- Query: Rows               = $Num -->\n";
@@ -120,19 +129,21 @@ if ( $Result ) {
 	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Status</TD></TR>\n";
-for ( $i=0; $i < $Num; $i++ ) {
-	$Row_Cell		= mysql_fetch_row($Result);
+$i=0;
+while ( $Row_Cell = $Result->fetch_row() ) {
 	$Key				= htmlspecialchars($Row_Cell[0]);
 	$Key_Count		= htmlspecialchars($Row_Cell[1]);
 	if ( $i%2 == 0 ) { $Row_Color="tdGrey"; } else { $Row_Color="tdGreyLight"; }
 	echo "<TR CLASS=\"$Row_Color\"><TD>$Key</TD><TD>$Key_Count</TD><TR>\n";
+	$i++;
 }
+$Result->close();
 
 // Count the patterns grouped by Class
 $Query = "SELECT Class, Count(Class) FROM $TableName GROUP BY Class";
 //echo "<!-- Query: Submitted          = $Query -->\n";
-$Result = mysql_query($Query);
-$Num = mysql_numrows($Result);
+$Result = $Connection->query($Query);
+$Num = $Result->num_rows;
 if ( $Result ) {
 	//echo "<!-- Query: Result             = Success -->\n";
 	//echo "<!-- Query: Rows               = $Num -->\n";
@@ -140,19 +151,21 @@ if ( $Result ) {
 	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Class</TD></TR>\n";
-for ( $i=0; $i < $Num; $i++ ) {
-	$Row_Cell		= mysql_fetch_row($Result);
+$i=0;
+while ( $Row_Cell = $Result->fetch_row() ) {
 	$Key				= htmlspecialchars($Row_Cell[0]);
 	$Key_Count		= htmlspecialchars($Row_Cell[1]);
 	if ( $i%2 == 0 ) { $Row_Color="tdGrey"; } else { $Row_Color="tdGreyLight"; }
 	echo "<TR CLASS=\"$Row_Color\"><TD>$Key</TD><TD>$Key_Count</TD><TR>\n";
+	$i++;
 }
+$Result->close();
 
 // Count the patterns grouped by Type
 $Query = "SELECT PatternType, Count(PatternType) FROM $TableName GROUP BY PatternType";
 //echo "<!-- Query: Submitted          = $Query -->\n";
-$Result = mysql_query($Query);
-$Num = mysql_numrows($Result);
+$Result = $Connection->query($Query);
+$Num = $Result->num_rows;
 if ( $Result ) {
 	//echo "<!-- Query: Result             = Success -->\n";
 	//echo "<!-- Query: Rows               = $Num -->\n";
@@ -160,16 +173,18 @@ if ( $Result ) {
 	//echo "<!-- Query: Result             = FAILURE -->\n";
 }
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\">Count by Pattern Type</TD></TR>\n";
-for ( $i=0; $i < $Num; $i++ ) {
-	$Row_Cell		= mysql_fetch_row($Result);
+$i=0;
+while ( $Row_Cell = $Result->fetch_row() ) {
 	$Key				= htmlspecialchars($Row_Cell[0]);
 	$Key_Count		= htmlspecialchars($Row_Cell[1]);
 	if ( $i%2 == 0 ) { $Row_Color="tdGrey"; } else { $Row_Color="tdGreyLight"; }
 	echo "<TR CLASS=\"$Row_Color\"><TD>$Key</TD><TD>$Key_Count</TD><TR>\n";
+	$i++;
 }
+$Result->close();
 
 echo "<FORM>";
-include 'db-close.php';
+$Connection->close();
 echo "<TR CLASS=\"head_2\"><TD COLSPAN=\"2\" ALIGN=\"center\"><INPUT TYPE=\"BUTTON\" VALUE=\"Close\" ONCLICK=\"window.location.href='patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=$Filter&ck=$Check'\"></TD></TR>\n";
 ?> 
 </FORM>
