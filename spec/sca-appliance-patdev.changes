@@ -1,4 +1,11 @@
 -------------------------------------------------------------------
+Thu May  8 20:19:44 UTC 2014 - jrecord@suse.com
+
+- Added login using web-config.php credentials
+- Converted mysql PHP calls to mysqli (bnc#876918)
+- Added string escapes
+
+-------------------------------------------------------------------
 Tue Apr 22 22:09:20 UTC 2014 - jrecord@suse.com
 
 - Removed clear screen and -c
