@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -117,7 +117,7 @@
 	echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
 
 	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-	if ($Connection->connect_errno()) {
+	if ($Connection->connect_errno) {
 		echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Database Pattern Index</P>\n";
 		echo "<H2 ALIGN=\"center\">Connect to Database: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 		echo "<P ALIGN=\"center\">Make sure the MariaDB database is configured properly.</P>\n";

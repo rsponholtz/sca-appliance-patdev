@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -93,7 +93,7 @@ include 'sdp-config.php';
 
 if (isset($_POST['add-sdp'])) {
 	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
-	if ($Connection->connect_errno()) {
+	if ($Connection->connect_errno) {
 		echo "</HEAD>\n";
 		echo "<BODY>\n";
 		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
