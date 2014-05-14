@@ -1,7 +1,6 @@
 <?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
-<HEAD>
 <?PHP
 	include 'sdp-config.php';
 
@@ -115,6 +114,7 @@
 	echo "<TITLE>SDP Submissions</TITLE>\n";
 	echo "</HEAD>\n";
 	echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+	echo "\n<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 
 	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 	if ($Connection->connect_errno) {
@@ -182,7 +182,7 @@
 					//echo "<!-- Query: Result             = Skipped -->\n";
 				}
 			}
-			include 'db-close.php';
+			$Result->close();
 
 			if ( $UpdateErrors ) {
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";

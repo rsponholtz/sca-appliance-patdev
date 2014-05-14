@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed May 14 19:57:04 UTC 2014 - jrecord@suse.com
+
+- Fixed login and timeout (bnc#876919)
+
+-------------------------------------------------------------------
 Mon May 12 21:49:18 UTC 2014 - jrecord@suse.com
 
 - Fixed connection errors
