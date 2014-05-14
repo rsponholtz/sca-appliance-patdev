@@ -103,7 +103,6 @@ if (isset($_POST['add-sdp'])) {
 		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
 		die();
 	}
-	$Description = 'NULL';
 	$PatternID     = 0;
 	$Title 			= $Connection->real_escape_string($_POST['form_title']);
 	$Description 	= $Connection->real_escape_string($_POST['form_description']);
@@ -174,7 +173,7 @@ if (isset($_POST['add-sdp'])) {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
-			echo "<!-- Description: strlen($Description), '$Description' -->\n";
+			echo "<!-- Description: " . strlen($Description) . ", '$Description' -->\n";
 			if( strlen($Description) > 0 ) {
 				$Description = "'$Description'";
 			} else {
