@@ -139,11 +139,7 @@ if (isset($_POST['add-sdp'])) {
 	elseif ( strlen($URL05) > 0 ) { $URL = preg_split("/=/", "$URL05"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
 	else { $PrimaryLink = 'NULL'; }
 
-//	$Query = "LOCK TABLES $TableName WRITE";
-//	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
-//	$Result->close();
-
-	//echo "<!-- Query: Submitted          = $Query -->\n";
+	$Connection->query("LOCK TABLES $TableName WRITE") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
 	//echo "<!-- Database: Table           = Locked $TableName -->\n";
 
 	if ( $Title && $Submitter && $Category && $Component ) {
@@ -156,7 +152,7 @@ if (isset($_POST['add-sdp'])) {
 			echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 		} else {
 			if ( ( $Status == "Assigned" || $Status == "In-Progress" ) && $Owner == "" ) {
-				$Owner = "'$Submitter'";
+				$Owner = "$Submitter";
 				$Owner2submitter = 1;
 				$LocalRefresh = $StatusRefresh * 3;
 				//echo "<!-- Override: Owner           = $Owner -->\n";
@@ -173,19 +169,23 @@ if (isset($_POST['add-sdp'])) {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
-			echo "<!-- Description: " . strlen($Description) . ", '$Description' -->\n";
-			if( strlen($Description) > 0 ) {
-				$Description = "'$Description'";
-			} else {
-				$Description = NULL;
-			}
+			if( strlen($Description) > 0 ) { $Description = "'$Description'"; } else { $Description = 'NULL'; }
+			if( strlen($Notes) > 0 ) { $Notes = "'$Notes'"; } else { $Notes = 'NULL'; }
+			if( strlen($PatternFile) > 0 ) { $PatternFile = "'$PatternFile'"; } else { $PatternFile = 'NULL'; }
+			if( strlen($Owner) > 0 ) { $Owner = "'$Owner'"; } else { $Owner = 'NULL'; }
+			if( strlen($TID) > 0 ) { $TID = "'$TID'"; } else { $TID = 'NULL'; }
+			if( strlen($BUG) > 0 ) { $BUG = "'$BUG'"; } else { $BUG = 'NULL'; }
+			if( strlen($URL01) > 0 ) { $URL01 = "'$URL01'"; } else { $URL01 = 'NULL'; }
+			if( strlen($URL02) > 0 ) { $URL02 = "'$URL02'"; } else { $URL02 = 'NULL'; }
+			if( strlen($URL03) > 0 ) { $URL03 = "'$URL03'"; } else { $URL03 = 'NULL'; }
+			if( strlen($URL04) > 0 ) { $URL04 = "'$URL04'"; } else { $URL04 = 'NULL'; }
+			if( strlen($URL05) > 0 ) { $URL05 = "'$URL05'"; } else { $URL05 = 'NULL'; }
 			$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
 //
 			echo "<!-- Query: Submitted          = $Query -->\n";
 			$Result = $Connection->query($Query);
 			if ($Result) {
-//
-				echo "<!-- Query: Result             = Success -->\n";
+//				echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
@@ -198,12 +198,11 @@ if (isset($_POST['add-sdp'])) {
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 				$Result->close();
 			} else {
-//
-				echo "<!-- Query: Result             = FAILED -->\n";
+//				echo "<!-- Query: Result             = FAILED -->\n";
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR:</B> Unable to add record to database</P>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR:</B> Unable to add record to database " . $Result->error . "</P>\n";
 				echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 			}
 		}
@@ -216,10 +215,7 @@ if (isset($_POST['add-sdp'])) {
 		echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 	}
 
-//	$Query = "UNLOCK TABLES";
-	//echo "<!-- Query: Submitted          = $Query -->\n";
-//	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
-//	$Result->close();
+	$Connection->query("UNLOCK TABLES") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
 	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 	$Connection->close();
 } else {
