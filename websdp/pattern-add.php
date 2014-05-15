@@ -82,11 +82,11 @@
 		$Check = 0;
 	}
 
-	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
-	//echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
-	//echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
-	//echo "<!-- Variable: Filter          = $Filter -->\n";
-	//echo "<!-- Variable: Check           = $Check -->\n";
+//	echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
+//	echo "<!-- Variable: OrderDir        = $OrderDir -->\n";
+//	echo "<!-- Variable: ToggleDir       = $ToggleDir -->\n";
+//	echo "<!-- Variable: Filter          = $Filter -->\n";
+//	echo "<!-- Variable: Check           = $Check -->\n";
 
 
 include 'sdp-config.php';
@@ -112,7 +112,6 @@ if (isset($_POST['add-sdp'])) {
 		echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
 		die();
 	}
-//	if (!($Statement->bind_param('issssssssssssssssssssssssssss', $PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status'))) {
 	if (!($Statement->bind_param('isssssssssssssssssssssssssss', $PatternID,$Title,$Description,$Class,$Category,$Component,$Notes,$PatternFile,$PatternType,$Submitted,$Modified,$Released,$Submitter,$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,$Status))) {
 		echo "</HEAD>\n";
 		echo "<BODY>\n";
@@ -123,14 +122,7 @@ if (isset($_POST['add-sdp'])) {
 		die();
 	}
 
-//	$Statement->bind_param('issssssssssssssssssssssssssss', )
-//$stmt = $mysqli->prepare("INSERT INTO SampleTable VALUES (?)");
-//$stmt->bind_param('s', $sample);   // bind $sample to the parameter
-
-//$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,
-//'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,
-//$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
-	$PatternID     = 0;
+	$PatternID     = 0; #auto assigns next incremented value in the database
 	$Title 			= $Connection->real_escape_string($_POST['form_title']);
 	$Description 	= $Connection->real_escape_string($_POST['form_description']);
 	$Class 			= $Connection->real_escape_string($_POST['form_class']);
@@ -151,20 +143,20 @@ if (isset($_POST['add-sdp'])) {
 	$URL03 			= $_POST['form_url3'];
 	$URL04 			= $_POST['form_url4'];
 	$URL05 			= $_POST['form_url5'];
-	$URL06 			= 'NULL';
-	$URL07 			= 'NULL';
-	$URL08 			= 'NULL';
-	$URL09 			= 'NULL';
-	$URL10 			= 'NULL';
+	$URL06 			= NULL;
+	$URL07 			= NULL;
+	$URL08 			= NULL;
+	$URL09 			= NULL;
+	$URL10 			= NULL;
 	$Status 			= $_POST['form_status'];
-	if ( strlen($TID) > 0 ) { $PrimaryLink = "'META_LINK_TID'"; }
-	elseif ( strlen($BUG) > 0 ) { $PrimaryLink = "'META_LINK_BUG'"; }
-	elseif ( strlen($URL01) > 0 ) { $URL = preg_split("/=/", "$URL01"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
-	elseif ( strlen($URL02) > 0 ) { $URL = preg_split("/=/", "$URL02"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
-	elseif ( strlen($URL03) > 0 ) { $URL = preg_split("/=/", "$URL03"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
-	elseif ( strlen($URL04) > 0 ) { $URL = preg_split("/=/", "$URL04"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
-	elseif ( strlen($URL05) > 0 ) { $URL = preg_split("/=/", "$URL05"); $PrimaryLink = "'META_LINK_$URL[0]'"; }
-	else { $PrimaryLink = 'NULL'; }
+	if ( strlen($TID) > 0 ) { $PrimaryLink = "META_LINK_TID"; }
+	elseif ( strlen($BUG) > 0 ) { $PrimaryLink = "META_LINK_BUG"; }
+	elseif ( strlen($URL01) > 0 ) { $URL = preg_split("/=/", "$URL01"); $PrimaryLink = "META_LINK_$URL[0]"; }
+	elseif ( strlen($URL02) > 0 ) { $URL = preg_split("/=/", "$URL02"); $PrimaryLink = "META_LINK_$URL[0]"; }
+	elseif ( strlen($URL03) > 0 ) { $URL = preg_split("/=/", "$URL03"); $PrimaryLink = "META_LINK_$URL[0]"; }
+	elseif ( strlen($URL04) > 0 ) { $URL = preg_split("/=/", "$URL04"); $PrimaryLink = "META_LINK_$URL[0]"; }
+	elseif ( strlen($URL05) > 0 ) { $URL = preg_split("/=/", "$URL05"); $PrimaryLink = "META_LINK_$URL[0]"; }
+	else { $PrimaryLink = NULL; }
 
 	$Connection->query("LOCK TABLES $TableName WRITE") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
 //	echo "<!-- Database: Table           = Locked $TableName -->\n";
@@ -191,37 +183,23 @@ if (isset($_POST['add-sdp'])) {
 				$Status = 'Assigned'; 
 				$Status2assigned = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				//echo "<!-- Override: Status          = $Status -->\n";
+//				echo "<!-- Override: Status          = $Status -->\n";
 			} else {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
-			if( strlen($Description) > 0 ) { $Description = "'$Description'"; } else { $Description = 'NULL'; }
-			if( strlen($Notes) > 0 ) { $Notes = "'$Notes'"; } else { $Notes = 'NULL'; }
-			if( strlen($PatternFile) > 0 ) { $PatternFile = "'$PatternFile'"; } else { $PatternFile = 'NULL'; }
-			if( strlen($Owner) > 0 ) { $Owner = "'$Owner'"; } else { $Owner = 'NULL'; }
-			if( strlen($TID) > 0 ) { $TID = "'$TID'"; } else { $TID = 'NULL'; }
-			if( strlen($BUG) > 0 ) { $BUG = "'$BUG'"; } else { $BUG = 'NULL'; }
-			if( strlen($URL01) > 0 ) { $URL01 = "'$URL01'"; } else { $URL01 = 'NULL'; }
-			if( strlen($URL02) > 0 ) { $URL02 = "'$URL02'"; } else { $URL02 = 'NULL'; }
-			if( strlen($URL03) > 0 ) { $URL03 = "'$URL03'"; } else { $URL03 = 'NULL'; }
-			if( strlen($URL04) > 0 ) { $URL04 = "'$URL04'"; } else { $URL04 = 'NULL'; }
-			if( strlen($URL05) > 0 ) { $URL05 = "'$URL05'"; } else { $URL05 = 'NULL'; }
-			if (!($Statement->execute())) {
-				echo "</HEAD>\n";
-				echo "<BODY>\n";
-				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
-				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-				echo "<H2 ALIGN=\"center\">Insert: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
-				die();
-			}
-			$Result = $Statement->get_result();
-//			$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
-//			echo "<!-- Query: Submitted          = $Query -->\n";
-//			$Result = $Connection->query($Query);
-			if ($Result) {
-//				echo "<!-- Query: Result             = Success -->\n";
+			if( strlen($Description) > 0 ) { $Description = "$Description"; } else { $Description = NULL; }
+			if( strlen($Notes) > 0 ) { $Notes = "$Notes"; } else { $Notes = NULL; }
+			if( strlen($PatternFile) > 0 ) { $PatternFile = "$PatternFile"; } else { $PatternFile = NULL; }
+			if( strlen($Owner) > 0 ) { $Owner = "$Owner"; } else { $Owner = NULL; }
+			if( strlen($TID) > 0 ) { $TID = "$TID"; } else { $TID = NULL; }
+			if( strlen($BUG) > 0 ) { $BUG = "$BUG"; } else { $BUG = NULL; }
+			if( strlen($URL01) > 0 ) { $URL01 = "$URL01"; } else { $URL01 = NULL; }
+			if( strlen($URL02) > 0 ) { $URL02 = "$URL02"; } else { $URL02 = NULL; }
+			if( strlen($URL03) > 0 ) { $URL03 = "$URL03"; } else { $URL03 = NULL; }
+			if( strlen($URL04) > 0 ) { $URL04 = "$URL04"; } else { $URL04 = NULL; }
+			if( strlen($URL05) > 0 ) { $URL05 = "$URL05"; } else { $URL05 = NULL; }
+			if (($Statement->execute())) {
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
@@ -232,19 +210,19 @@ if (isset($_POST['add-sdp'])) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Pre-existing Owner, Status Changed to Assigned -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";
 				}
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
-				$Result->close();
 				$Statement->close();
 			} else {
-//				echo "<!-- Query: Result             = FAILED -->\n";
+				echo "</HEAD>\n";
 				echo "<BODY>\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR:</B> Unable to add record to database " . $Result->error . "</P>\n";
-				echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
+				echo "<H2 ALIGN=\"center\">Insert: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
+				die();
 			}
 		}
 	} else {
-		//echo "<!-- Variables Undefined       = Title and Submitter -->\n";
+//		echo "<!-- Variables Undefined       = Title and Submitter -->\n";
 		echo "<BODY>\n";
 		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 		echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
@@ -253,7 +231,7 @@ if (isset($_POST['add-sdp'])) {
 	}
 
 	$Connection->query("UNLOCK TABLES") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
-	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
+//	echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 	$Connection->close();
 } else {
 ?>
