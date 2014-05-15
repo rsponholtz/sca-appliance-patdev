@@ -123,19 +123,19 @@ if (isset($_POST['add-sdp'])) {
 	}
 
 	$PatternID     = 0; #auto assigns next incremented value in the database
-	$Title 			= $Connection->real_escape_string($_POST['form_title']);
-	$Description 	= $Connection->real_escape_string($_POST['form_description']);
-	$Class 			= $Connection->real_escape_string($_POST['form_class']);
-	$Category 		= $Connection->real_escape_string($_POST['form_category']);
-	$Component 		= $Connection->real_escape_string($_POST['form_component']);
-	$Notes 			= $Connection->real_escape_string($_POST['form_notes']);
-	$PatternFile 	= $Connection->real_escape_string($_POST['form_pattern_file']);
-	$PatternType 	= $Connection->real_escape_string($_POST['form_pattern_type']);
+	$Title 			= $_POST['form_title'];
+	$Description 	= $_POST['form_description'];
+	$Class 			= $_POST['form_class'];
+	$Category 		= $_POST['form_category'];
+	$Component 		= $_POST['form_component'];
+	$Notes 			= $_POST['form_notes'];
+	$PatternFile 	= $_POST['form_pattern_file'];
+	$PatternType 	= $_POST['form_pattern_type'];
 //	$Submitted     = date('Y\-m\-d'); # Must be set above
 	$Modified 		= $Submitted;
 	$Released 		= NULL;
-	$Submitter 		= $Connection->real_escape_string($_POST['form_submitter']);
-	$Owner 			= $Connection->real_escape_string($_POST['form_owner']);
+	$Submitter 		= $_POST['form_submitter'];
+	$Owner 			= $_POST['form_owner'];
 	$TID 				= $_POST['form_tid'];
 	$BUG 				= $_POST['form_bug'];
 	$URL01 			= $_POST['form_url1'];

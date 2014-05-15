@@ -65,20 +65,20 @@ if (isset($_POST['update-sdp'])) {
 		die();
 	}
 
-	$Title 			= $Connection->real_escape_string($_POST['form_title']);
-	$Description 	= $Connection->real_escape_string($_POST['form_description']);
-	$Class 			= $Connection->real_escape_string($_POST['form_class']);
-	$Category 		= $Connection->real_escape_string($_POST['form_category']);
-	$Component 		= $Connection->real_escape_string($_POST['form_component']);
-	$Notes 			= $Connection->real_escape_string($_POST['form_notes']);
-	$PatternFile 	= $Connection->real_escape_string($_POST['form_pattern_file']);
+	$Title 			= $_POST['form_title'];
+	$Description 	= $_POST['form_description'];
+	$Class 			= $_POST['form_class'];
+	$Category 		= $_POST['form_category'];
+	$Component 		= $_POST['form_component'];
+	$Notes 			= $_POST['form_notes'];
+	$PatternFile 	= $_POST['form_pattern_file'];
 	$PatternType 	= $_POST['form_pattern_type'];
 	$Submitted 		= $_POST['form_submitted'];
 	$Modified 		= date('Y\-m\-d');
-	$Released 		= $Connection->real_escape_string($_POST['form_released']);
-	$Submitter 		= $Connection->real_escape_string($_POST['form_submitter']);
-	$Owner 			= $Connection->real_escape_string($_POST['form_owner']);
-	$PrimaryLink   = $Connection->real_escape_string($_POST['form_plink']);
+	$Released 		= $_POST['form_released'];
+	$Submitter 		= $_POST['form_submitter'];
+	$Owner 			= $_POST['form_owner'];
+	$PrimaryLink   = $_POST['form_plink'];
 	$TID 				= $_POST['form_tid'];
 	$BUG 				= $_POST['form_bug'];
 	$URL01 			= $_POST['form_url1'];
@@ -87,8 +87,6 @@ if (isset($_POST['update-sdp'])) {
 	$URL04 			= $_POST['form_url4'];
 	$URL05 			= $_POST['form_url5'];
 	$Status 			= $_POST['form_status'];
-//
-	echo "<!-- Variable: Released        = $Released    -->\n";
 
 	if ( strlen($Released) == 0 ) {
 		$Released = NULL;
@@ -97,7 +95,7 @@ if (isset($_POST['update-sdp'])) {
 			$Released = $Modified;
 		}
 	}
-	//echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+//	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
 	if ( strlen($PrimaryLink) < 1 ) {
 		if ( strlen($TID) > 0 ) { $PrimaryLink = "META_LINK_TID"; }
 		elseif ( strlen($BUG) > 0 ) { $PrimaryLink = "META_LINK_BUG"; }
@@ -132,7 +130,7 @@ if (isset($_POST['update-sdp'])) {
 				$Owner = $Submitter;
 				$Owner2submitter = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				//echo "<!-- Override: Owner           = $Owner -->\n";
+//				echo "<!-- Override: Owner           = $Owner -->\n";
 			} else {
 				$Owner2submitter = 0;
 				$LocalRefresh = $StatusRefresh;
@@ -141,16 +139,16 @@ if (isset($_POST['update-sdp'])) {
 				$Status = 'Assigned'; 
 				$Status2assigned = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				//echo "<!-- Override: Status          = $Status -->\n";
+//				echo "<!-- Override: Status          = $Status -->\n";
 			} else {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
 			$Connection->query("LOCK TABLES $TableName WRITE") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
-			//echo "<!-- Database: Table           = Locked $TableName -->\n";
+//			echo "<!-- Database: Table           = Locked $TableName -->\n";
 
 			if (($Statement->execute())) {
-				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
+				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=pattern-edit.php?pid=$PatternID&by=$OrderBy&dir=$OrderDir&filter=$Filter&up=1\">\n"; }
 				echo "<BODY>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				if ( $Owner2submitter ) {
@@ -159,7 +157,7 @@ if (isset($_POST['update-sdp'])) {
 				if ( $Status2assigned ) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Pre-existing Owner, Status Changed to Assigned -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";
 				}
-				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
+				echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 				$Statement->close();
 			} else {
 				echo "</HEAD>\n";
@@ -207,11 +205,11 @@ if (isset($_POST['update-sdp'])) {
 	}
 	$Query = "SELECT * FROM $TableName WHERE PatternID=$PatternID";
 	$Result = $Connection->query($Query);
-	//echo "<!-- Query: Submitted          = $Query -->\n";
+//	echo "<!-- Query: Submitted          = $Query -->\n";
 	if ( $Result ) {
-		//echo "<!-- Query: Result             = Success -->\n";
+//		echo "<!-- Query: Result             = Success -->\n";
 	} else {
-		//echo "<!-- Query: Results            = FAILURE -->\n";
+//		echo "<!-- Query: Results            = FAILURE -->\n";
 	}
 	$row_cell = $Result->fetch_row();
 	$PatternID		= htmlspecialchars($row_cell[0]);
@@ -285,8 +283,6 @@ if (isset($_POST['update-sdp'])) {
 	echo "</TD></TR>\n";
 
 //	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
-//
-	echo "<!-- Variable: Released        = $Released    -->\n";
 	echo "<TR><TD>";
 	if ( $TID ) {
 		if ( "$PrimaryLink" == "META_LINK_TID" ) { $CheckMark = "CHECKED=\"yes\""; }
@@ -403,9 +399,9 @@ if (isset($_POST['update-sdp'])) {
 	echo "<TD ALIGN=\"center\" COLSPAN=2>Notes:&nbsp;&nbsp;<TEXTAREA NAME=\"form_notes\" COLS=$NotesLength ROWS=3>$Notes</TEXTAREA></TD>";
 	echo "</TR>\n";
 
-	if ( $UpdatedOnce > 0 ) { $Action = "Return to List"; } else { $Action = "Cancel"; }
-	//echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
-	//echo "<!-- Variable: Action          = $Action -->\n";
+	if ( $UpdatedOnce > 0 ) { $Action = "Close Window"; } else { $Action = "Cancel"; }
+//	echo "<!-- Variable: UpdatedOnce     = $UpdatedOnce -->\n";
+//	echo "<!-- Variable: Action          = $Action -->\n";
 
 	echo "<TR><TD COLSPAN=2>&nbsp;</TD></TR>\n";
 	echo "<TR ALIGN=\"center\"><TD COLSPAN=2>\n";
