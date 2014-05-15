@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 15 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -103,6 +103,33 @@ if (isset($_POST['add-sdp'])) {
 		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
 		die();
 	}
+	if (!($Statement = $Connection->prepare("INSERT INTO $TableName VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"))) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Prepare: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
+		die();
+	}
+//	if (!($Statement->bind_param('issssssssssssssssssssssssssss', $PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status'))) {
+	if (!($Statement->bind_param('isssssssssssssssssssssssssss', $PatternID,$Title,$Description,$Class,$Category,$Component,$Notes,$PatternFile,$PatternType,$Submitted,$Modified,$Released,$Submitter,$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,$Status))) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Bind Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
+		die();
+	}
+
+//	$Statement->bind_param('issssssssssssssssssssssssssss', )
+//$stmt = $mysqli->prepare("INSERT INTO SampleTable VALUES (?)");
+//$stmt->bind_param('s', $sample);   // bind $sample to the parameter
+
+//$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,
+//'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,
+//$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
 	$PatternID     = 0;
 	$Title 			= $Connection->real_escape_string($_POST['form_title']);
 	$Description 	= $Connection->real_escape_string($_POST['form_description']);
@@ -114,7 +141,7 @@ if (isset($_POST['add-sdp'])) {
 	$PatternType 	= $Connection->real_escape_string($_POST['form_pattern_type']);
 //	$Submitted     = date('Y\-m\-d'); # Must be set above
 	$Modified 		= $Submitted;
-	$Released 		= 'NULL';
+	$Released 		= NULL;
 	$Submitter 		= $Connection->real_escape_string($_POST['form_submitter']);
 	$Owner 			= $Connection->real_escape_string($_POST['form_owner']);
 	$TID 				= $_POST['form_tid'];
@@ -140,7 +167,7 @@ if (isset($_POST['add-sdp'])) {
 	else { $PrimaryLink = 'NULL'; }
 
 	$Connection->query("LOCK TABLES $TableName WRITE") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
-	//echo "<!-- Database: Table           = Locked $TableName -->\n";
+//	echo "<!-- Database: Table           = Locked $TableName -->\n";
 
 	if ( $Title && $Submitter && $Category && $Component ) {
 		if ( $Status == "Complete" && $Owner == "" ) {
@@ -155,7 +182,7 @@ if (isset($_POST['add-sdp'])) {
 				$Owner = "$Submitter";
 				$Owner2submitter = 1;
 				$LocalRefresh = $StatusRefresh * 3;
-				//echo "<!-- Override: Owner           = $Owner -->\n";
+//				echo "<!-- Override: Owner           = $Owner -->\n";
 			} else {
 				$Owner2submitter = 0;
 				$LocalRefresh = $StatusRefresh;
@@ -180,10 +207,19 @@ if (isset($_POST['add-sdp'])) {
 			if( strlen($URL03) > 0 ) { $URL03 = "'$URL03'"; } else { $URL03 = 'NULL'; }
 			if( strlen($URL04) > 0 ) { $URL04 = "'$URL04'"; } else { $URL04 = 'NULL'; }
 			if( strlen($URL05) > 0 ) { $URL05 = "'$URL05'"; } else { $URL05 = 'NULL'; }
-			$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
-//
-			echo "<!-- Query: Submitted          = $Query -->\n";
-			$Result = $Connection->query($Query);
+			if (!($Statement->execute())) {
+				echo "</HEAD>\n";
+				echo "<BODY>\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+				echo "<H2 ALIGN=\"center\">Insert: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
+				die();
+			}
+			$Result = $Statement->get_result();
+//			$Query = "INSERT INTO $TableName VALUES ($PatternID,'$Title',$Description,'$Class','$Category','$Component',$Notes,$PatternFile,'$PatternType','$Submitted','$Modified',$Released,'$Submitter',$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$URL06,$URL07,$URL08,$URL09,$URL10,'$Status')";
+//			echo "<!-- Query: Submitted          = $Query -->\n";
+//			$Result = $Connection->query($Query);
 			if ($Result) {
 //				echo "<!-- Query: Result             = Success -->\n";
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
@@ -197,6 +233,7 @@ if (isset($_POST['add-sdp'])) {
 				}
 				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 				$Result->close();
+				$Statement->close();
 			} else {
 //				echo "<!-- Query: Result             = FAILED -->\n";
 				echo "<BODY>\n";
