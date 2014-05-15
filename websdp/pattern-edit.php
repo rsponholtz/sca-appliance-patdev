@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 15 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -17,8 +17,13 @@ if ( isset($PatternID) ) {
 } else {
 	die("<FONT SIZE=\"-1\"><B>ERROR</B>: Missing Pattern ID</FONT><BR>");
 }
-
-if ( ! isset($UpdatedOnce) ) { $UpdatedOnce = 0; }
+if ( isset($UpdatedOnce) ) {
+	if ( ! is_numeric($UpdatedOnce) ) {
+		$UpdateOnce = 0;
+	}
+} else {
+	$UpdateOnce = 0;
+}
 
 include 'sdp-config.php';
 
@@ -36,9 +41,27 @@ if (isset($_POST['update-sdp'])) {
 		echo "<BODY>\n";
 		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-		echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<H2 ALIGN=\"center\">Connect: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 		echo "<P ALIGN=\"center\"><B>ERROR:</B> Failed to connect to database.</P>\n";
 		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
+		die();
+	}
+	if (!($Statement = $Connection->prepare("UPDATE $TableName SET Title=?, Description=?, Class=?, Category=?, Component=?, Notes=?, PatternFile=?, PatternType=?, Submitted=?, Modified=?, Released=?, Submitter=?, Owner=?, PrimaryLink=?, TID=?, BUG=?, URL01=?, URL02=?, URL03=?, URL04=?, URL05=?, Status=? WHERE PatternID=$PatternID"))) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Prepare: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
+		die();
+	}
+	if (!($Statement->bind_param('ssssssssssssssssssssss', $Title,$Description,$Class,$Category,$Component,$Notes,$PatternFile,$PatternType,$Submitted,$Modified,$Released,$Submitter,$Owner,$PrimaryLink,$TID,$BUG,$URL01,$URL02,$URL03,$URL04,$URL05,$Status))) {
+		echo "</HEAD>\n";
+		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
+		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
+		echo "<H2 ALIGN=\"center\">Bind Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
 		die();
 	}
 
@@ -64,8 +87,12 @@ if (isset($_POST['update-sdp'])) {
 	$URL04 			= $_POST['form_url4'];
 	$URL05 			= $_POST['form_url5'];
 	$Status 			= $_POST['form_status'];
+//
+	echo "<!-- Variable: Released        = $Released    -->\n";
 
-	if ( $Status == "Released" || $Status == "Maintenance" ) {
+	if ( strlen($Released) == 0 ) {
+		$Released = NULL;
+	} elseif ( $Status == "Released" || $Status == "Maintenance" ) {
 		if ( $Released < 1 ) {
 			$Released = $Modified;
 		}
@@ -79,10 +106,17 @@ if (isset($_POST['update-sdp'])) {
 		elseif ( strlen($URL03) > 0 ) { $URL = preg_split("/=/", "$URL03"); $PrimaryLink = "META_LINK_$URL[0]"; }
 		elseif ( strlen($URL04) > 0 ) { $URL = preg_split("/=/", "$URL04"); $PrimaryLink = "META_LINK_$URL[0]"; }
 		elseif ( strlen($URL05) > 0 ) { $URL = preg_split("/=/", "$URL05"); $PrimaryLink = "META_LINK_$URL[0]"; }
-		else { $PrimaryLink = ''; }
+		else { $PrimaryLink = NULL; }
 	}
 
 	$UpdatedOnce	= $_POST['form_updated_once'];
+	if ( isset($UpdatedOnce) ) {
+		if ( ! is_numeric($UpdatedOnce) ) {
+			$UpdateOnce = 0;
+		}
+	} else {
+		$UpdateOnce = 0;
+	}
 	
 	if ( $Title && $Submitter && $Category && $Component ) {
 		if ( $Status == "Complete" && $Owner == "" ) {
@@ -112,21 +146,12 @@ if (isset($_POST['update-sdp'])) {
 				$Status2assigned = 0;
 				$LocalRefresh = $StatusRefresh;
 			}
-			$Query = "LOCK TABLES $TableName WRITE";
-			$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
-			$Result->close();
-			//echo "<!-- Query: Submitted          = $Query -->\n";
+			$Connection->query("LOCK TABLES $TableName WRITE") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Lock -> <B>FAILED</B></FONT><BR>\n");
 			//echo "<!-- Database: Table           = Locked $TableName -->\n";
 
-			$Query = "UPDATE $TableName SET Title='$Title', Description='$Description', Class='$Class', Category='$Category', Component='$Component', Notes='$Notes', PatternFile='$PatternFile', PatternType='$PatternType', Submitted='$Submitted', Modified='$Modified', Released='$Released', Submitter='$Submitter', Owner='$Owner', PrimaryLink='$PrimaryLink', TID='$TID', BUG='$BUG', URL01='$URL01', URL02='$URL02', URL03='$URL03', URL04='$URL04', URL05='$URL05', Status='$Status' WHERE PatternID=$PatternID";
-
-			//echo "<!-- Query: Submitted          = $Query -->\n";
-			$Result = $Connection->query($Query);
-			if ($Result) {
-				//echo "<!-- Query: Result             = Success -->\n";
-				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=pattern-edit.php?pid=$PatternID&by=$OrderBy&dir=$OrderDir&filter=$Filter&up=1\">\n"; }
+			if (($Statement->execute())) {
+				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
-				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				if ( $Owner2submitter ) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Submitter Assigned to Missing Owner -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";
@@ -134,17 +159,17 @@ if (isset($_POST['update-sdp'])) {
 				if ( $Status2assigned ) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Pre-existing Owner, Status Changed to Assigned -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";
 				}
-				echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
+				echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"green\">Success</FONT></H2>\n";
+				$Statement->close();
 			} else {
-				//echo "<!-- Query: Result             = FAILED -->\n";
+				echo "</HEAD>\n";
 				echo "<BODY>\n";
 				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-				echo "<H2 ALIGN=\"center\">Update Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<P ALIGN=\"center\"><B>ERROR:</B> " . $Connection->error . "</P>\n";
-				echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
+				echo "<H2 ALIGN=\"center\">Update: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+				echo "<P ALIGN=\"center\"><B>ERROR(" . $Statement->errno . "):</B> " . $Statement->error . "</P>\n";
+				die();
 			}
-			$Result->close();
 		}
 	} else {
 		echo "<BODY>\n";
@@ -155,12 +180,8 @@ if (isset($_POST['update-sdp'])) {
 		echo "<P ALIGN=\"center\">Click <B>back</B>, and correct.</P>\n";
 	}
 
-	$Query = "UNLOCK TABLES";
-	$Result = $Connection->query($Query) or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
-	$Result->close();
-	//echo "<!-- Query: Submitted          = $Query -->\n";
-	//echo "<!-- Database: Table           = UnLocked $TableName -->\n";
-
+	$Connection->query("UNLOCK TABLES") or die("<FONT SIZE=\"-1\"><B>ERROR</B>: Database: Table $TableName Unlock -> <B>FAILED</B></FONT><BR>\n");
+//	echo "<!-- Database: Table           = UnLocked $TableName -->\n";
 	$Connection->close();
 } else {
 ?>
@@ -231,7 +252,7 @@ if (isset($_POST['update-sdp'])) {
 <TR VALIGN="top"><TD>
 
 <?PHP
-	echo "<INPUT TYPE=\"hidden\" NAME=\"form_updated_once\" VALUE=\"Updated\">\n";
+	echo "<INPUT TYPE=\"hidden\" NAME=\"form_updated_once\" VALUE=\"1\">\n";
 	echo "<TABLE BORDER=0>\n";
 	echo "<TR><TD>Submitter:</TD><TD><INPUT TYPE=\"text\" NAME=\"form_submitter\" SIZE=$FieldLength VALUE=\"$Submitter\"><FONT COLOR=\"red\">*</FONT></TD></TR>\n";
 	echo "<TR><TD>Owner:</TD><TD><INPUT TYPE=\"text\" NAME=\"form_owner\" SIZE=$FieldLength VALUE=\"$Owner\"></TD></TR>\n";
@@ -263,7 +284,9 @@ if (isset($_POST['update-sdp'])) {
 		include 'form-pattern-type.php';
 	echo "</TD></TR>\n";
 
-	//echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+//	echo "<!-- Variable: PrimaryLink     = $PrimaryLink -->\n";
+//
+	echo "<!-- Variable: Released        = $Released    -->\n";
 	echo "<TR><TD>";
 	if ( $TID ) {
 		if ( "$PrimaryLink" == "META_LINK_TID" ) { $CheckMark = "CHECKED=\"yes\""; }

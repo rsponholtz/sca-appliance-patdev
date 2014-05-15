@@ -98,7 +98,7 @@ if (isset($_POST['add-sdp'])) {
 		echo "<BODY>\n";
 		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
-		echo "<H2 ALIGN=\"center\">Add Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+		echo "<H2 ALIGN=\"center\">Connect: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 		echo "<P ALIGN=\"center\"><B>ERROR:</B> Failed to connect to database.</P>\n";
 		echo "<P ALIGN=\"center\">Make sure the database is setup and configured properly.</P>\n";
 		die();
