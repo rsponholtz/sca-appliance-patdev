@@ -112,12 +112,12 @@
 	echo "<META HTTP-EQUIV=\"Content-Style-Type\" CONTENT=\"text/css\">\n";
 	echo "<LINK REL=\"stylesheet\" HREF=\"style.css\">\n";
 	echo "<TITLE>SDP Submissions</TITLE>\n";
-	echo "</HEAD>\n";
-	echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
-	echo "\n<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 
 	$Connection = new mysqli($DB_HOST, $DB_USER, $DB_PASS, $DB_NAME);
 	if ($Connection->connect_errno) {
+		echo "</HEAD>\n";
+		echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+		echo "\n<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 		echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Database Pattern Index</P>\n";
 		echo "<H2 ALIGN=\"center\">Connect to Database: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 		echo "<P ALIGN=\"center\">Make sure the MariaDB database is configured properly.</P>\n";
@@ -135,9 +135,11 @@
 	}
 
 	if ( isset($_POST['multi-edit']) ) {
+		$LocalRefresh = 4;
 		if (!($StatusReleased = $Connection->prepare("UPDATE $TableName SET Status=?,Modified=?,Released=? WHERE PatternID=?"))) {
 			echo "</HEAD>\n";
-			echo "<BODY>\n";
+			echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
 			echo "<H2 ALIGN=\"center\">Prepare Release: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
@@ -145,7 +147,8 @@
 		}
 		if (!($StatusUpdate = $Connection->prepare("UPDATE $TableName SET Status=?,Modified=? WHERE PatternID=?"))) {
 			echo "</HEAD>\n";
-			echo "<BODY>\n";
+			echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
 			echo "<H2 ALIGN=\"center\">Prepare Update: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
@@ -154,7 +157,8 @@
 		$StatusReleasedUsed = 0;
 		if (!($StatusReleased->bind_param('sssi', $Status,$Modified,$Released,$PatternID))) {
 			echo "</HEAD>\n";
-			echo "<BODY>\n";
+			echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
 			echo "<H2 ALIGN=\"center\">Bind Release Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $StatusReleased->errno . "):</B> " . $StatusReleased->error . "</P>\n";
@@ -162,7 +166,8 @@
 		}
 		if (!($StatusUpdate->bind_param('ssi', $Status,$Modified,$PatternID))) {
 			echo "</HEAD>\n";
-			echo "<BODY>\n";
+			echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
 			echo "<H2 ALIGN=\"center\">Bind Release Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $StatusUpdate->errno . "):</B> " . $StatusUpdate->error . "</P>\n";
@@ -229,19 +234,29 @@
 			$Result->close();
 
 			if ( $UpdateErrors ) {
+				echo "</HEAD>\n";
+				echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 				echo "<H3 ALIGN=\"center\">Errors Found: $UpdateErrors of $TotalEdits</H3>\n";
 			} else {
+				echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">\n";
+				echo "</HEAD>\n";
+				echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"green\">Success</FONT></H2>\n";
 				echo "<H3 ALIGN=\"center\">Pattern Statuses Updated: $PatternsUpdated of $TotalEdits</H3>\n";
 			}
 		}
-		echo "<P ALIGN=\"center\">Return to <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">SDP Submissions</A></P>\n";
 	} else { // end _POST['multi-edit']
-
+		$LocalRefresh = $ResourceRefresh;
 		if ( $Check ) { $CheckMark="CHECKED"; } else { $CheckMark=""; }
 
 		// Menu
+		echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">\n";
+		echo "</HEAD>\n";
+		echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 		echo "<P CLASS=\"head3b\" ALIGN=\"center\">";
 		echo "[&nbsp;<A HREF=\"pattern-add.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">Create A Pattern</A>&nbsp;";
 		echo "|&nbsp;<A HREF=\"pattern-summary.php?by=$OrderBy&dir=$OrderDir&td=0&filter=$Filter&ck=$Check\">Summary</A>&nbsp;";
@@ -328,7 +343,7 @@
 
 		echo "</FORM>\n";
 	}
-	$Result->close();
+//	$Result->close();
 	$Connection->close();
 
 	//echo "<!-- Variable: OrderBy         = $OrderBy -->\n";
