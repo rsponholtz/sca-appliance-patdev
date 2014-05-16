@@ -239,6 +239,7 @@
 				echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 				echo "<H3 ALIGN=\"center\">Errors Found: $UpdateErrors of $TotalEdits</H3>\n";
+				echo "<P ALIGN=\"center\">Return to <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">SDP Submissions</A></P>\n";
 			} else {
 				echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">\n";
 				echo "</HEAD>\n";
