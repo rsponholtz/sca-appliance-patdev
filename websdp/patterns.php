@@ -152,7 +152,7 @@
 			die();
 		}
 		$StatusReleasedUsed = 0;
-		if (!($StatusReleased->bind_param('sssi', $Status,$Modifed,$Released,$PatternID))) {
+		if (!($StatusReleased->bind_param('sssi', $Status,$Modified,$Released,$PatternID))) {
 			echo "</HEAD>\n";
 			echo "<BODY>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
@@ -160,7 +160,7 @@
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $StatusReleased->errno . "):</B> " . $StatusReleased->error . "</P>\n";
 			die();
 		}
-		if (!($StatusUpdate->bind_param('ssi', $Status,$Modifed,$PatternID))) {
+		if (!($StatusUpdate->bind_param('ssi', $Status,$Modified,$PatternID))) {
 			echo "</HEAD>\n";
 			echo "<BODY>\n";
 			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
