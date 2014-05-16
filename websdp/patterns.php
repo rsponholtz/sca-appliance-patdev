@@ -171,12 +171,11 @@
 					if ( $UpdateResult ) {
 						//echo "<!-- Query: Result             = Success -->\n";
 						$PatternsUpdated++;
+						$UpdateResult->close();
 					} else {
 						//echo "<!-- Query: Result             = FAILURE -->\n";
 						$UpdateErrors++;
 					}
-					$UpdateResult->close();
-
 				} else {
 					//echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
 					//echo "<!-- Query: Result             = Skipped -->\n";
