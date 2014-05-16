@@ -151,6 +151,7 @@
 			echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
 			die();
 		}
+		$StatusReleasedUsed = 0;
 		if (!($StatusReleased->bind_param('sssi', $Status,$Modifed,$Released,$PatternID))) {
 			echo "</HEAD>\n";
 			echo "<BODY>\n";
@@ -195,6 +196,7 @@
 					switch ($Status) {
 					case "Released":
 					case "Maintenance":
+						$StatusReleasedUsed = 1;
 						if ($StatusReleased->execute()) {
 							$PatternsUpdated++;
 							echo "<!-- Success: PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
@@ -203,7 +205,6 @@
 							echo "<!-- FAILED:  PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
 						}
 						$StatusReleased->fetch();
-//						$StatusReleased->close();
 						break;
 					default:
 						if ($StatusUpdate->execute()) {
@@ -214,12 +215,16 @@
 							echo "<!-- FAILED:  PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
 						}
 						$StatusUpdate->fetch();
-//						$StatusUpdate->close();
 					}
 				} else {
 					//echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
 					//echo "<!-- Query: Result             = Skipped -->\n";
 				}
+			}
+			if( $StatusReleasedUsed ) {
+				$StatusReleased->close();
+			} else {
+				$StatusUpdate->close();
 			}
 			$Result->close();
 
