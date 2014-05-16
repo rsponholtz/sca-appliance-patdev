@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 16 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <?PHP
@@ -135,8 +135,42 @@
 	}
 
 	if ( isset($_POST['multi-edit']) ) {
+		if (!($StatusReleased = $Connection->prepare("UPDATE $TableName SET Status=?,Modified=?,Released=? WHERE PatternID=?"))) {
+			echo "</HEAD>\n";
+			echo "<BODY>\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
+			echo "<H2 ALIGN=\"center\">Prepare Release: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+			echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
+			die();
+		}
+		if (!($StatusUpdate = $Connection->prepare("UPDATE $TableName SET Status=?,Modified=? WHERE PatternID=?"))) {
+			echo "</HEAD>\n";
+			echo "<BODY>\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
+			echo "<H2 ALIGN=\"center\">Prepare Update: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+			echo "<P ALIGN=\"center\"><B>ERROR(" . $Connection->errno . "):</B> " . $Connection->error . "</P>\n";
+			die();
+		}
+		if (!($StatusReleased->bind_param('sssi', $Status,$Modifed,$Released,$PatternID))) {
+			echo "</HEAD>\n";
+			echo "<BODY>\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
+			echo "<H2 ALIGN=\"center\">Bind Release Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+			echo "<P ALIGN=\"center\"><B>ERROR(" . $StatusReleased->errno . "):</B> " . $StatusReleased->error . "</P>\n";
+			die();
+		}
+		if (!($StatusUpdate->bind_param('ssi', $Status,$Modifed,$PatternID))) {
+			echo "</HEAD>\n";
+			echo "<BODY>\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">SDP Pattern Multi-Edit</P>\n";
+			echo "<H2 ALIGN=\"center\">Bind Release Parameters: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
+			echo "<P ALIGN=\"center\"><B>ERROR(" . $StatusUpdate->errno . "):</B> " . $StatusUpdate->error . "</P>\n";
+			die();
+		}
+
 		$UpdateErrors = 0;
 		$PatternsUpdated = 0;
+		$TotalEdits = 0;
 		$NewStatus = htmlspecialchars($_POST["form_status"]);
 		if ( $NewStatus == "-Unchanged-" ) {
 			echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"blue\">Status Unchanged</FONT></H2>\n";
@@ -157,24 +191,30 @@
 				$UpdateStatus	= htmlspecialchars($_POST["update_status_$PatternID"]); 
 
 				if ( $UpdateStatus ) {
+					$TotalEdits++;
 					switch ($Status) {
 					case "Released":
 					case "Maintenance":
-						$Query = "UPDATE $TableName SET Status='$Status',Modified='$Modified',Released='$Released' WHERE PatternID=$PatternID";
+						if ($StatusReleased->execute()) {
+							$PatternsUpdated++;
+							echo "<!-- Success: PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
+						} else {
+							$UpdateErrors++;
+							echo "<!-- FAILED:  PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
+						}
+						$StatusReleased->fetch();
+//						$StatusReleased->close();
 						break;
 					default:
-						$Query = "UPDATE $TableName SET Status='$Status',Modified='$Modified' WHERE PatternID=$PatternID";				
-					}
-
-					//echo "<!-- Query: Submitted          = $Query -->\n";
-					$UpdateResult = $Connection->query($Query);
-					if ( $UpdateResult ) {
-						//echo "<!-- Query: Result             = Success -->\n";
-						$PatternsUpdated++;
-						$UpdateResult->close();
-					} else {
-						//echo "<!-- Query: Result             = FAILURE -->\n";
-						$UpdateErrors++;
+						if ($StatusUpdate->execute()) {
+							$PatternsUpdated++;
+							echo "<!-- Success: PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
+						} else {
+							$UpdateErrors++;
+							echo "<!-- FAILED:  PatternID=$PatternID, Title=$Title, Status=$Status -->\n";
+						}
+						$StatusUpdate->fetch();
+//						$StatusUpdate->close();
 					}
 				} else {
 					//echo "<!-- Variable: UpdateStatus    = Not Checked for PatternID $PatternID -->\n";
@@ -185,10 +225,10 @@
 
 			if ( $UpdateErrors ) {
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
-				echo "<H3 ALIGN=\"center\">Errors Found: $UpdateErrors</H3>\n";
+				echo "<H3 ALIGN=\"center\">Errors Found: $UpdateErrors of $TotalEdits</H3>\n";
 			} else {
 				echo "<H2 ALIGN=\"center\">$SubmitText: <FONT COLOR=\"green\">Success</FONT></H2>\n";
-				echo "<H3 ALIGN=\"center\">Pattern Statuses Updated: $PatternsUpdated</H3>\n";
+				echo "<H3 ALIGN=\"center\">Pattern Statuses Updated: $PatternsUpdated of $TotalEdits</H3>\n";
 			}
 		}
 		echo "<P ALIGN=\"center\">Return to <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">SDP Submissions</A></P>\n";
