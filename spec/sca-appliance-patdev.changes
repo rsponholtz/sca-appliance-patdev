@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Wed May 14 19:57:04 UTC 2014 - jrecord@suse.com
+Fri May 16 19:17:59 UTC 2014 - jrecord@suse.com
 
+- Fixed SQL injection vulnerabilities (bnc#876240)
 - Fixed login and timeout (bnc#876919)
 
 -------------------------------------------------------------------
