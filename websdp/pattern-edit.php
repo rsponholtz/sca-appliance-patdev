@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 15 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 19 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -150,6 +150,7 @@ if (isset($_POST['update-sdp'])) {
 			if (($Statement->execute())) {
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=pattern-edit.php?pid=$PatternID&by=$OrderBy&dir=$OrderDir&filter=$Filter&up=1\">\n"; }
 				echo "<BODY>\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				if ( $Owner2submitter ) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Submitter Assigned to Missing Owner -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";

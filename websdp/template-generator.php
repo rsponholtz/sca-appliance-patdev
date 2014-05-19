@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 12 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 May 19 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -23,7 +23,7 @@
 		die();
 	}
 	$Query = "SELECT * FROM $TableName WHERE PatternID=$PatternID";
-	$Result = $Connection->query($query);
+	$Result = $Connection->query($Query);
 	$row_cell = $Result->fetch_row();
 	$PatternID		= htmlspecialchars($row_cell[0]);
 	$Title 			= htmlspecialchars($row_cell[1]);
