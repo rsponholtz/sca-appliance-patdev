@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Thu Jun  5 19:50:21 UTC 2014 - jrecord@suse.com
+
+- Separated module list for better debugging in template-python.php
+
+-------------------------------------------------------------------
 Mon May 19 18:29:11 UTC 2014 - jrecord@suse.com
 
 - Fixed empty query error template-generator.php
