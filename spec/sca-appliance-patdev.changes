@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Thu Jun  5 19:50:21 UTC 2014 - jrecord@suse.com
+Mon Jun  9 19:59:28 UTC 2014 - jrecord@suse.com
 
+- Fixed header lines
 - Separated module list for better debugging in template-python.php
 
 -------------------------------------------------------------------

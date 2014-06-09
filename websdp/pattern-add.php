@@ -6,6 +6,7 @@
 <LINK REL="stylesheet" HREF="style.css">
 
 <?PHP
+	$PageTitle = "Supportconfig Diagnostic Pattern";
 	$PageFunction = "Add";
 	$Submitted = date('Y\-m\-d');
 	$OrderBy = htmlspecialchars($_GET['by']);
@@ -165,6 +166,7 @@ if (isset($_POST['add-sdp'])) {
 		if ( $Status == "Complete" && $Owner == "" ) {
 			echo "</HEAD>\n";
 			echo "<BODY>\n";
+			echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 			echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 			echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 			echo "<P ALIGN=\"center\"><B>ERROR:</B> No assigned owner.</P>\n";
@@ -202,6 +204,7 @@ if (isset($_POST['add-sdp'])) {
 			if (($Statement->execute())) {
 				if ( ! isset($DEBUG) ) { echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">\n"; }
 				echo "<BODY>\n";
+				echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 				echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 				if ( $Owner2submitter ) {
 					echo "<H2 ALIGN=\"center\"><FONT COLOR=\"blue\">Override</FONT>: Submitter Assigned to Missing Owner -> <FONT COLOR=\"blue\">Done</FONT></H2>\n";
@@ -224,6 +227,7 @@ if (isset($_POST['add-sdp'])) {
 	} else {
 //		echo "<!-- Variables Undefined       = Title and Submitter -->\n";
 		echo "<BODY>\n";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 		echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 		echo "<H2 ALIGN=\"center\">Submit Pattern: <FONT COLOR=\"red\">FAILED</FONT></H2>\n";
 		echo "<P ALIGN=\"center\"><B>ERROR:</B> Missing Required Field(s).</P>\n";

@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 16 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 09 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <?PHP
@@ -257,16 +257,21 @@
 		echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"$LocalRefresh;URL=patterns.php?by=$OrderBy&dir=$OrderDir&td=$ToggleDir&filter=$Filter&ck=0\">\n";
 		echo "</HEAD>\n";
 		echo "<BODY BGPROPERTIES=FIXED BGCOLOR=\"#FFFFFF\" TEXT=\"#000000\">\n";
-		echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns</P>\n";
-		echo "<P CLASS=\"head3b\" ALIGN=\"center\">";
+		echo "<P CLASS=\"head_1\" ALIGN=\"center\">Supportconfig Diagnostic Patterns<BR><FONT SIZE=\"+2\">Pattern List</FONT></P>\n";
+		echo "<P ALIGN=\"center\">[ ";
+		echo "<A HREF=\"index.php\">Reports</A> | ";
+		echo "<A HREF=\"opstate.php\">Operations</A> | ";
+		echo "<B>Create Patterns</B> | ";
+		echo "<A HREF=\"help-sdp.html\" TARGET=\"docs\">Documentation</A> ";
+		echo "]<BR>\n";
+
 		echo "[&nbsp;<A HREF=\"pattern-add.php?by=$OrderBy&dir=$OrderDir&filter=$Filter&ck=$Check\">Create A Pattern</A>&nbsp;";
 		echo "|&nbsp;<A HREF=\"pattern-summary.php?by=$OrderBy&dir=$OrderDir&td=0&filter=$Filter&ck=$Check\">Summary</A>&nbsp;";
-		echo "|&nbsp;<A HREF=\"help-sdp.html\" TARGET=\"_blank\">Documentation</A>&nbsp;";
 		echo "|&nbsp;Filters:&nbsp;";
-		if ( $Filter == "dev" ) { echo " Dev&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=dev&ck=0\">Dev</A>&nbsp;"; }
-		if ( $Filter == "testing" ) { echo " Testing&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=testing&ck=0\">Testing</A>&nbsp;"; }
-		if ( $Filter == "release" ) { echo " Released&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=release&ck=0\">Released</A>&nbsp;"; }
-		if ( $Filter == "all" ) { echo " All&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=all&ck=0\">All</A>&nbsp;"; }
+		if ( $Filter == "dev" ) { echo " <B>Dev</B>&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=dev&ck=0\">Dev</A>&nbsp;"; }
+		if ( $Filter == "testing" ) { echo " <B>Testing</B>&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=testing&ck=0\">Testing</A>&nbsp;"; }
+		if ( $Filter == "release" ) { echo " <B>Released</B>&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=release&ck=0\">Released</A>&nbsp;"; }
+		if ( $Filter == "all" ) { echo " <B>All</B>&nbsp;"; } else { echo " <A HREF=\"patterns.php?by=$OrderBy&dir=$OrderDir&td=0&filter=all&ck=0\">All</A>&nbsp;"; }
 		echo "]</P>\n";
 
 		// Create table header
