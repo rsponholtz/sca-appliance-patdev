@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 15 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 09 -->\n"; ?>
 <?PHP include 'checklogin.php';?>
 <HTML>
 <HEAD>
@@ -243,6 +243,7 @@ if (isset($_POST['add-sdp'])) {
 <BODY>
 
 <?PHP
+	echo "<P CLASS=\"head_1\" ALIGN=\"center\">$PageTitle</P>\n";
 	echo "<H2 ALIGN=\"center\">$PageFunction</H2>\n";
 ?>
 
