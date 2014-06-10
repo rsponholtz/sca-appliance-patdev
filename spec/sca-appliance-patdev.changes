@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Tue Jun 10 02:48:42 UTC 2014 - jrecord@suse.com
+Tue Jun 10 15:23:39 UTC 2014 - jrecord@suse.com
 
+- No login required for pattern development
 - Fixed header lines
 - Separated module list for better debugging in template-python.php
 

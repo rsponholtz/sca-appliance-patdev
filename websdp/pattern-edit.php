@@ -1,5 +1,7 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 19 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 10 -->\n"; ?>
+<!--
 <?PHP include 'checklogin.php';?>
+-->
 <HTML>
 <HEAD>
 <META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
