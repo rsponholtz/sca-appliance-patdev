@@ -20,9 +20,9 @@ Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Core.html">Core</a><br>
-</td><td width="25%" valign=top>re<br>
-</td><td width="25%" valign=top>string<br>
-</td><td width="25%" valign=top>sys<br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/string.html">string</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/sys.html">sys</a><br>
 </td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
@@ -30,7 +30,7 @@ Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-compareKernel"><strong>compareKernel</strong></a>(kernelVerion)</dt><dd><tt>Checks&nbsp;if&nbsp;kernel&nbsp;version&nbsp;is&nbsp;newer&nbsp;then&nbsp;given&nbsp;version<br>
+<td width="100%"><dl><dt><a name="-compareKernel"><strong>compareKernel</strong></a>(kernelVersion)</dt><dd><tt>Checks&nbsp;if&nbsp;kernel&nbsp;version&nbsp;is&nbsp;newer&nbsp;then&nbsp;given&nbsp;version<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;kernelVersion&nbsp;-&nbsp;The&nbsp;kernel&nbsp;version&nbsp;string&nbsp;to&nbsp;compare<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1,&nbsp;0,&nbsp;1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;Installed&nbsp;kernel&nbsp;version&nbsp;older&nbsp;than&nbsp;kernelVerion<br>
@@ -85,6 +85,32 @@ if(&nbsp;DRIVER_INFO['loaded']&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_IGNORE,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_WARNING,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;missing,&nbsp;install&nbsp;it")</tt></dd></dl>
+ <dl><dt><a name="-getHostInfo"><strong>getHostInfo</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;server<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hostname&nbsp;(String)&nbsp;-&nbsp;The&nbsp;hostname&nbsp;of&nbsp;the&nbsp;server&nbsp;analyzed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KernelVersion&nbsp;(String)&nbsp;-&nbsp;The&nbsp;running&nbsp;kernel&nbsp;version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Architecture&nbsp;(String)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Distro&nbsp;(String)&nbsp;-&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;distribution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DistroVersion&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;major&nbsp;distribution&nbsp;version&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DistroPatchLevel&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;distribution&nbsp;service&nbsp;patch&nbsp;level<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OES&nbsp;(Boolean)&nbsp;-&nbsp;True&nbsp;if&nbsp;OES&nbsp;installed,&nbsp;False&nbsp;if&nbsp;no&nbsp;OES&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OESDistro&nbsp;(String)&nbsp;The&nbsp;name&nbsp;of&nbsp;the&nbsp;OES&nbsp;distribution<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OESVersion&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;major&nbsp;OES&nbsp;version&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OESPatchLevel&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;OES&nbsp;service&nbsp;patch&nbsp;level<br>
+Example:<br>
+&nbsp;<br>
+import&nbsp;re<br>
+SERVER&nbsp;=&nbsp;SUSE.<a href="#-getHostInfo">getHostInfo</a>()<br>
+SLE&nbsp;=&nbsp;re.compile("SUSE&nbsp;Linux&nbsp;Enterprise&nbsp;Server",&nbsp;re.IGNORECASE)<br>
+if&nbsp;SLE.search(SERVER['Distro']):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;SERVER['DistroVersion']&nbsp;&gt;=&nbsp;11&nbsp;and&nbsp;SERVER['DistroVersion']&nbsp;&lt;&nbsp;12&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"SLES"&nbsp;+&nbsp;str(SERVER['DistroVersion'])&nbsp;+&nbsp;"SP"&nbsp;+&nbsp;str(SERVER['DistroPatchLevel'])&nbsp;+&nbsp;":&nbsp;Testing&nbsp;required")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"SLES"&nbsp;+&nbsp;str(SERVER['DistroVersion'])&nbsp;+&nbsp;"SP"&nbsp;+&nbsp;str(SERVER['DistroPatchLevel'])&nbsp;+&nbsp;":&nbsp;No&nbsp;Testing&nbsp;Needed")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;SERVER['Distro']&nbsp;+&nbsp;":&nbsp;Invalid&nbsp;Distribution&nbsp;for&nbsp;Test&nbsp;Case")</tt></dd></dl>
  <dl><dt><a name="-getRpmInfo"><strong>getRpmInfo</strong></a>(PackageName)</dt><dd><tt>Retrieves&nbsp;RPM&nbsp;package&nbsp;information&nbsp;from&nbsp;supportconfig&nbsp;files&nbsp;using&nbsp;the&nbsp;specified&nbsp;PackageName<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;RPM&nbsp;package&nbsp;name&nbsp;on&nbsp;which&nbsp;you&nbsp;want&nbsp;details<br>
@@ -119,7 +145,7 @@ if(&nbsp;Core.compareVersions(SC_INFO['version'],&nbsp;REQUIRED_VERSION)&nbsp;&g
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;meets&nbsp;minimum&nbsp;requirement")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Supportconfig&nbsp;v"&nbsp;+&nbsp;str(SC_INFO['version'])&nbsp;+&nbsp;"&nbsp;NOT&nbsp;sufficient,&nbsp;"&nbsp;+&nbsp;str(REQUIRED_VERSION)&nbsp;+&nbsp;"&nbsp;or&nbsp;higher&nbsp;needed")</tt></dd></dl>
- <dl><dt><a name="-getServiceDInfo"><strong>getServiceDInfo</strong></a>(SERVICE_NAME)</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;systemd&nbsp;service&nbsp;information&nbsp;for&nbsp;SERVICE<br>
+ <dl><dt><a name="-getServiceDInfo"><strong>getServiceDInfo</strong></a>(SERVICE_NAME)</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;systemd&nbsp;service&nbsp;information&nbsp;for&nbsp;SERVICE_NAME<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SERVICE_NAME&nbsp;-&nbsp;Name&nbsp;of&nbsp;systemd&nbsp;service<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys&nbsp;corresponding&nbsp;to&nbsp;systemctl&nbsp;show&nbsp;SERVICE_NAME<br>
@@ -132,17 +158,26 @@ if(&nbsp;SERVICE_INFO['SubState']&nbsp;==&nbsp;'running'&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Service&nbsp;is&nbsp;running:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Service&nbsp;is&nbsp;down:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));</tt></dd></dl>
- <dl><dt><a name="-getVersion"><strong>getVersion</strong></a>()</dt><dd><tt>Returns&nbsp;the&nbsp;SUSE&nbsp;release&nbsp;information<br>
+ <dl><dt><a name="-getServiceInfo"><strong>getServiceInfo</strong></a>(SERVICE_NAME)</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;system&nbsp;service&nbsp;information&nbsp;for&nbsp;SERVICE_NAME<br>
 &nbsp;<br>
-Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
-Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;string&nbsp;from&nbsp;the&nbsp;SUSE&nbsp;release&nbsp;file&nbsp;like&nbsp;SLES&nbsp;11&nbsp;SP3<br>
-Example:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
- <dl><dt><a name="-normalizeVersionName"><strong>normalizeVersionName</strong></a>(versionString)</dt><dd><tt>Converts&nbsp;versionString&nbsp;into&nbsp;its&nbsp;abbreviated&nbsp;form.&nbsp;For&nbsp;example,&nbsp;<br>
-SUSE&nbsp;Linux&nbsp;Enterprise&nbsp;Server&nbsp;to&nbsp;SLES<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SERVICE_NAME&nbsp;-&nbsp;Name&nbsp;of&nbsp;System&nbsp;V&nbsp;service<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name&nbsp;(String)&nbsp;-&nbsp;System&nbsp;V&nbsp;service&nbsp;name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Running&nbsp;(Integer)&nbsp;-&nbsp;-1=Unknown,&nbsp;0=Unused&nbsp;or&nbsp;Dead,&nbsp;1=Running<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BootLevels&nbsp;(String)&nbsp;-&nbsp;A&nbsp;list&nbsp;of&nbsp;runlevel&nbsp;numbers&nbsp;in&nbsp;which&nbsp;the&nbsp;service&nbsp;is&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;turned&nbsp;on&nbsp;for&nbsp;boot.&nbsp;An&nbsp;empty&nbsp;string&nbsp;means&nbsp;the&nbsp;service&nbsp;is&nbsp;turned&nbsp;off&nbsp;at<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;boot&nbsp;for&nbsp;all&nbsp;runlevels.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RunLevel&nbsp;(String)&nbsp;-&nbsp;The&nbsp;current&nbsp;system&nbsp;runlevel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;OnForRunLevel&nbsp;(Bool)&nbsp;-&nbsp;False=Service&nbsp;is&nbsp;turned&nbsp;off&nbsp;for&nbsp;the&nbsp;current&nbsp;runlevel,&nbsp;True=Service&nbsp;is&nbsp;turned&nbsp;on&nbsp;for&nbsp;the&nbsp;current&nbsp;runlevel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Known&nbsp;(Bool)&nbsp;-&nbsp;True=The&nbsp;service&nbsp;is&nbsp;found&nbsp;in&nbsp;the&nbsp;service&nbsp;table,&nbsp;False=The&nbsp;service&nbsp;is&nbsp;not&nbsp;known&nbsp;and&nbsp;only&nbsp;partial&nbsp;information&nbsp;may&nbsp;be&nbsp;included.<br>
+Example:<br>
 &nbsp;<br>
-Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString&nbsp;-&nbsp;A&nbsp;complete&nbsp;version&nbsp;string<br>
-Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString&nbsp;-&nbsp;String&nbsp;with&nbsp;abbreviations&nbsp;replacing&nbsp;long&nbsp;strings<br>
-Example:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None</tt></dd></dl>
+SERVICE&nbsp;=&nbsp;'cups'<br>
+SERVICE_INFO&nbsp;=&nbsp;SUSE.<a href="#-getServiceInfo">getServiceInfo</a>(SERVICE)<br>
+if(&nbsp;SERVICE_INFO['Running']&nbsp;&gt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Service&nbsp;is&nbsp;running:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Service&nbsp;is&nbsp;down:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));</tt></dd></dl>
  <dl><dt><a name="-packageInstalled"><strong>packageInstalled</strong></a>(PackageName)</dt><dd><tt>The&nbsp;PackageName&nbsp;is&nbsp;installed&nbsp;on&nbsp;the&nbsp;server<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;The&nbsp;RPM&nbsp;package&nbsp;name&nbsp;to&nbsp;check&nbsp;if&nbsp;installed<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>

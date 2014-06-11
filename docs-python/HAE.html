@@ -1,0 +1,62 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module HAE</title>
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>HAE</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href="../docs-python.html">index</a><br>/usr/lib/sca/python/HAE.py</font></td></tr></table>
+    <p><tt>Supportconfig&nbsp;Analysis&nbsp;Library&nbsp;for&nbsp;HAE&nbsp;python&nbsp;patterns<br>
+&nbsp;<br>
+Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&nbsp;specific&nbsp;to&nbsp;<br>
+High&nbsp;Availability&nbsp;Extension&nbsp;(HAE)&nbsp;clustering</tt></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Core.html">Core</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/string.html">string</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/sys.html">sys</a><br>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#eeaa77">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl><dt><a name="-getSBDInfo"><strong>getSBDInfo</strong></a>()</dt><dd><tt>Gets&nbsp;split&nbsp;brain&nbsp;detection&nbsp;partition&nbsp;information.&nbsp;Gathers&nbsp;information&nbsp;from&nbsp;the&nbsp;sbd&nbsp;dump&nbsp;command&nbsp;and&nbsp;the&nbsp;/etc/sysconfig/sbd&nbsp;file.&nbsp;SBD&nbsp;partitions&nbsp;with&nbsp;invalid&nbsp;sbd&nbsp;dump&nbsp;output&nbsp;are&nbsp;ignored.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;SBD&nbsp;Dictionaries&nbsp;with&nbsp;keys<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBD_DEVICE&nbsp;(String)&nbsp;-&nbsp;The&nbsp;/etc/sysconfig/sbd&nbsp;SDB_DEVICE&nbsp;variable.&nbsp;This&nbsp;value&nbsp;applies&nbsp;to&nbsp;all&nbsp;and&nbsp;is&nbsp;stored&nbsp;with&nbsp;each&nbsp;sbd&nbsp;device.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SBD_OPTS&nbsp;(String)&nbsp;-&nbsp;The&nbsp;/etc/sysconfig/sbd&nbsp;SBD_OPTS&nbsp;variable<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SDB&nbsp;header&nbsp;version&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Slots&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;number&nbsp;of&nbsp;SDB&nbsp;slots<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sector_Size&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SBD&nbsp;sector&nbsp;size<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Watchdog&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SBD&nbsp;watchdog&nbsp;timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Allocate&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SBD&nbsp;allocate&nbsp;timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Loop&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SBD&nbsp;loop&nbsp;timeout<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MsgWait&nbsp;(Int)&nbsp;-&nbsp;The&nbsp;SBD&nbsp;msgwait&nbsp;timeout<br>
+Example:<br>
+&nbsp;<br>
+SBD&nbsp;=&nbsp;HAE.<a href="#-getSBDInfo">getSBDInfo</a>()<br>
+MSG_WAIT_MIN&nbsp;=&nbsp;300<br>
+MSG_WAIT_OVERALL&nbsp;=&nbsp;MSG_WAIT_MIN<br>
+#&nbsp;Find&nbsp;the&nbsp;smallest&nbsp;msgwait&nbsp;value&nbsp;among&nbsp;the&nbsp;SBD&nbsp;partitions<br>
+for&nbsp;I&nbsp;in&nbsp;range(0,&nbsp;len(SBD)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;SBD[I]['MsgWait']&nbsp;&lt;&nbsp;MSG_WAIT_OVERALL&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MSG_WAIT_OVERALL&nbsp;=&nbsp;SBD[I]['MsgWait']<br>
+#&nbsp;See&nbsp;if&nbsp;the&nbsp;smallest&nbsp;msgwait&nbsp;is&nbsp;less&nbsp;than&nbsp;the&nbsp;minimum&nbsp;required<br>
+if&nbsp;(&nbsp;MSG_WAIT_OVERALL&nbsp;&lt;&nbsp;MSG_WAIT_MIN&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.REC,&nbsp;"Consider&nbsp;changing&nbsp;your&nbsp;msgwait&nbsp;time")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"The&nbsp;msgwait&nbsp;is&nbsp;sufficient")</tt></dd></dl>
+</td></tr></table>
+</body></html>

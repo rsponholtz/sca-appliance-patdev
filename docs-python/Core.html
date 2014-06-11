@@ -8,7 +8,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>Core</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href="../docs-python.html">index</a><br>/usr/lib/sca/python/SUSE.py</font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href="../docs-python.html">index</a><br>/usr/lib/sca/python/Core.py</font></td></tr></table>
     <p><tt>Supportconfig&nbsp;Analysis&nbsp;Library&nbsp;for&nbsp;Core&nbsp;python&nbsp;patterns<br>
 &nbsp;<br>
 Core&nbsp;library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;and&nbsp;processing&nbsp;python&nbsp;patterns</tt></p>
@@ -19,9 +19,9 @@ Core&nbsp;library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;and&nbsp;pr
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top>distutils<br>
-</td><td width="25%" valign=top>re<br>
-</td><td width="25%" valign=top>sys<br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="https://docs.python.org/library/distutils.html">distutils</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/sys.html">sys</a><br>
 </td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
@@ -29,14 +29,30 @@ Core&nbsp;library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;and&nbsp;pr
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-compareVersions"><strong>compareVersions</strong></a>(version1, version2)</dt><dd><tt>Compares&nbsp;two&nbsp;version&nbsp;strings<br>
+<td width="100%"><dl><dt><a name="-compareLooseVersions"><strong>compareLooseVersions</strong></a>(version1, version2)</dt><dd><tt>Compares&nbsp;two&nbsp;version&nbsp;strings&nbsp;using&nbsp;LooseVersion<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;(String)&nbsp;-&nbsp;The&nbsp;first&nbsp;version&nbsp;string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version2&nbsp;(String)&nbsp;-&nbsp;The&nbsp;second&nbsp;version&nbsp;string<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1,&nbsp;0,&nbsp;1<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;older&nbsp;than&nbsp;version2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;version2<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;newer&nbsp;than&nbsp;version2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;version2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;newer&nbsp;than&nbsp;version2<br>
+Example:<br>
+&nbsp;<br>
+thisVersion&nbsp;=&nbsp;'1.1.0-2'<br>
+thatVersion&nbsp;=&nbsp;'1.2'<br>
+if(&nbsp;<a href="#-compareLooseVersions">compareLooseVersions</a>(thisVersion,&nbsp;thatVersion)&nbsp;&gt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"The&nbsp;version&nbsp;is&nbsp;too&nbsp;old,&nbsp;update&nbsp;the&nbsp;system")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"The&nbsp;version&nbsp;is&nbsp;sufficient")</tt></dd></dl>
+ <dl><dt><a name="-compareVersions"><strong>compareVersions</strong></a>(version1, version2)</dt><dd><tt>Compares&nbsp;the&nbsp;left&nbsp;most&nbsp;significant&nbsp;version&nbsp;string&nbsp;elements<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;(String)&nbsp;-&nbsp;The&nbsp;first&nbsp;version&nbsp;string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version2&nbsp;(String)&nbsp;-&nbsp;The&nbsp;second&nbsp;version&nbsp;string<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1,&nbsp;0,&nbsp;1<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;older&nbsp;than&nbsp;version2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;the&nbsp;same&nbsp;as&nbsp;version2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version1&nbsp;is&nbsp;newer&nbsp;than&nbsp;version2<br>
 Example:<br>
 &nbsp;<br>
 thisVersion&nbsp;=&nbsp;'1.1.0-2'<br>
@@ -77,6 +93,10 @@ Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLASS&nbs
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INFO&nbsp;=&nbsp;OVERALL_INFO<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LINKS&nbsp;=&nbsp;OTHER_LINKS<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates&nbsp;global&nbsp;variables</tt></dd></dl>
+ <dl><dt><a name="-normalizeVersionString"><strong>normalizeVersionString</strong></a>(versionString)</dt><dd><tt>Converts&nbsp;a&nbsp;version&nbsp;string&nbsp;to&nbsp;a&nbsp;list&nbsp;of&nbsp;version&nbsp;elements<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&nbsp;list&nbsp;of&nbsp;version&nbsp;string&nbsp;elements</tt></dd></dl>
  <dl><dt><a name="-printPatternResults"><strong>printPatternResults</strong></a>()</dt><dd><tt>Prints&nbsp;to&nbsp;stdout&nbsp;the&nbsp;pattern&nbsp;result&nbsp;string.&nbsp;The&nbsp;pattern&nbsp;result&nbsp;string&nbsp;is&nbsp;case<br>
 sensitive&nbsp;and&nbsp;order&nbsp;dependent.&nbsp;This&nbsp;function&nbsp;ensures&nbsp;the&nbsp;strings&nbsp;is&nbsp;printed&nbsp;<br>
 correctly.&nbsp;Call&nbsp;this&nbsp;function&nbsp;when&nbsp;the&nbsp;pattern&nbsp;had&nbsp;completed&nbsp;its&nbsp;processing.<br>
