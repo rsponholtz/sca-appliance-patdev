@@ -1,7 +1,5 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jun 10 -->\n"; ?>
-<!--
-<?PHP include 'checklogin.php';?>
--->
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 13 -->\n"; ?>
+<?PHP //include 'checklogin.php';?>
 <HTML>
 <HEAD>
 <?PHP
