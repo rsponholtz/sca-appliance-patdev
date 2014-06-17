@@ -19,10 +19,9 @@ Core&nbsp;library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;and&nbsp;pr
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="https://docs.python.org/library/distutils.html">distutils</a><br>
-</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
 </td><td width="25%" valign=top><a href="https://docs.python.org/library/sys.html">sys</a><br>
-</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -61,15 +60,14 @@ if(&nbsp;<a href="#-compareVersions">compareVersions</a>(thisVersion,&nbsp;thatV
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"The&nbsp;version&nbsp;is&nbsp;too&nbsp;old,&nbsp;update&nbsp;the&nbsp;system")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"The&nbsp;version&nbsp;is&nbsp;sufficient")</tt></dd></dl>
- <dl><dt><a name="-getSection"><strong>getSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Extracts&nbsp;a&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT<br>
-list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+ <dl><dt><a name="-getSection"><strong>getSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;regex&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(List)&nbsp;-&nbsp;Section&nbsp;contents&nbsp;line-by-line<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;The&nbsp;specified&nbsp;section&nbsp;was&nbsp;found<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;the&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;The&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
 Example:<br>
 &nbsp;<br>
 fileOpen&nbsp;=&nbsp;"boot.txt"<br>
@@ -93,6 +91,22 @@ Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLASS&nbs
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INFO&nbsp;=&nbsp;OVERALL_INFO<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LINKS&nbsp;=&nbsp;OTHER_LINKS<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates&nbsp;global&nbsp;variables</tt></dd></dl>
+ <dl><dt><a name="-listSections"><strong>listSections</strong></a>(FILE_OPEN, CONTENT)</dt><dd><tt>Extracts&nbsp;all&nbsp;section&nbsp;names&nbsp;from&nbsp;FILE_OPEN&nbsp;and&nbsp;adds&nbsp;them&nbsp;to&nbsp;CONTENT.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(List)&nbsp;-&nbsp;Section&nbsp;names&nbsp;in&nbsp;FILE_OPEN<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;Sections&nbsp;were&nbsp;found&nbsp;in&nbsp;FILE_OPEN<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;No&nbsp;sections&nbsp;found&nbsp;in&nbsp;FILE_OPEN<br>
+Example:<br>
+&nbsp;<br>
+FILE_OPEN&nbsp;=&nbsp;"ha.txt"<br>
+CONTENT&nbsp;=&nbsp;{}<br>
+if&nbsp;Core.<a href="#-listSections">listSections</a>(FILE_OPEN,&nbsp;CONTENT):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;LINE&nbsp;in&nbsp;CONTENT:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"corosync.conf"&nbsp;in&nbsp;CONTENT[LINE]:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return&nbsp;True<br>
+return&nbsp;False</tt></dd></dl>
  <dl><dt><a name="-normalizeVersionString"><strong>normalizeVersionString</strong></a>(versionString)</dt><dd><tt>Converts&nbsp;a&nbsp;version&nbsp;string&nbsp;to&nbsp;a&nbsp;list&nbsp;of&nbsp;version&nbsp;elements<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;versionString<br>

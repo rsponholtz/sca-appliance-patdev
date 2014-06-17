@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jun 05 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 17 -->\n"; ?>
 <?PHP
 $tmp = strtolower($Owner);
 $pos = strrpos($tmp, ' ') + 1;
@@ -34,10 +34,8 @@ echo "##########################################################################
 echo "# Module Definition<br>\n";
 echo "##############################################################################<br>\n";
 echo "<br>\n";
-echo "import sys<br>\n";
 echo "import os<br>\n";
 echo "import Core<br>\n";
-echo "import SUSE<br>\n";
 echo "<br>\n";
 echo "##############################################################################<br>\n";
 echo "# Overriden (eventually or in part) from SDP::Core Module<br>\n";
