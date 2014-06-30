@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Mar 13 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 30 -->\n"; ?>
 <?PHP
 $tmp = strtolower($Owner);
 $pos = strrpos($tmp, ' ') + 1;
@@ -26,7 +26,11 @@ echo "#  You should have received a copy of the GNU General Public License<br>\n
 echo "#  along with this program; if not, see &lt;http://www.gnu.org/licenses/&gt;.<br>\n";
 echo "#<br>\n";
 echo "#&nbsp;&nbsp;Authors/Contributors:<br>\n";
-echo "#&nbsp;&nbsp;&nbsp;$Owner ($Email@$EmailDomain)<br>\n";
+if ( strlen($EmailDomain) > 0 ) {
+	echo "#&nbsp;&nbsp;&nbsp;$Owner ($Email@$EmailDomain)<br>\n";
+} else {
+	echo "#&nbsp;&nbsp;&nbsp;$Owner<br>\n";
+}
 echo "#<br>\n";
 echo "##############################################################################<br>\n";
 echo "<br>\n";

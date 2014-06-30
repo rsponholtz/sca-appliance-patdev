@@ -1,10 +1,10 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 May 08 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Jun 30 -->\n"; ?>
 <?PHP
 	$DB_USER = 'sdpuser';
 	$DB_PASS = "${DB_USER}_password";
 	$DB_NAME = 'SCAPatterns';
 	$TableName = 'Submissions';
-	$EmailDomain = 'suse.com';
+	$EmailDomain = '';
 	$DB_HOST = 'localhost';
 	$ResourceRefresh = 300;
 	$StatsRefresh = 15;
@@ -12,7 +12,7 @@
 	$FieldLength = 30;
 	$DescLength = $FieldLength - 1;
 	$NotesLength = $FieldLength * 3;
-	$Company = 'SUSE LLC';	
+	$Company = '';	
 	$Year = date('Y');
 	$CurrentDate = date('Y M d');
 

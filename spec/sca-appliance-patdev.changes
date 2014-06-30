@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Mon Jun 30 21:53:29 UTC 2014 - jrecord@suse.com
+
+- Company and email domain are configurable at install (bnc#885061)
+
+-------------------------------------------------------------------
 Tue Jun 17 23:05:44 UTC 2014 - jrecord@suse.com
 
 - Updated Python documentation
