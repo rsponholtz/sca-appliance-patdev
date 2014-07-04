@@ -1,4 +1,4 @@
-.TH setup-sdp 8 "30 Jun 2014" "setup-sdp" "Supportconfig Analysis Manual"
+.TH SETUP-SDP 8 "04 Jul 2014" "sca-appliance-patdev" "Supportconfig Analysis Manual"
 .SH NAME
 setup-sdp - Supportconfig Diagnostic Pattern Setup Tool
 .SH SYNOPSIS
@@ -20,7 +20,7 @@ The email domain name used when pattern templates are generated.
 MySQL root password. The root password is needed to create the ServerDiagnostics database and its associated tables.
 .TP
 \fB\-b\fR \fIstring\fR
-MySQL sdp password. The password to use for the sdp MySQL user. The sdp user is local and is used by \fBsdp\fR(1). The password is initially set based on the user schema file \fI/usr/share/doc/packages/scdiag/ServerDiagnostics_Users.sql\fR.
+MySQL sdp password. The password to use for the sdp MySQL user. The sdp user is local and is used by \fBsdpdb\fR(1). The password is initially set based on the user schema file \fI/usr/share/doc/packages/scdiag/ServerDiagnostics_Users.sql\fR.
 .TP
 \fB\-s\fR \fIstring\fR
 Path to schema files.
@@ -44,4 +44,5 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 .SH SEE ALSO
 .BR sdp.conf (5)
+.BR sdpdb (8)
 

@@ -1,4 +1,4 @@
-.TH sdpdb 8 "18 Mar 2014" "sdpdb" "Supportconfig Analysis Manual"
+.TH SDPDB 8 "04 Jul 2014" "sca-appliance-patdev" "Supportconfig Analysis Manual"
 .SH NAME
 sdpdb - Supportconfig Diagnostic Pattern Database Tool
 .SH SYNOPSIS
@@ -19,8 +19,11 @@ Truncates Submissions table
 \fBcmd\fR \fIquery\fR
 Supports a custom query
 .TP
+\fBbackup\fR
+Creates a tarred compressed backup file of the pattern database. 
+.TP
 \fBimport\fR \fIfile\fR
-Imports a MySQL file
+Imports a MySQL file. It can be used to restore a decompressed version of a file created with the \fBbackup\fR option.
 .TP
 \fBdel\fR \fIinteger\fR
 Deletes pattern with Pattern ID <int>
@@ -40,5 +43,5 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, see <http://www.gnu.org/licenses/>.
 .SH SEE ALSO
-.BR pat (8)
+.BR pat (1)
 

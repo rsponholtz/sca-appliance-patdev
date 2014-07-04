@@ -19,7 +19,7 @@ Group:        System/Monitoring
 License:      GPL-2.0
 Autoreqprov:  on
 Version:      1.3
-Release:      31
+Release:      32
 Source:       %{name}-%{version}.tar.gz
 BuildRoot:    %{_tmppath}/%{name}-%{version}
 Buildarch:    noarch
@@ -43,6 +43,7 @@ Authors:
 %build
 gzip -9f man/*1
 gzip -9f man/*5
+gzip -9f man/*8
 
 %install
 pwd;ls -la
@@ -53,6 +54,7 @@ install -d $RPM_BUILD_ROOT/usr/sbin
 install -d $RPM_BUILD_ROOT/usr/bin
 install -d $RPM_BUILD_ROOT/usr/share/man/man1
 install -d $RPM_BUILD_ROOT/usr/share/man/man5
+install -d $RPM_BUILD_ROOT/usr/share/man/man8
 install -d $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -d $RPM_BUILD_ROOT/var/log/archives
 install -m 444 man/COPYING.GPLv2 $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
@@ -68,6 +70,7 @@ install -m 644 schema/* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 docs/README* $RPM_BUILD_ROOT/usr/share/doc/packages/%{sca_common}
 install -m 644 man/*.1.gz $RPM_BUILD_ROOT/usr/share/man/man1
 install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
+install -m 644 man/*.8.gz $RPM_BUILD_ROOT/usr/share/man/man8
 
 %files
 %defattr(-,root,root)
@@ -81,6 +84,7 @@ install -m 644 man/*.5.gz $RPM_BUILD_ROOT/usr/share/man/man5
 %config /etc/%{sca_common}/*
 %doc /usr/share/man/man1/*
 %doc /usr/share/man/man5/*
+%doc /usr/share/man/man8/*
 %attr(-,wwwrun,www) /srv/www/htdocs/%{sca_common}
 %attr(-,wwwrun,www) /srv/www/htdocs/%{sca_common}/docs-python
 %doc /usr/share/doc/packages/%{sca_common}/*
