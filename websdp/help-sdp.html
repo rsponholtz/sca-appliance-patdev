@@ -12,6 +12,9 @@ The Supportconfig Analysis (SCA) appliance uses scripts or programs to parse sup
 The scripts or programs are patterns. You can create your own custom patterns for local use. The Supportconfig Analysis pattern database
 is used to manage and create pattern templates to speed up development time.
 </P>
+<P>
+Pattern library documentation is available for <A HREF="docs-python.html">Python</A> and <A HREF="docs-perl.html">Perl</A>.
+</P>
 <UL>
 <LI><A HREF="#prereqs">Pattern Requirements</A></LI>
 <LI><A HREF="#create">Creating a Pattern</A></LI>
@@ -30,13 +33,14 @@ META_CLASS=&lt;string&gt;|META_CATEGORY=&lt;string&gt;|META_COMPONENT=&lt;string
 <BR>
 <LI>A pattern supports a maximum of 12 solution links - one TID, one BUG and 10 custom links</LI>
 <LI>Provide at least one solution link</LI>
-<LI>Set the OVERALL status value to 0-5, -1 being invalid</LI>
+<LI>Set the OVERALL status value to 0-6, -1 being invalid</LI>
 	0 = SUCCESS<BR>
 	1 = RECOMMEND<BR>
 	2 = PROMOTION<BR>
 	3 = WARNING<BR>
 	4 = CRITICAL<BR>
 	5 = ERROR<BR>
+	6 = IGNORE<BR>
 <LI>Set the OVERALL_INFO value to the report's display string</LI>
 </UL>
 
