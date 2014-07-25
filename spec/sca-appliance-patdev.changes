@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jul 25 16:28:16 UTC 2014 - jrecord@suse.com
+
+- Added DOS file format detect to pat
+
+-------------------------------------------------------------------
 Tue Jul 22 20:49:43 UTC 2014 - jrecord@suse.com
 
 - Correct online documentation
