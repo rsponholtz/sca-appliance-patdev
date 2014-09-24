@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Wed Sep 24 01:08:12 UTC 2014 - jrecord@suse.com
+
+- Updated Python library documenation, includes PatchInfo class
+
+-------------------------------------------------------------------
 Fri Jul 25 16:28:16 UTC 2014 - jrecord@suse.com
 
 - Added DOS file format detect to pat
