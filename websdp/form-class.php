@@ -1,4 +1,4 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Jan 22 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2014 Nov 7 -->\n"; ?>
 <?PHP
 
 $ClassArray = array(
@@ -13,6 +13,7 @@ $ClassArray = array(
 'Print',
 'Security',
 'SLE',
+'SUMA',
 );
 
 if ( isset($Class) ) {

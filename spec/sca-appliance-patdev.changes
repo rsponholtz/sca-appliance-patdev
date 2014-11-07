@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Nov  7 14:44:47 UTC 2014 - jrecord@suse.com
+
+- Added SUMA class for SUSE Manager patterns
+
+-------------------------------------------------------------------
 Wed Sep 24 01:08:12 UTC 2014 - jrecord@suse.com
 
 - Updated Python library documenation, includes PatchInfo class
