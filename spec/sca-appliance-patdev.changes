@@ -1,6 +1,7 @@
 -------------------------------------------------------------------
-Fri Jun  2 20:34:24 UTC 2017 - jason.record@suse.com
+Fri Jun  2 22:10:40 UTC 2017 - jason.record@suse.com
 
+- Added new libraries to docs-python.html
 - Updated Python library documentation
 - Added MPIO, oes and suma library documentation
 
