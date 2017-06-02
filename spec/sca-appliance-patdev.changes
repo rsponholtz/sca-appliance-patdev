@@ -1,4 +1,9 @@
 -------------------------------------------------------------------
+Fri Jun  2 23:11:07 UTC 2017 - jason.record@suse.com
+
+- Fixed incorrect SLE12SP2 global library value (bsc#1042515)
+
+-------------------------------------------------------------------
 Fri Jun  2 22:10:40 UTC 2017 - jason.record@suse.com
 
 - Added new libraries to docs-python.html
