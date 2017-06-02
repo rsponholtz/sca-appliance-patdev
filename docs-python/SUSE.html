@@ -1,6 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module SUSE</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -8,7 +9,7 @@
 <td valign=bottom>&nbsp;<br>
 <font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>SUSE</strong></big></big></font></td
 ><td align=right valign=bottom
-><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:/opt/gitwork/sca-patterns-base/libraries/python/SUSE.py">/opt/gitwork/sca-patterns-base/libraries/python/SUSE.py</a></font></td></tr></table>
+><font color="#ffffff" face="helvetica, arial"><a href="../docs-python.html">index</a><br>/usr/lib/sca/python/SUSE.py</font></td></tr></table>
     <p><tt>Supportconfig&nbsp;Analysis&nbsp;Library&nbsp;for&nbsp;SUSE&nbsp;python&nbsp;patterns<br>
 &nbsp;<br>
 Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&nbsp;specific&nbsp;to&nbsp;SUSE</tt></p>
@@ -20,8 +21,10 @@ Library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;python&nbsp;patterns&
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="Core.html">Core</a><br>
-</td><td width="25%" valign=top><a href="re.html">re</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/ast.html">ast</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/datetime.html">datetime</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+</td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#ee77aa">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -124,11 +127,79 @@ RPM_VERSION&nbsp;=&nbsp;'1.1.0'<br>
 if(&nbsp;SUSE.<a href="#-packageInstalled">packageInstalled</a>(RPM_NAME)&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INSTALLED_VERSION&nbsp;=&nbsp;SUSE.<a href="#-compareRPM">compareRPM</a>(RPM_NAME,&nbsp;RPM_VERSION)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;INSTALLED_VERSION&nbsp;&lt;=&nbsp;0&nbsp;):<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.CRIT,&nbsp;"Bug&nbsp;detected&nbsp;in&nbsp;"&nbsp;+&nbsp;RPM_VERSION&nbsp;+&nbsp;",&nbsp;update&nbsp;server&nbsp;for&nbsp;fixes")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.CRIT,&nbsp;"Bug&nbsp;detected&nbsp;in&nbsp;"&nbsp;+&nbsp;RPM_NAME&nbsp;+&nbsp;",&nbsp;update&nbsp;server&nbsp;for&nbsp;fixes")<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Bug&nbsp;fixes&nbsp;applied&nbsp;for&nbsp;"&nbsp;+&nbsp;RPM_VERSION)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Bug&nbsp;fixes&nbsp;applied&nbsp;for&nbsp;"&nbsp;+&nbsp;RPM_NAME)<br>
 else:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;"ERROR:&nbsp;"&nbsp;+&nbsp;RPM_NAME&nbsp;+&nbsp;"&nbsp;not&nbsp;installed")</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;"ERROR:&nbsp;RPM&nbsp;package&nbsp;not&nbsp;installed:&nbsp;"&nbsp;+&nbsp;RPM_NAME)</tt></dd></dl>
+ <dl><dt><a name="-getBasicFIPSData"><strong>getBasicFIPSData</strong></a>()</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;state&nbsp;of&nbsp;key&nbsp;FIPS&nbsp;data&nbsp;values.<br>
+Supportconfigs&nbsp;from&nbsp;SLE12&nbsp;minimum&nbsp;required<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary<br>
+Keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Installed&nbsp;=&nbsp;FIPS&nbsp;packages&nbsp;are&nbsp;installed<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enabled&nbsp;&nbsp;&nbsp;=&nbsp;FIPS&nbsp;is&nbsp;enabled&nbsp;per&nbsp;/proc/sys/crypto/fips_enabled<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GrubFips&nbsp;&nbsp;=&nbsp;fips=1&nbsp;found&nbsp;in&nbsp;/etc/default/grub&nbsp;for&nbsp;GRUB2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GrubBoot&nbsp;&nbsp;=&nbsp;boot=&nbsp;found&nbsp;in&nbsp;/etc/default/grub&nbsp;for&nbsp;GRUB2<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KernFips&nbsp;&nbsp;=&nbsp;fips=1&nbsp;found&nbsp;in&nbsp;/proc/cmdline<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;KernBoot&nbsp;&nbsp;=&nbsp;boot=&nbsp;found&nbsp;in&nbsp;/proc/cmdline<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Initrd&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;fips&nbsp;module&nbsp;included&nbsp;in&nbsp;the&nbsp;ramdisk&nbsp;of&nbsp;the&nbsp;running&nbsp;kernel<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note:&nbsp;This&nbsp;key&nbsp;is&nbsp;present&nbsp;only&nbsp;if&nbsp;the&nbsp;supportconfig&nbsp;has&nbsp;the&nbsp;lsinitrd&nbsp;output&nbsp;in&nbsp;boot.txt<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+FIPS&nbsp;=&nbsp;SUSE.<a href="#-getBasicFIPSData">getBasicFIPSData</a>()<br>
+if(&nbsp;FIPS['Installed']&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"FIPS&nbsp;installed")<br>
+else:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.REC,&nbsp;"Consider&nbsp;installing&nbsp;FIPS")</tt></dd></dl>
+ <dl><dt><a name="-getBasicVirtualization"><strong>getBasicVirtualization</strong></a>()</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gathers&nbsp;Virtualization&nbsp;section&nbsp;of&nbsp;the&nbsp;basic-environment.txt&nbsp;file.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Converts&nbsp;the&nbsp;basic-environment.txt&nbsp;section&nbsp;from&nbsp;this:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#==[&nbsp;System&nbsp;]=======================================#<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#&nbsp;Virtualization<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Manufacturer:&nbsp;&nbsp;HP<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hardware:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ProLiant&nbsp;DL380&nbsp;Gen9<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Hypervisor:&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Identity:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Not&nbsp;Detected<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;to&nbsp;this&nbsp;dictionary:<br>
+&nbsp;<br>
+{'Hardware':&nbsp;'ProLiant&nbsp;DL380&nbsp;Gen9',&nbsp;'Hypervisor':&nbsp;'None',&nbsp;'Identity':&nbsp;'Not&nbsp;Detected',&nbsp;'Manufacturer':&nbsp;'HP'}&nbsp;<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SYSTEM&nbsp;=&nbsp;SUSE.<a href="#-getBasicVirtualization">getBasicVirtualization</a>()<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"hp"&nbsp;in&nbsp;SYSTEM['Manufacturer'].lower():<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Detected&nbsp;HP&nbsp;hardware")<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"No&nbsp;HP&nbsp;hardware&nbsp;found")</tt></dd></dl>
+ <dl><dt><a name="-getConfigFileLVM"><strong>getConfigFileLVM</strong></a>(PART)</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;/etc/lvm/lvm.conf&nbsp;file&nbsp;from&nbsp;the&nbsp;lvm.txt&nbsp;file&nbsp;in&nbsp;supportconfig.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PART<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;PART&nbsp;is&nbsp;set&nbsp;to&nbsp;''&nbsp;or&nbsp;'all',&nbsp;the&nbsp;entire&nbsp;lvm.conf&nbsp;file&nbsp;will&nbsp;be&nbsp;returned&nbsp;in&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;dictionaries.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;PART&nbsp;is&nbsp;set&nbsp;to&nbsp;a&nbsp;specific&nbsp;lvm.conf&nbsp;section,&nbsp;like&nbsp;'log'&nbsp;or&nbsp;'activation',&nbsp;only&nbsp;that&nbsp;section&nbsp;will&nbsp;be&nbsp;returned&nbsp;as&nbsp;a&nbsp;dictionary.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If&nbsp;PART&nbsp;is&nbsp;set,&nbsp;but&nbsp;not&nbsp;found&nbsp;among&nbsp;the&nbsp;lvm.conf&nbsp;sections,&nbsp;an&nbsp;empty&nbsp;dictionary&nbsp;is&nbsp;returned.<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary<br>
+Keys:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returned&nbsp;from&nbsp;the&nbsp;lvm.conf&nbsp;itself<br>
+&nbsp;<br>
+Example&nbsp;1:<br>
+LVM_CONFIG&nbsp;=&nbsp;SUSE.<a href="#-getConfigFileLVM">getConfigFileLVM</a>('log')<br>
+if(&nbsp;int(LVM_CONFIG['verbose'])&nbsp;&gt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"LVM&nbsp;logging&nbsp;set&nbsp;to&nbsp;greater&nbsp;verbosity")<br>
+else:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"LMV&nbsp;logging&nbsp;is&nbsp;not&nbsp;verbose")<br>
+&nbsp;<br>
+Example&nbsp;2:<br>
+LVM_CONFIG&nbsp;=&nbsp;SUSE.<a href="#-getConfigFileLVM">getConfigFileLVM</a>('ALL')<br>
+if(&nbsp;int(LVM_CONFIG['log']['verbose'])&nbsp;&gt;&nbsp;0&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"LVM&nbsp;logging&nbsp;set&nbsp;to&nbsp;greater&nbsp;verbosity")<br>
+else:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"LMV&nbsp;logging&nbsp;is&nbsp;not&nbsp;verbose")</tt></dd></dl>
  <dl><dt><a name="-getDriverInfo"><strong>getDriverInfo</strong></a>(DRIVER_NAME)</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;specified&nbsp;kernel&nbsp;driver<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DRIVER_NAME&nbsp;-&nbsp;The&nbsp;kernel&nbsp;driver&nbsp;name&nbsp;on&nbsp;which&nbsp;you&nbsp;want&nbsp;details<br>
@@ -150,6 +221,50 @@ if(&nbsp;DRIVER_INFO['loaded']&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_IGNORE,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_WARNING,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;missing,&nbsp;install&nbsp;it")</tt></dd></dl>
+ <dl><dt><a name="-getFileSystems"><strong>getFileSystems</strong></a>()</dt><dd><tt>Gets&nbsp;all&nbsp;fields&nbsp;from&nbsp;the&nbsp;mounted&nbsp;and&nbsp;unmountd&nbsp;file&nbsp;systems&nbsp;with&nbsp;their&nbsp;associated&nbsp;fstab&nbsp;file&nbsp;and&nbsp;df&nbsp;command&nbsp;output.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;Dictionaries<br>
+Keys:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ActiveDevice&nbsp;&nbsp;=&nbsp;The&nbsp;active&nbsp;device&nbsp;path<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MountedDevice&nbsp;=&nbsp;The&nbsp;device&nbsp;path&nbsp;from&nbsp;the&nbsp;mount&nbsp;command<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FstabDevice&nbsp;&nbsp;&nbsp;=&nbsp;The&nbsp;device&nbsp;path&nbsp;from&nbsp;/etc/fstab<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MountPoint&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;The&nbsp;mount&nbsp;point<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;File&nbsp;system&nbsp;type<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MountOptions&nbsp;&nbsp;=&nbsp;Options&nbsp;used&nbsp;when&nbsp;mounted&nbsp;as&nbsp;shown&nbsp;by&nbsp;the&nbsp;mount&nbsp;command<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FstabOptions&nbsp;&nbsp;=&nbsp;Options&nbsp;defined&nbsp;in&nbsp;the&nbsp;/etc/fstab<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dump&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;/etc/fstab&nbsp;dump&nbsp;field,&nbsp;''&nbsp;if&nbsp;unknown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;fsck&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;/etc/fstab&nbsp;fsck&nbsp;field,&nbsp;''&nbsp;if&nbsp;unknown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mounted&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;False&nbsp;=&nbsp;Not&nbsp;mounted,&nbsp;True&nbsp;=&nbsp;Mounted<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Size&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;File&nbsp;system&nbsp;size&nbsp;in&nbsp;bytes,&nbsp;''&nbsp;if&nbsp;unknown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UsedSpace&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;File&nbsp;system&nbsp;space&nbsp;used&nbsp;in&nbsp;bytes,&nbsp;''&nbsp;if&nbsp;unknown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AvailSpace&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;file&nbsp;system&nbsp;space&nbsp;available&nbsp;in&nbsp;bytes,&nbsp;''&nbsp;if&nbsp;unknown<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PercentUsed&nbsp;&nbsp;&nbsp;=&nbsp;file&nbsp;system&nbsp;percent&nbsp;used,&nbsp;-1&nbsp;if&nbsp;unknown<br>
+&nbsp;<br>
+Example:<br>
+UNMOUNTED&nbsp;=&nbsp;[]<br>
+FSLIST&nbsp;=&nbsp;SUSE.<a href="#-getFileSystems">getFileSystems</a>()<br>
+for&nbsp;FS&nbsp;in&nbsp;FSLIST:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;not&nbsp;FS['Mounted']&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNMOUNTED.append(FS['MountPoint'])<br>
+if(&nbsp;UNMOUNTED&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Detected&nbsp;unmounted&nbsp;filesystems:&nbsp;"&nbsp;+&nbsp;'&nbsp;'.join(UNMOUNTED))<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"All&nbsp;filesystems&nbsp;appear&nbsp;to&nbsp;be&nbsp;mounted")</tt></dd></dl>
+ <dl><dt><a name="-getGrub2Config"><strong>getGrub2Config</strong></a>()</dt><dd><tt>Returns&nbsp;a&nbsp;dictionary&nbsp;of&nbsp;the&nbsp;key/value&nbsp;pairs&nbsp;found&nbsp;in&nbsp;/etc/default/grub.<br>
+Supportconfigs&nbsp;from&nbsp;SLE12&nbsp;minimum&nbsp;required<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Dictionary<br>
+Keys:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;As&nbsp;defined&nbsp;in&nbsp;/etc/default/grub.&nbsp;All&nbsp;keys&nbsp;are&nbsp;forced&nbsp;to&nbsp;uppercase,&nbsp;values&nbsp;are&nbsp;left&nbsp;as&nbsp;is.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+CONFIG&nbsp;=&nbsp;SUSE.<a href="#-getGrub2Config">getGrub2Config</a>()<br>
+if(&nbsp;"splash=silent"&nbsp;in&nbsp;CONFIG['GRUB_CMDLINE_LINUX_DEFAULT'].lower()&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.REC,&nbsp;"Use&nbsp;splash=native&nbsp;for&nbsp;more&nbsp;screen&nbsp;output")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Additional&nbsp;screen&nbsp;output&nbsp;ignored")</tt></dd></dl>
  <dl><dt><a name="-getHostInfo"><strong>getHostInfo</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;server<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -176,6 +291,21 @@ if&nbsp;SLE.search(SERVER['Distro']):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"SLES"&nbsp;+&nbsp;str(SERVER['DistroVersion'])&nbsp;+&nbsp;"SP"&nbsp;+&nbsp;str(SERVER['DistroPatchLevel'])&nbsp;+&nbsp;":&nbsp;No&nbsp;Testing&nbsp;Needed")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;SERVER['Distro']&nbsp;+&nbsp;":&nbsp;Invalid&nbsp;Distribution&nbsp;for&nbsp;Test&nbsp;Case")</tt></dd></dl>
+ <dl><dt><a name="-getProcCmdLine"><strong>getProcCmdLine</strong></a>()</dt><dd><tt>Gathers&nbsp;the&nbsp;/proc/cmdline&nbsp;and&nbsp;assigns&nbsp;each&nbsp;value&nbsp;to&nbsp;a&nbsp;list&nbsp;element.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List<br>
+Example:<br>
+&nbsp;<br>
+CMDLINE&nbsp;=&nbsp;SUSE.<a href="#-getProcCmdLine">getProcCmdLine</a>()<br>
+CRASH_DEFINED&nbsp;=&nbsp;False<br>
+for&nbsp;OPTION&nbsp;in&nbsp;CMDLINE:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"crashkernel="&nbsp;in&nbsp;OPTION:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CRASH_DEFINED&nbsp;=&nbsp;True<br>
+if(&nbsp;CRASH_DEFINED&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Kernel&nbsp;crash&nbsp;memory&nbsp;is&nbsp;defined")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.REC,&nbsp;"Consider&nbsp;configuring&nbsp;the&nbsp;server&nbsp;for&nbsp;a&nbsp;kernel&nbsp;core&nbsp;dump")</tt></dd></dl>
  <dl><dt><a name="-getRpmInfo"><strong>getRpmInfo</strong></a>(PackageName)</dt><dd><tt>Retrieves&nbsp;RPM&nbsp;package&nbsp;information&nbsp;from&nbsp;supportconfig&nbsp;files&nbsp;using&nbsp;the&nbsp;specified&nbsp;PackageName<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;RPM&nbsp;package&nbsp;name&nbsp;on&nbsp;which&nbsp;you&nbsp;want&nbsp;details<br>
@@ -192,6 +322,41 @@ if(&nbsp;len(RPM_INFO)&nbsp;&gt;&nbsp;0&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_IGNORE,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;installed")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(STATUS_WARNING,&nbsp;"Package&nbsp;"&nbsp;+&nbsp;RPM_INFO['name']&nbsp;+&nbsp;str(RPM_INFO['version'])&nbsp;+&nbsp;"&nbsp;is&nbsp;missing,&nbsp;install&nbsp;it")</tt></dd></dl>
+ <dl><dt><a name="-getSCCInfo"><strong>getSCCInfo</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;provided&nbsp;by&nbsp;the&nbsp;SUSEConnect&nbsp;--status&nbsp;command&nbsp;in&nbsp;SLE12<br>
+&nbsp;<br>
+Requires:&nbsp;None<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;Dictionaries<br>
+Keys:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dictionary&nbsp;key&nbsp;names&nbsp;correspond&nbsp;to&nbsp;the&nbsp;field&nbsp;names&nbsp;from&nbsp;SUSEConnect&nbsp;command.&nbsp;The&nbsp;dictionaries&nbsp;are&nbsp;variable&nbsp;in&nbsp;length.<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+SCC_INFO&nbsp;=&nbsp;SUSE.<a href="#-getSCCInfo">getSCCInfo</a>()<br>
+UNREGISTERED_LIST&nbsp;=&nbsp;[]<br>
+if(&nbsp;SCC_INFO&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;I&nbsp;in&nbsp;range(len(SCC_INFO)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;"registered"&nbsp;!=&nbsp;str(SCC_INFO[I]['status'].lower())&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;UNREGISTERED_LIST.append(SCC_INFO[I]['identifier'])<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;UNREGISTERED_LIST&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Detected&nbsp;unregistered&nbsp;products:&nbsp;"&nbsp;+&nbsp;str(UNREGISTERED_LIST))<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"All&nbsp;products&nbsp;appear&nbsp;to&nbsp;be&nbsp;registered")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.ERROR,&nbsp;"ERROR:&nbsp;Missing&nbsp;SUSEConnect&nbsp;Information")</tt></dd></dl>
+ <dl><dt><a name="-getSCRunTime"><strong>getSCRunTime</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;when&nbsp;the&nbsp;supportconfig&nbsp;was&nbsp;run<br>
+&nbsp;<br>
+Requires:&nbsp;import&nbsp;datetime<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;datetime&nbsp;object<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+import&nbsp;datetime<br>
+SC_RUN_TIME&nbsp;=&nbsp;SUSE.<a href="#-getSCRunTime">getSCRunTime</a>()<br>
+if(&nbsp;SC_RUN_TIME&nbsp;&lt;&nbsp;datetime.datetime.now()&nbsp;-&nbsp;datetime.timedelta(days=30)&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Supportconfig&nbsp;data&nbsp;are&nbsp;older&nbsp;than&nbsp;30&nbsp;days,&nbsp;run&nbsp;a&nbsp;new&nbsp;supportconfig")<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Supportconfig&nbsp;data&nbsp;are&nbsp;current")</tt></dd></dl>
  <dl><dt><a name="-getScInfo"><strong>getScInfo</strong></a>()</dt><dd><tt>Gets&nbsp;information&nbsp;about&nbsp;the&nbsp;supportconfig&nbsp;archive&nbsp;itself<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
@@ -243,6 +408,52 @@ if(&nbsp;SERVICE_INFO['Running']&nbsp;&gt;&nbsp;0&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Service&nbsp;is&nbsp;running:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Service&nbsp;is&nbsp;down:&nbsp;"&nbsp;+&nbsp;str(SERVICE_NAME));</tt></dd></dl>
+ <dl><dt><a name="-getZypperProductList"><strong>getZypperProductList</strong></a>()</dt><dd><tt>Gathers&nbsp;zypper&nbsp;products&nbsp;output&nbsp;into&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionaries<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;Dictionaries<br>
+Keys:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dictionary&nbsp;key&nbsp;names&nbsp;correspond&nbsp;to&nbsp;the&nbsp;field&nbsp;names&nbsp;from&nbsp;zypper&nbsp;products&nbsp;command.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Status&nbsp;(S)&nbsp;-&nbsp;Product&nbsp;status<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Repository<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;InternalName<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Version<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Architecture&nbsp;(Arch)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;IsBase&nbsp;-&nbsp;True&nbsp;(Yes)&nbsp;is&nbsp;the&nbsp;product&nbsp;is&nbsp;a&nbsp;base&nbsp;product,&nbsp;otherwise&nbsp;False&nbsp;(No).<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+PRODUCT_LIST&nbsp;=&nbsp;SUSE.<a href="#-getZypperProductList">getZypperProductList</a>()<br>
+BASE_PRODUCTS&nbsp;=&nbsp;[]<br>
+for&nbsp;I&nbsp;in&nbsp;range(len(PRODUCT_LIST)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;PRODUCT_LIST[I]['IsBase']&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;BASE_PRODUCTS.append(PRODUCT_LIST[I]['Name'])<br>
+if(&nbsp;BASE_PRODUCTS&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.SUCC,&nbsp;"Base&nbsp;products&nbsp;found:&nbsp;"&nbsp;+&nbsp;str(BASE_PRODUCTS))<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.CRIT,&nbsp;"No&nbsp;base&nbsp;products&nbsp;found")</tt></dd></dl>
+ <dl><dt><a name="-getZypperRepoList"><strong>getZypperRepoList</strong></a>()</dt><dd><tt>Gathers&nbsp;zypper&nbsp;repos&nbsp;output&nbsp;into&nbsp;a&nbsp;list&nbsp;of&nbsp;dictionaries<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;None<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;List&nbsp;of&nbsp;Dictionaries<br>
+Keys:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The&nbsp;dictionary&nbsp;key&nbsp;names&nbsp;correspond&nbsp;to&nbsp;the&nbsp;field&nbsp;names&nbsp;from&nbsp;zypper&nbsp;repos&nbsp;command.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Num&nbsp;-&nbsp;Repository&nbsp;number<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Alias<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Name<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Enabled&nbsp;-&nbsp;True&nbsp;(Yes)&nbsp;if&nbsp;the&nbsp;repository&nbsp;is&nbsp;enabled,&nbsp;otherwise&nbsp;False&nbsp;(No).<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Refresh&nbsp;-&nbsp;True&nbsp;(Yes)&nbsp;is&nbsp;the&nbsp;repository&nbsp;is&nbsp;set&nbsp;to&nbsp;refresh,&nbsp;otherwise&nbsp;False&nbsp;(No).<br>
+&nbsp;<br>
+Example:<br>
+&nbsp;<br>
+REPO_LIST&nbsp;=&nbsp;SUSE.<a href="#-getZypperRepoList">getZypperRepoList</a>()<br>
+DISABLED_REPOS&nbsp;=&nbsp;[]<br>
+for&nbsp;I&nbsp;in&nbsp;range(len(REPO_LIST)):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(&nbsp;not&nbsp;REPO_LIST[I]['Enabled']&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;DISABLED_REPOS.append(REPO_LIST[I]['Name'])<br>
+if(&nbsp;DISABLED_REPOS&nbsp;):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.WARN,&nbsp;"Detected&nbsp;"&nbsp;+&nbsp;str(len(DISABLED_REPOS))&nbsp;+&nbsp;"&nbsp;disabled&nbsp;repositories&nbsp;of&nbsp;"&nbsp;+&nbsp;str(len(REPO_LIST))&nbsp;+&nbsp;"&nbsp;available:&nbsp;"&nbsp;+&nbsp;str(DISABLED_REPOS))<br>
+else:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.updateStatus(Core.IGNORE,&nbsp;"Not&nbsp;disabled&nbsp;repositories&nbsp;detected")</tt></dd></dl>
  <dl><dt><a name="-packageInstalled"><strong>packageInstalled</strong></a>(PackageName)</dt><dd><tt>The&nbsp;PackageName&nbsp;is&nbsp;installed&nbsp;on&nbsp;the&nbsp;server<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PackageName&nbsp;-&nbsp;The&nbsp;RPM&nbsp;package&nbsp;name&nbsp;to&nbsp;check&nbsp;if&nbsp;installed<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
@@ -305,18 +516,28 @@ else:<br>
     
 <tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
 <td width="100%"><strong>SLE10GA</strong> = '2.6.16.21-0.8'<br>
+<strong>SLE10SP0</strong> = '2.6.16.21-0.8'<br>
 <strong>SLE10SP1</strong> = '2.6.16.46-0.12'<br>
 <strong>SLE10SP2</strong> = '2.6.16.60-0.21'<br>
 <strong>SLE10SP3</strong> = '2.6.16.60-0.54.5'<br>
 <strong>SLE10SP4</strong> = '2.6.16.60-0.85.1'<br>
 <strong>SLE10SP5</strong> = '2.6.17'<br>
 <strong>SLE11GA</strong> = '2.6.27.19-5'<br>
+<strong>SLE11SP0</strong> = '2.6.27.19-5'<br>
 <strong>SLE11SP1</strong> = '2.6.32.12-0.7'<br>
 <strong>SLE11SP2</strong> = '3.0.13-0.27'<br>
 <strong>SLE11SP3</strong> = '3.0.76-0.11.1'<br>
-<strong>SLE11SP4</strong> = '3.1'<br>
-<strong>SLE12GA</strong> = '3.999'<br>
+<strong>SLE11SP4</strong> = '3.0.101-0.63.1'<br>
+<strong>SLE11SP5</strong> = '3.1'<br>
+<strong>SLE12GA</strong> = '3.12.28-4'<br>
+<strong>SLE12SP0</strong> = '3.12.28-4'<br>
+<strong>SLE12SP1</strong> = '3.12.49-11.1'<br>
+<strong>SLE12SP2</strong> = '3.999'<br>
+<strong>SLE12SP3</strong> = '3.999'<br>
+<strong>SLE12SP4</strong> = '3.999'<br>
+<strong>SLE12SP5</strong> = '3.999'<br>
 <strong>SLE9GA</strong> = '2.6.5-7.97'<br>
+<strong>SLE9SP0</strong> = '2.6.5-7.97'<br>
 <strong>SLE9SP1</strong> = '2.6.5-7.139'<br>
 <strong>SLE9SP2</strong> = '2.6.5-7.191'<br>
 <strong>SLE9SP3</strong> = '2.6.5-7.244'<br>

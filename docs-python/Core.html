@@ -1,6 +1,7 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html><head><title>Python: module Core</title>
+<meta charset="utf-8">
 </head><body bgcolor="#f0f0f8">
 
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
@@ -19,9 +20,10 @@ Core&nbsp;library&nbsp;of&nbsp;functions&nbsp;for&nbsp;creating&nbsp;and&nbsp;pr
 <font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
     
 <tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="https://docs.python.org/library/os.html">os</a><br>
+</td><td width="25%" valign=top><a href="https://docs.python.org/library/re.html">re</a><br>
 </td><td width="25%" valign=top><a href="https://docs.python.org/library/sys.html">sys</a><br>
-</td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+</td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
 <table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
 <tr bgcolor="#eeaa77">
 <td colspan=3 valign=bottom>&nbsp;<br>
@@ -40,7 +42,7 @@ Example:<br>
 &nbsp;<br>
 thisVersion&nbsp;=&nbsp;'1.1.0-2'<br>
 thatVersion&nbsp;=&nbsp;'1.2'<br>
-if(&nbsp;<a href="#-compareLooseVersions">compareLooseVersions</a>(thisVersion,&nbsp;thatVersion)&nbsp;&gt;&nbsp;0&nbsp;):<br>
+if(&nbsp;Core.<a href="#-compareLooseVersions">compareLooseVersions</a>(thisVersion,&nbsp;thatVersion)&nbsp;&gt;&nbsp;0&nbsp;):<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"The&nbsp;version&nbsp;is&nbsp;too&nbsp;old,&nbsp;update&nbsp;the&nbsp;system")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"The&nbsp;version&nbsp;is&nbsp;sufficient")</tt></dd></dl>
@@ -60,11 +62,70 @@ if(&nbsp;<a href="#-compareVersions">compareVersions</a>(thisVersion,&nbsp;thatV
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"The&nbsp;version&nbsp;is&nbsp;too&nbsp;old,&nbsp;update&nbsp;the&nbsp;system")<br>
 else:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"The&nbsp;version&nbsp;is&nbsp;sufficient")</tt></dd></dl>
- <dl><dt><a name="-getSection"><strong>getSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+ <dl><dt><a name="-getExactSection"><strong>getExactSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+NOTE:&nbsp;getExactSection&nbsp;differs&nbsp;from&nbsp;getSection&nbsp;in&nbsp;that&nbsp;CONTENT&nbsp;is&nbsp;a&nbsp;list&nbsp;instead&nbsp;of&nbsp;a&nbsp;dictionary&nbsp;and&nbsp;the&nbsp;SECTION&nbsp;string&nbsp;must&nbsp;match&nbsp;exactly&nbsp;to&nbsp;the&nbsp;Section&nbsp;name&nbsp;in&nbsp;the&nbsp;file.<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;regex&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(List)&nbsp;-&nbsp;Section&nbsp;contents&nbsp;line-by-line<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;The&nbsp;specified&nbsp;section&nbsp;was&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;The&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
+Example:<br>
+&nbsp;<br>
+fileOpen&nbsp;=&nbsp;"boot.txt"<br>
+section&nbsp;=&nbsp;"menu.lst"<br>
+content&nbsp;=&nbsp;[]<br>
+if&nbsp;Core.<a href="#-getSection">getSection</a>(fileOpen,&nbsp;section,&nbsp;content):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;line&nbsp;in&nbsp;content:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"xen.gz"&nbsp;in&nbsp;line:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"Found&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option"<br>
+Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"Missing&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option")</tt></dd></dl>
+ <dl><dt><a name="-getRegExSection"><strong>getRegExSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+NOTE:&nbsp;getRegExSection&nbsp;differs&nbsp;from&nbsp;getSection&nbsp;in&nbsp;that&nbsp;CONTENT&nbsp;is&nbsp;a&nbsp;list&nbsp;instead&nbsp;of&nbsp;a&nbsp;dictionary.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;regex&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(List)&nbsp;-&nbsp;Section&nbsp;contents&nbsp;line-by-line<br>
+Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;The&nbsp;specified&nbsp;section&nbsp;was&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;The&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
+Example:<br>
+&nbsp;<br>
+FILE_OPEN&nbsp;=&nbsp;"boot.txt"<br>
+SECTION&nbsp;=&nbsp;"menu.lst"<br>
+CONTENT&nbsp;=&nbsp;[]<br>
+if&nbsp;Core.<a href="#-getRegExSection">getRegExSection</a>(FILE_OPEN,&nbsp;SECTION,&nbsp;CONTENT):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;LINE&nbsp;in&nbsp;CONTENT:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"xen.gz"&nbsp;in&nbsp;LINE:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"Found&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option"<br>
+Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"Missing&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option")</tt></dd></dl>
+ <dl><dt><a name="-getRegExSectionRaw"><strong>getRegExSectionRaw</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;list,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+NOTE:&nbsp;getRegExSectionRaw&nbsp;differs&nbsp;from&nbsp;getRegExSection&nbsp;by&nbsp;searching&nbsp;commented&nbsp;lines&nbsp;in&nbsp;the&nbsp;file&nbsp;section.&nbsp;All&nbsp;lines&nbsp;are&nbsp;included&nbsp;in&nbsp;the&nbsp;search.<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;regex&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(List)&nbsp;-&nbsp;Section&nbsp;contents&nbsp;line-by-line<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;The&nbsp;specified&nbsp;section&nbsp;was&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;The&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Example:<br>
+&nbsp;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;=&nbsp;"boot.txt"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;=&nbsp;"menu.lst"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;=&nbsp;[]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;Core.<a href="#-getRegExSectionRaw">getRegExSectionRaw</a>(FILE_OPEN,&nbsp;SECTION,&nbsp;CONTENT):<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for&nbsp;LINE&nbsp;in&nbsp;CONTENT:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if&nbsp;"xen.gz"&nbsp;in&nbsp;LINE:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.IGNORE,&nbsp;"Found&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option"<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Core.<a href="#-updateStatus">updateStatus</a>(Core.WARN,&nbsp;"Missing&nbsp;Xen&nbsp;kernel&nbsp;boot&nbsp;option")</tt></dd></dl>
+ <dl><dt><a name="-getSection"><strong>getSection</strong></a>(FILE_OPEN, SECTION, CONTENT)</dt><dd><tt>Deprecated:&nbsp;Use&nbsp;Core.getRegExSection&nbsp;or&nbsp;Core.getExactSection&nbsp;instead.<br>
+&nbsp;<br>
+Extracts&nbsp;the&nbsp;first&nbsp;section&nbsp;of&nbsp;a&nbsp;supportconfig&nbsp;file&nbsp;matching&nbsp;SECTION&nbsp;and&nbsp;puts&nbsp;it&nbsp;into&nbsp;the&nbsp;CONTENT&nbsp;dictionary,&nbsp;one&nbsp;line&nbsp;per&nbsp;list&nbsp;element.<br>
+&nbsp;<br>
+Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SECTION&nbsp;(String)&nbsp;-&nbsp;The&nbsp;section&nbsp;regex&nbsp;identifier&nbsp;in&nbsp;the&nbsp;file<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CONTENT&nbsp;(Dictionary)&nbsp;-&nbsp;Section&nbsp;contents&nbsp;line-by-line<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;or&nbsp;False<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;True&nbsp;-&nbsp;The&nbsp;specified&nbsp;section&nbsp;was&nbsp;found<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;False&nbsp;-&nbsp;The&nbsp;section&nbsp;was&nbsp;not&nbsp;found<br>
@@ -91,6 +152,7 @@ Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CLASS&nbs
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;INFO&nbsp;=&nbsp;OVERALL_INFO<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LINKS&nbsp;=&nbsp;OTHER_LINKS<br>
 Returns:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Updates&nbsp;global&nbsp;variables</tt></dd></dl>
+ <dl><dt><a name="-isFileActive"><strong>isFileActive</strong></a>(FILE_OPEN)</dt></dl>
  <dl><dt><a name="-listSections"><strong>listSections</strong></a>(FILE_OPEN, CONTENT)</dt><dd><tt>Extracts&nbsp;all&nbsp;section&nbsp;names&nbsp;from&nbsp;FILE_OPEN&nbsp;and&nbsp;adds&nbsp;them&nbsp;to&nbsp;CONTENT.<br>
 &nbsp;<br>
 Args:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FILE_OPEN&nbsp;(String)&nbsp;-&nbsp;The&nbsp;supportconfig&nbsp;filename&nbsp;to&nbsp;open<br>

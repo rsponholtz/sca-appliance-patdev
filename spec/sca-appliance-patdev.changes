@@ -1,4 +1,10 @@
 -------------------------------------------------------------------
+Fri Jun  2 20:34:24 UTC 2017 - jason.record@suse.com
+
+- Updated Python library documentation
+- Added MPIO, oes and suma library documentation
+
+-------------------------------------------------------------------
 Fri Nov  7 14:44:47 UTC 2014 - jrecord@suse.com
 
 - Added SUMA class for SUSE Manager patterns
