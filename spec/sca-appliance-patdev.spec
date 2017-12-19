@@ -69,8 +69,9 @@ install -m 644 man/*.8.gz %{buildroot}%{_mandir}/man8
 
 %files
 %defattr(-,root,root)
-%dir %{sca_webdir}/docs-python
 %dir %{_docdir}/%{name}
+%dir %{sca_webdir}/docs-python
+%dir %{sca_configdir}
 %{_sbindir}/sdpdb
 %{_sbindir}/setup-sdp
 %{_bindir}/pat

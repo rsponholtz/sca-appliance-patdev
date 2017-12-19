@@ -31,7 +31,7 @@ dist:
 	@rm -rf $(SRCDIR)
 	@mv -f $(SRCFILE).gz src
 
-clean: uninstall
+clean: uninstall obclean
 	@echo [clean]: Cleaning up make files
 	@rm -rf $(OBSPACKAGE)*
 	@for i in $(SVNDIRS); do rm -f $$i/*~; done
@@ -53,7 +53,7 @@ obsetup: obclean
 	@echo [obsetup]: Setup OBS Novell:NTS:Unstable/$(OBSPACKAGE)
 	@osc -A 'https://api.opensuse.org/' co Novell:NTS:Unstable/$(OBSPACKAGE) &>/dev/null
 
-obclean: clean
+obclean:
 	@echo [obclean]: Cleaning OBS Novell:NTS:Unstable
 	@rm -rf Novell:NTS:Unstable
 
