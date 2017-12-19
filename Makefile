@@ -51,7 +51,7 @@ build: clean install
 
 obsetup: obclean
 	@echo [obsetup]: Setup OBS Novell:NTS:Unstable/$(OBSPACKAGE)
-	@osc -A 'https://api.opensuse.org/' co Novell:NTS:Unstable/$(OBSPACKAGE) &>/dev/null
+	@osc -A 'https://api.opensuse.org/' co Novell:NTS:Unstable/$(OBSPACKAGE)
 
 obclean:
 	@echo [obclean]: Cleaning OBS Novell:NTS:Unstable
@@ -59,7 +59,7 @@ obclean:
 
 obs: dist
 	@echo [obs]: Preparing OBS Novell:NTS:Unstable/$(OBSPACKAGE) for checkin
-	@osc -A 'https://api.opensuse.org/' up Novell:NTS:Unstable/$(OBSPACKAGE) &>/dev/null
+	@osc -A 'https://api.opensuse.org/' up Novell:NTS:Unstable/$(OBSPACKAGE)
 	@cp spec/* Novell:NTS:Unstable/$(OBSPACKAGE)
 	@cp src/$(SRCFILE).gz Novell:NTS:Unstable/$(OBSPACKAGE)
 
