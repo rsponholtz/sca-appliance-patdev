@@ -1,19 +1,16 @@
-<?PHP //echo "<!-- Modified: Date       = 2014 Nov 7 -->\n"; ?>
+<?PHP //echo "<!-- Modified: Date       = 2021 Mar 12 -->\n"; ?>
 <?PHP
 
 $ClassArray = array(
-'Custom',
 'Basic Health',
+'Cloud',
 'HAE',
-'NCS',
-'eDirectory',
-'Filr',
-'GroupWise',
-'OES',
-'Print',
+'HPC',
 'Security',
+'SES',
 'SLE',
 'SUMA',
+'Custom'
 );
 
 if ( isset($Class) ) {

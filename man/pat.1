@@ -183,25 +183,25 @@ The default \fB\s-1ARCHDIR\s0\fR location is \fB/var/log/archives\fR.
 2. pat net\-check.py
 .Sp
 3. All extracted archives in /var/log/archives will be used when testing your pattern
-.IP "Temporarily use /var/log/nts_* directories to test" 5
-.IX Item "Temporarily use /var/log/nts_* directories to test"
-ARCHDIR=/var/log pat mpio\-00001.pl
-.IP "Use /tmp/nts_* directories to test for this login session" 5
-.IX Item "Use /tmp/nts_* directories to test for this login session"
+.IP "Temporarily use /var/log/scc_* directories to test" 5
+.IX Item "Temporarily use /var/log/scc_* directories to test"
+ARCHDIR=/var/log pat mpio\-00001.py
+.IP "Use /tmp/scc_* directories to test for this login session" 5
+.IX Item "Use /tmp/scc_* directories to test for this login session"
 export ARCHDIR=/tmp
 .Sp
-pat mpio\-00001.pl
+pat mpio\-00001.py
 .IP "Use a specific supportconfig tar ball directory for this login session." 5
 .IX Item "Use a specific supportconfig tar ball directory for this login session."
-export ARCHDIR=/mnt/spr/nts_sles11_sp3_x86_64_default_any
+export ARCHDIR=/mnt/spr/scc_sles15_sp3_x86_64_default_any
 .Sp
 pat net\-00002.pl
 .SH "AUTHOR"
 .IX Header "AUTHOR"
-Jason Record <jrecord@suse.com>
+Jason Record <jason.record@suse.com>
 .SH "COPYRIGHT"
 .IX Header "COPYRIGHT"
-Copyright (C) 2014 \s-1SUSE\s0 \s-1LLC\s0
+Copyright (C) 2014-2021 \s-1SUSE\s0 \s-1LLC\s0
 .PP
 This program is free software; you can redistribute it and/or modify
 it under the terms of the \s-1GNU\s0 General Public License as published by

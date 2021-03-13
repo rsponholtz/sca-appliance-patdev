@@ -126,7 +126,7 @@ running on SUSE servers.</p>
 <dt><strong><a name="description" class="item">Description</a></strong>
 
 <dd>
-<p>Returns a hash containing host and OES information.</p>
+<p>Returns a hash containing host information.</p>
 </dd>
 </li>
 <dt><strong><a name="usage" class="item">Usage</a></strong>
@@ -134,11 +134,7 @@ running on SUSE servers.</p>
 <dd>
 <pre>
         my %HOST_INFO = SDP::SUSE::getHostInfo();
-        if ( $HOST_INFO{'oes'} ) {
-                SDP::Core::updateStatus(STATUS_SUCCESS, &quot;OES Installed on $HOST_INFO{'hostname'}&quot;);
-        } else {
-                SDP::Core::updateStatus(STATUS_WARNING, &quot;OES NOT Installed on $HOST_INFO{'hostname'}&quot;);
-        }</pre>
+</pre>
 </dd>
 <dt><strong><a name="input" class="item">Input</a></strong>
 
@@ -161,7 +157,7 @@ running on SUSE servers.</p>
 <dt><strong><a name="hash_keys" class="item">Hash Keys</a></strong>
 
 <dd>
-<p>architecture, hostname, kernel, distribution, patchlevel, oes, oesversion, oesmajor, oesdistribution, oespatchlevel, oesbuild, nows, nowsversion</p>
+<p>architecture, hostname, kernel, distribution, patchlevel</p>
 </dd>
 </li>
 </dl>
@@ -226,7 +222,7 @@ running on SUSE servers.</p>
 
 <dd>
 <pre>
-        my $SERVICE_NAME = 'novell-nss';
+        my $SERVICE_NAME = 'ftp';
         my %SERVICE_INFO = SDP::SUSE::getServiceInfo($SERVICE_NAME);
         if ( $SERVICE_INFO{'running'} &gt; 0 ) {
                 SDP::Core::updateStatus(STATUS_SUCCESS, &quot;Service $SERVICE_INFO{'name'} is running&quot;);

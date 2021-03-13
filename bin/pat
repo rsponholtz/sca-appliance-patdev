@@ -1,12 +1,12 @@
 #!/bin/bash
-SVER='1.0.10'
+SVER='1.0.11'
 
 ##############################################################################
 #  pat - Pattern Tester Tool
-#  Copyright (C) 2014 SUSE LLC
+#  Copyright (C) 2014-2021 SUSE LLC
 #
 # Description:  Tests one pattern against several supportconfig archives.
-# Modified:     2014 Jul 25
+# Modified:     2021 Mar 12
 #
 ##############################################################################
 #
@@ -161,7 +161,8 @@ if head -1 $PATFULL | grep '^ ' &>/dev/null; then
 	((ERR_HPL++))
 fi
 [[ ! -x $PATFULL ]] && { ((ERR_MODE++)); ((RET_FAT++)); }
-if grep  $PATFULL &>/dev/null
+if grep 
+ $PATFULL &>/dev/null
 then
 	((RET_FAT++))
 	((ERR_DOS++))
@@ -176,7 +177,7 @@ if [[ -s $ARCHDIR/basic-environment.txt ]]; then
 	echo "Returns: $RC, Overall: $OVERALL"
 	((ARCHIVES++))
 else
-	for i in $(find -L ${ARCHDIR}/ -maxdepth 1 -type d | grep "nts_")
+	for i in $(find -L ${ARCHDIR}/ -maxdepth 1 -type d | egrep "scc_|nts_")
 	do
 		echo "Running: $PATFULL $@ -p $i"
 		PATOUT=$(perl $PATFULL $@ -p $i)
