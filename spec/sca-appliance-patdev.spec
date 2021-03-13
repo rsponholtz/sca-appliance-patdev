@@ -17,7 +17,7 @@
 %define sca_configdir %{_sysconfdir}/%{sca_common}
 
 Name:         sca-appliance-patdev
-Version:      1.3
+Version:      1.3.1
 Release:      0
 Summary:      Supportconfig Analysis Appliance Pattern Development
 License:      GPL-2.0
