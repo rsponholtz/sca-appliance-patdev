@@ -160,13 +160,13 @@ if head -1 $PATFULL | grep '^ ' &>/dev/null; then
 	((RET_FAT++))
 	((ERR_HPL++))
 fi
-[[ ! -x $PATFULL ]] && { ((ERR_MODE++)); ((RET_FAT++)); }
-if grep 
- $PATFULL &>/dev/null
-then
-	((RET_FAT++))
-	((ERR_DOS++))
-fi
+#[[ ! -x $PATFULL ]] && { ((ERR_MODE++)); ((RET_FAT++)); }
+#if grep 
+# $PATFULL &>/dev/null
+#then
+#	((RET_FAT++))
+#	((ERR_DOS++))
+#fi
 
 if [[ -s $ARCHDIR/basic-environment.txt ]]; then
 	echo "Running: $PATFULL $@ -p $ARCHDIR"
